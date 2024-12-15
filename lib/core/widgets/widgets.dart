@@ -1,6 +1,6 @@
-export 'button.dart';
-export 'button_notification.dart';
-export 'button_text.dart';
+export 'buttons/button.dart';
+export 'buttons/button_notification.dart';
+export 'buttons/button_text.dart';
 export 'circle_image.dart';
 export 'color_loaders.dart';
 export 'drop_down.dart';

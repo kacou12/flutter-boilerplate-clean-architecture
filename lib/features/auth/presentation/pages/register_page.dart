@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:formz/formz.dart';
 import 'package:go_router/go_router.dart';
-import 'package:swiit/src/features/auth/presentation/bloc/register/register_bloc.dart';
-import 'package:swiit/src/features/auth/presentation/bloc/register/register_state.dart';
-import 'package:swiit/src/features/auth/presentation/pages/sign_up_first_step.dart';
+import 'package:my/features/auth/presentation/pages/sign_up_first_step.dart';
 
 import '../../../../core/core.dart';
 
@@ -51,11 +48,11 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             body: SignUpFirstStep(
               onNext: () {
-                context.goNamed(PageRoutes.signUpOtpStep, extra: {
-                  "continue": true,
-                  "email": context.read<RegisterBloc>().state.email.value,
-                  "continueOnEditInteretPage":true,
-                });
+                // context.goNamed(PageRoutes.signUpOtpStep, extra: {
+                //   "continue": true,
+                //   "email": context.read<RegisterBloc>().state.email.value,
+                //   "continueOnEditInteretPage": true,
+                // });
               },
             )),
         Align(

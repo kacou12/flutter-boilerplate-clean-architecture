@@ -1,5 +1,7 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:my/core/errors/failures.dart';
 import 'package:my/features/auth/domain/entities/user.dart';
 import 'package:my/features/auth/domain/repositories/auth_repository.dart';
@@ -9,6 +11,7 @@ part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this.loginCase) : super(LoginInitial());
+  late GlobalKey<FormBuilderState> formKey;
 
   final LoginCase loginCase;
 

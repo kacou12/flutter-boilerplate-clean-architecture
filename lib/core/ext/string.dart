@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:my/core/core.dart';
 import 'package:my/core/resources/resources.dart';
-import 'package:intl/intl.dart';
 import 'package:oktoast/oktoast.dart';
 
 extension StringExtension on String {
@@ -104,4 +104,25 @@ extension StringExtension on String {
   }
 }
 
-extension StringExtensions on String? {}
+extension StringExtensions on String? {
+  String? isValidEmailOrPhoneNumber() {
+    bool isValidNumber = this != null
+        ? RegExp(r"^(07|05|01|21|25|27)([0-9\s]{8})$").hasMatch(this!)
+        : false;
+
+    if (this == null) {
+      return "Veuillez saisir un numero de telephone ou un email valide";
+    }
+
+    if (RegExp(r"^[0-9]+$").hasMatch(this!)) {
+      if (!isValidNumber) {
+        return "Veuillez saisir un numero valide";
+      }
+    } else if (!RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(this!)) {
+      return "Veuillez saisir un email valide";
+    }
+    return null;
+  }
+}

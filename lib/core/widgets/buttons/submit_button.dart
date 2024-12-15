@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_svg/flutter_svg.dart'; // Pour utiliser des icônes SVG
 
 class SubmitButton extends StatelessWidget {
   const SubmitButton({
     required this.title,
     this.isOutlined = false,
-    required this.onTap,
+    this.onTap,
     this.icon, // Icône optionnelle
     super.key,
   });
 
   final String title;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final bool isOutlined;
   final Widget? icon; // Icône optionnelle pour le bouton
 
@@ -30,7 +29,7 @@ class SubmitButton extends StatelessWidget {
           children: [
             if (icon != null) ...[
               icon!,
-              SizedBox(width: 8), // Espace entre l'icône et le texte
+              const SizedBox(width: 8), // Espace entre l'icône et le texte
             ],
             Text(
               title,
@@ -60,52 +59,6 @@ class SubmitButton extends StatelessWidget {
               color: Colors.white,
             )
           : null,
-    );
-  }
-}
-
-// Bouton Google
-class GoogleSignInButton extends StatelessWidget {
-  final bool isOutlined;
-  final VoidCallback onTap;
-  final String? label;
-
-  const GoogleSignInButton({super.key, required this.onTap, this.isOutlined = false, this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return SubmitButton(
-      title: label ?? 'Se connecter avec Google',
-      onTap: onTap,
-      icon: SvgPicture.asset(
-        'assets/icons/icon-google.svg', // Ajoute une icône Google (SVG ou PNG)
-        height: 24,
-        width: 24,
-      ),
-      isOutlined: isOutlined, // Peut être outlined ou pas selon le style voulu
-    );
-  }
-}
-
-// Bouton Facebook
-class FacebookSignInButton extends StatelessWidget {
-  final bool isOutlined;
-  final String? label;
-  final VoidCallback onTap;
-
-  const FacebookSignInButton({super.key, required this.onTap, this.isOutlined = false, this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return SubmitButton(
-      title: label ?? 'Se connecter avec Facebook' ,
-      onTap: onTap,
-      icon: SvgPicture.asset(
-        'assets/icons/icon-facebook.svg', // Ajoute une icône Facebook (SVG ou PNG)
-        height: 24,
-        width: 24,
-      ),
-      isOutlined: isOutlined, // Peut aussi être outlined
     );
   }
 }
