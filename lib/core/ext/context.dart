@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my/core/core.dart';
 import 'package:my/core/resources/resources.dart';
-import 'package:oktoast/oktoast.dart';
-// import 'toast_manager.dart';
 
 extension ContextExtensions on BuildContext {
   double widthInPercent(double percent) {
