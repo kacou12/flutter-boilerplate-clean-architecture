@@ -15,12 +15,12 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc({
-    required this.currentUser,
-    required this.logout,
-    required this.loginCubit,
-    required this.registerCubit,
-  }) : super(const AuthState.unknown()) {
+  AuthBloc(
+    this.currentUser,
+    this.logout,
+    this.loginCubit,
+    this.registerCubit,
+  ) : super(const AuthState.unknown()) {
     on(_call);
 
     loginSubscription = loginCubit.stream.listen((loginState) {
@@ -80,7 +80,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         break;
 
       case AuthRead():
-        if (state.status == AuthStatus.authenticated) {
+        if (state.isAuthenticated) {
           final userData = await currentUser.call(NoParams());
 
           if (userData is RightResult<User?> && userData.value != null) {
