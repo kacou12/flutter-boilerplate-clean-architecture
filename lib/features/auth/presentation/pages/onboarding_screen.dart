@@ -3,14 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my/core/widgets/buttons/submit_button.dart';
 
-class OnBoardingPage extends StatefulWidget {
-  const OnBoardingPage({super.key});
+class OnBoardingScreen extends StatefulWidget {
+  const OnBoardingScreen({super.key});
 
   @override
-  State<OnBoardingPage> createState() => _OnBoardingPageState();
+  State<OnBoardingScreen> createState() => _OnBoardingScreenState();
 }
 
-class _OnBoardingPageState extends State<OnBoardingPage> {
+class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.sizeOf(context).height;

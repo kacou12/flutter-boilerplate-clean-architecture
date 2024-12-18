@@ -14,14 +14,14 @@ import 'package:my/core/widgets/buttons/submit_button.dart';
 
 import '../../../../core/widgets/widgets.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginScreenState extends State<LoginScreen> {
   /// Controller
   final _conEmail = TextEditingController();
   final _conPassword = TextEditingController();
@@ -115,16 +115,12 @@ class _UsernameInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormBuilderField(
-        name: "email or phone number",
-        validator: FormBuilderValidators.compose([
-          FormBuilderValidators.required(),
-        ]),
+        name: "username",
+        validator: (v) {
+          return v.isValidEmailOrPhoneNumber();
+        },
         builder: (FormFieldState field) {
           return CommonTextFormField(
-              name: "login",
-              validator: (v) {
-                return v.isValidEmailOrPhoneNumber();
-              },
               controller: conEmail,
               decoration: InputDecoration(
                   labelText: "Adresse email ou numero de téléphone",
@@ -152,14 +148,12 @@ class _PasswordInputState extends State<_PasswordInput> {
   Widget build(BuildContext context) {
     final IconData icon = obscureText ? Icons.visibility : Icons.visibility_off;
     return FormBuilderField(
-        name: "email or phone number",
+        name: "password",
         validator: FormBuilderValidators.compose([
           FormBuilderValidators.required(),
         ]),
         builder: (FormFieldState field) {
           return CommonTextFormField(
-            validator: FormBuilderValidators.required(),
-            name: "password",
             controller: widget.conPassword,
             decoration: InputDecoration(
                 labelText: "Mot de passe",
