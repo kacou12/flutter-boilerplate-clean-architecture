@@ -16,14 +16,15 @@ enum ActiveTheme {
 }
 
 class MainBoxStorage<T> {
-  MainBoxStorage(
-    this._key, {
-    required this.fromJson,
-    required this.toJson,
+  MainBoxStorage({
+    this.fromJson,
+    this.toJson,
   });
-  final String _key;
-  final FromJsonFunction<T> fromJson;
-  final ToJsonFunction<T> toJson;
+
+  // final String _key;
+  final FromJsonFunction<T>? fromJson;
+  final ToJsonFunction<T>? toJson;
+  static const _firstTimerKey = 'is-user-first-timer';
 
   static late Box? mainBox;
   static final _boxName = HelperConstants.boxName;
@@ -33,17 +34,17 @@ class MainBoxStorage<T> {
     mainBox = await Hive.openBox("$prefixBox$_boxName");
   }
 
-  Future<void> saveData(T data) async {
-    final encodedData = jsonEncode(toJson(data));
-    await mainBox?.put(_key, encodedData);
+  Future<void> saveMapData({required String key, required T data}) async {
+    final encodedData = jsonEncode(toJson!(data));
+    await mainBox?.put(key, encodedData);
   }
 
-  Future<T?> loadData() async {
+  Future<T?> loadMapData(String key) async {
     try {
-      final storedData = mainBox?.get(_key);
+      final storedData = mainBox?.get(key);
       if (storedData != null && storedData.isNotEmpty) {
         final decodedData = jsonDecode(storedData) as Map<String, dynamic>;
-        return fromJson(decodedData);
+        return fromJson!(decodedData);
       }
     } catch (e) {
       rethrow;
@@ -52,12 +53,18 @@ class MainBoxStorage<T> {
     return null;
   }
 
-  Future<void> clearData() async {
-    await mainBox?.delete(_key);
+  Future<void> clearData(String key) async {
+    await mainBox?.delete(key);
   }
 
   Future<void> deleteAll() async {
     /// Clear the box
     mainBox?.clear();
+  }
+
+  bool isFirstTime() => mainBox?.get(_firstTimerKey) ?? true;
+
+  Future<void> cacheFirstTimer() async {
+    await mainBox?.put(_firstTimerKey, false);
   }
 }
