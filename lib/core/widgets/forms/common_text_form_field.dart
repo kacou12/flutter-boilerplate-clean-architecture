@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CommonTextFormField extends StatelessWidget {
-  final String name;
+  // final String name;
   final InputDecoration? decoration;
   final String? initialValue;
   final TextEditingController? controller;
@@ -10,7 +10,7 @@ class CommonTextFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final void Function(String?)? onChanged;
   final void Function()? onTap;
-  final String? Function(String?)? validator;
+  // final String? Function(String?)? validator;
   final int maxLines, minLines;
   final int? maxLength;
   final bool? readOnly;
@@ -20,13 +20,13 @@ class CommonTextFormField extends StatelessWidget {
   final EdgeInsets? scrollPadding;
   const CommonTextFormField(
       {super.key,
-      required this.name,
+      // required this.name,
       this.decoration,
       this.readOnly,
       this.onTap,
       this.initialValue,
       this.onChanged,
-      this.validator,
+      // this.validator,
       this.obscureText = false,
       this.keyboardType,
       this.maxLines = 1,
@@ -42,10 +42,10 @@ class CommonTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
         controller: controller,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
+        // autovalidateMode: AutovalidateMode.onUserInteraction,
         readOnly: readOnly ?? false,
         keyboardType: keyboardType,
-        validator: validator,
+        // validator: validator,
         obscureText: obscureText,
         initialValue: initialValue,
         onChanged: onChanged,
