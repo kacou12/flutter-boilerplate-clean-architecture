@@ -16,7 +16,7 @@ abstract class AuthRemoteDataSource {
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final DioClient dio;
 
-  AuthRemoteDataSourceImpl({required this.dio});
+  AuthRemoteDataSourceImpl(this.dio);
 
   @override
   FutureResult<UserModel> login({required RequestLogin requests}) async {

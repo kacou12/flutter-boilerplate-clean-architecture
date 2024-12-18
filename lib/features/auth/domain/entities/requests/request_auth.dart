@@ -14,54 +14,34 @@ class RequestLogin extends Equatable {
 }
 
 class RequestRegister extends Equatable {
-  final String userName;
-  final String name;
+  final String firstName;
+  final String lastName;
   final String email;
   final String password;
-  final String sponsor;
-  final String country;
-  final String city;
   final String phone;
-  final String deviceId;
-  final String deviceType;
 
   const RequestRegister({
-    required this.userName,
-    required this.name,
+    required this.firstName,
+    required this.lastName,
     required this.email,
     required this.password,
-    required this.sponsor,
-    required this.country,
-    required this.city,
     required this.phone,
-    required this.deviceId,
-    required this.deviceType,
   });
 
   Map<String, dynamic> toJson() => {
-        'user_name': userName,
+        'first_name': firstName,
+        'last_name': lastName,
         'password': password,
         'email': email,
-        'name': name,
-        'sponsor': sponsor,
-        'country': country,
-        'city': city,
         'phone': phone,
-        'device_id': deviceId,
-        'device_type': deviceType
       };
 
   @override
   List<Object?> get props => [
-        userName,
         password,
         email,
-        name,
-        sponsor,
-        country,
-        city,
         phone,
-        deviceId,
-        deviceType
+        firstName,
+        lastName,
       ];
 }

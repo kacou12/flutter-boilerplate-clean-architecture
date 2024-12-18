@@ -13,11 +13,11 @@ class AuthRepositoryImpl implements AuthRepository {
   final NetworkInfo networkInfo;
   final AuthLocalDataSource store;
 
-  AuthRepositoryImpl({
-    required this.remoteDataSource,
-    required this.networkInfo,
-    required this.store,
-  });
+  AuthRepositoryImpl(
+    this.remoteDataSource,
+    this.networkInfo,
+    this.store,
+  );
 
   @override
   FutureResult<User> login(RequestParamsLogin params) async {
@@ -39,7 +39,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  FutureEitherResult<User> myProfile() async {
+  FutureResult<User> myProfile() async {
     if (await networkInfo.isConnected) {
       final response = await remoteDataSource.myProfile();
 
@@ -71,7 +71,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  FutureEitherResult<void> loggout() async {
+  FutureResult<void> loggout() async {
     final response = await remoteDataSource.logout();
     return response.fold(
       (failure) => Left(failure),
@@ -82,32 +82,35 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  FutureEitherResult<User> register(RequestParamsRegister request) async {
+  FutureResult<User> register(RequestParamsRegister request) async {
     if (await networkInfo.isConnected) {
       try {
         final response = await remoteDataSource.register(
             requests: RequestRegister(
-                name: request.name,
-                user_name: request.user_name,
-                email: request.email,
-                password: request.password,
-                interests_id: request.interests_id,
-                sponsor: request.sponsor,
-                country: request.country,
-                city: request.city,
-                phone: request.phone,
-                device_id: request.device_id,
-                device_type: request.device_type));
+          firstName: request.firstName,
+          lastName: request.lastName,
+          email: request.email,
+          password: request.password,
+          phone: request.phone,
+        ));
 
-        if (response is Success<UserModel>) {
-          await store.saveData(response.data);
-          return Right(response.data);
-        } else {
-          final errorMessage =
-              response.asOrNull<Failed<dynamic>>()?.errors.error ??
-                  'Erreur inconnue';
-          return Left(ServerFailure(message: errorMessage));
-        }
+        return response.fold(
+          (failure) => Left(failure),
+          (response) async {
+            await store.saveData(response);
+            return Right(response);
+          },
+        );
+
+        // if (response is Success<UserModel>) {
+        //   await store.saveData(response.data);
+        //   return Right(response.data);
+        // } else {
+        //   final errorMessage =
+        //       response.asOrNull<Failed<dynamic>>()?.errors.error ??
+        //           'Erreur inconnue';
+        //   return Left(ServerFailure(message: errorMessage));
+        // }
       } catch (e) {
         return Left(ServerFailure(message: "$e"));
       }
