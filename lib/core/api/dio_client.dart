@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:my/core/api/api_result.dart';
 import 'package:my/core/core.dart';
 import 'package:my/core/utils/constants/network_constants.dart';
 import 'package:my/core/utils/typedefs.dart';
@@ -106,7 +107,8 @@ class DioClient {
         );
       }
 
-      return Right(converter(response.data['data']));
+      return Right(
+          ApiResult.fromResponse(mapper: converter, response: response));
     } on ServerException catch (e) {
       try {
         return Left(
@@ -142,18 +144,55 @@ class DioClient {
         );
       }
 
-      return Right(converter(response.data['data']));
-    } on ServerException catch (e) {
-      try {
-        return Left(
-          ServerFailure.fromException(e),
+      return Right(
+        ApiResult.fromResponse(mapper: converter, response: response),
+      );
+    } on DioException catch (error) {
+      final exception = RequestException.fromDioError(error);
+      return Left(ServerFailure(
+          message: exception.message, statusCode: exception.statusCode ?? 400));
+    }
+    // on ServerException
+    catch (e) {
+      return const Left(ServerFailure(
+        message: "Erro  r Occurred: It's not your fault, it's ours",
+        statusCode: 500,
+      ));
+    }
+  }
+
+  FutureResult<T> putRequest<T>(
+    String url, {
+    Map<String, dynamic>? data,
+    required ResponseConverter<T> converter,
+  }) async {
+    try {
+      final response = await _dio.put(
+        url,
+        data: data,
+      );
+      if ((response.statusCode ?? 0) < 200 ||
+          (response.statusCode ?? 0) > 201) {
+        throw ServerException(
+          message: response.statusMessage ?? 'Unknown Error',
+          statusCode: response.statusCode ?? 500,
         );
-      } catch (e) {
-        return const Left(ServerFailure(
-          message: "Error Occurred: It's not your fault, it's ours",
-          statusCode: 500,
-        ));
       }
+
+      return Right(
+        ApiResult.fromResponse(mapper: converter, response: response),
+      );
+    } on DioException catch (error) {
+      final exception = RequestException.fromDioError(error);
+      return Left(ServerFailure(
+          message: exception.message, statusCode: exception.statusCode ?? 400));
+    }
+    // on ServerException
+    catch (e) {
+      return const Left(ServerFailure(
+        message: "Erro  r Occurred: It's not your fault, it's ours",
+        statusCode: 500,
+      ));
     }
   }
 }
