@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class FormInputPassword extends StatelessWidget {
-   FormInputPassword({required this.label, required this.labelColor, super.key});
+  FormInputPassword({required this.label, required this.labelColor, super.key});
   final String label;
   final Color labelColor;
 
-  ValueNotifier<bool> isHidden = ValueNotifier<bool>(true);
+  final ValueNotifier<bool> isHidden = ValueNotifier<bool>(true);
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<bool>(
@@ -21,9 +21,10 @@ class FormInputPassword extends StatelessWidget {
               suffixIcon: IconButton(
                   onPressed: () {
                     isHidden.value = !isHidden.value;
-
                   },
-                  icon:  Icon(isHidden.value? Icons.visibility:Icons.visibility_off)),
+                  icon: Icon(isHidden.value
+                      ? Icons.visibility
+                      : Icons.visibility_off)),
               labelStyle: Theme.of(context)
                   .textTheme
                   .bodyMedium

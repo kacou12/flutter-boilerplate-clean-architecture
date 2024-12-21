@@ -4,13 +4,13 @@ import 'package:flutter/services.dart';
 class CommonTextFormField extends StatelessWidget {
   // final String name;
   final InputDecoration? decoration;
-  final String? initialValue;
+  // final String? initialValue;
   final TextEditingController? controller;
   final bool obscureText;
   final TextInputType? keyboardType;
   final void Function(String?)? onChanged;
   final void Function()? onTap;
-  // final String? Function(String?)? validator;
+  final String? Function(String?)? validator;
   final int maxLines, minLines;
   final int? maxLength;
   final bool? readOnly;
@@ -24,9 +24,9 @@ class CommonTextFormField extends StatelessWidget {
       this.decoration,
       this.readOnly,
       this.onTap,
-      this.initialValue,
-      this.onChanged,
-      // this.validator,
+      // this.initialValue,
+      required this.onChanged,
+      this.validator,
       this.obscureText = false,
       this.keyboardType,
       this.maxLines = 1,
@@ -45,9 +45,9 @@ class CommonTextFormField extends StatelessWidget {
         // autovalidateMode: AutovalidateMode.onUserInteraction,
         readOnly: readOnly ?? false,
         keyboardType: keyboardType,
+        // initialValue: initialValue,
         // validator: validator,
         obscureText: obscureText,
-        initialValue: initialValue,
         onChanged: onChanged,
         minLines: minLines,
         onTap: onTap,
@@ -69,7 +69,7 @@ class CommonTextFormField extends StatelessWidget {
 
   InputBorder get _border {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(35.0),
+      borderRadius: BorderRadius.circular(10),
     );
   }
 }
