@@ -19,7 +19,7 @@ enum PageRoutes {
   userProfileEdit("/profile/edit"),
   userHome("/profile/home"),
 
-  onBordingRoute("/onBordingRoute");
+  onBoarding("/onBoarding");
 
   const PageRoutes(this.path);
 

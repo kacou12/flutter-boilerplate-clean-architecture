@@ -21,11 +21,13 @@ class AppRouter extends GoRouter {
                   final isLoggedIn = authBloc.state.isAuthenticated;
 
                   if (!isLoggedIn) {
-                    if (state.matchedLocation ==
-                        PageRoutes.onBordingRoute.path) {
-                      return PageRoutes.onBordingRoute.path;
+                    if (state.matchedLocation == PageRoutes.onBoarding.path) {
+                      return PageRoutes.onBoarding.path;
                     } else if (state.matchedLocation == PageRoutes.login.path) {
                       return PageRoutes.login.path;
+                    } else if (state.matchedLocation ==
+                        PageRoutes.splashScreen.path) {
+                      return PageRoutes.splashScreen.path;
                     } else if (state.matchedLocation ==
                         PageRoutes.register.path) {
                       return PageRoutes.register.path;
@@ -39,10 +41,7 @@ class AppRouter extends GoRouter {
                   GoRoute(
                     path: PageRoutes.login.path,
                     name: PageRoutes.login.name,
-                    builder: (_, __) => BlocProvider(
-                      create: (_) => sl<LoginCubit>(),
-                      child: const LoginScreen(),
-                    ),
+                    builder: (_, __) => const LoginScreen(),
                   ),
                   GoRoute(
                     path: PageRoutes.register.path,
@@ -58,17 +57,20 @@ class AppRouter extends GoRouter {
                     builder: (_, __) => const UsersScreen(),
                   ),
                   GoRoute(
-                    name: PageRoutes.splashScreen.path,
+                    path: PageRoutes.onBoarding.path,
+                    name: PageRoutes.onBoarding.name,
+                    builder: (_, __) => const OnBoardingScreen(),
+                  ),
+                  GoRoute(
                     path: PageRoutes.splashScreen.path,
+                    name: PageRoutes.splashScreen.name,
                     redirect: (context, state) async {
                       final mainBoxStorage = sl<MainBoxStorage>();
-                      if (authBloc.state.isAuthenticated) {
-                        return PageRoutes.userHome.name;
-                      }
+
                       // TODO : check this  only if used onboarding
-                      else if (authBloc.state.isUnauthenticated &&
-                          mainBoxStorage.isFirstTime()) {
-                        return PageRoutes.onBordingRoute.name;
+                      if (mainBoxStorage.isFirstTime()) {
+                        mainBoxStorage.cacheFirstTimer();
+                        return PageRoutes.onBoarding.path;
                       }
 
                       return null;

@@ -9,30 +9,30 @@ class RouterObserver extends NavigatorObserver {
 
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) =>
-      log.v('didPush: ${route.str}, previousRoute= ${previousRoute?.str}');
+      log.t('didPush: ${route.str}, previousRoute= ${previousRoute?.str}');
 
   @override
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) =>
-      log.v('didPop: ${route.str}, previousRoute= ${previousRoute?.str}');
+      log.t('didPop: ${route.str}, previousRoute= ${previousRoute?.str}');
 
   @override
   void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) =>
-      log.v('didRemove: ${route.str}, previousRoute= ${previousRoute?.str}');
+      log.t('didRemove: ${route.str}, previousRoute= ${previousRoute?.str}');
 
   @override
   void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) =>
-      log.v('didReplace: new= ${newRoute?.str}, old= ${oldRoute?.str}');
+      log.t('didReplace: new= ${newRoute?.str}, old= ${oldRoute?.str}');
 
   @override
   void didStartUserGesture(
     Route<dynamic> route,
     Route<dynamic>? previousRoute,
   ) =>
-      log.v('didStartUserGesture: ${route.str}, '
+      log.t('didStartUserGesture: ${route.str}, '
           'previousRoute= ${previousRoute?.str}');
 
   @override
-  void didStopUserGesture() => log.v('didStopUserGesture');
+  void didStopUserGesture() => log.t('didStopUserGesture');
 }
 
 extension on Route<dynamic> {
