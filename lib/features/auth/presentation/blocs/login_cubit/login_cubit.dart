@@ -11,7 +11,7 @@ part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this.loginCase) : super(LoginInitial());
-  late GlobalKey<FormBuilderState> formKey;
+  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
 
   final LoginCase loginCase;
 

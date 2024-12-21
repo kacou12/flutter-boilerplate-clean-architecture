@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my/core/ext/context.dart';
 import 'package:my/core/ext/string.dart';
 import 'package:my/core/resources/dimens.dart';
 import 'package:my/core/resources/images.dart';
+import 'package:my/core/services/router/page_routes.enum.dart';
+import 'package:my/core/widgets/buttons/submit_button.dart';
 import 'package:my/core/widgets/forms/common_text_form_field.dart';
 import 'package:my/core/widgets/my_form_builder.dart';
 import 'package:my/features/auth/domain/repositories/auth_repository.dart';
+import 'package:my/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:my/features/auth/presentation/blocs/login_cubit/login_cubit.dart';
-import 'package:my/core/widgets/buttons/submit_button.dart';
 
 import '../../../../core/widgets/widgets.dart';
 
@@ -23,8 +26,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   /// Controller
-  final _conEmail = TextEditingController();
-  final _conPassword = TextEditingController();
+  final _conEmail = TextEditingController(text: "abc");
+  final _conPassword = TextEditingController(text: "testtest");
 
   LoginCubit get cubit {
     return context.read<LoginCubit>();
@@ -32,22 +35,38 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginCubit, LoginState>(
-      listener: (_, state) {
-        switch (state) {
-          case LoginLoading():
-            context.show();
-            break;
-          case LoginFailure(message: String message):
-            context.dismiss();
-            message.toToastError(context);
-            break;
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<LoginCubit, LoginState>(
+          listener: (_, state) {
+            switch (state) {
+              case LoginLoading():
+                context.show();
+                break;
+              case LoginFailure(message: String message):
+                context.dismiss();
+                message.toToastError(context);
+                break;
+              case LoginSuccess():
+                context
+                    .read<AuthBloc>()
+                    .add(const AuthStatusChanged(AuthStatus.authenticated));
 
-          default:
-        }
-      },
-      child: Center(
-        child: SingleChildScrollView(
+              default:
+            }
+          },
+        ),
+        BlocListener<AuthBloc, AuthState>(
+          listener: (context, state) {
+            if (state.isAuthenticated) {
+              context.dismiss();
+              context.goNamed(PageRoutes.userHome.name);
+            }
+          },
+        ),
+      ],
+      child: Scaffold(
+        body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.all(Dimens.space24),
             child: AutofillGroup(
@@ -82,22 +101,30 @@ class _LoginScreenState extends State<LoginScreen> {
             formKey: cubit.formKey,
             child: Column(
               children: [
-                // TextFormField()
                 _UsernameInput(conEmail: _conEmail),
                 SpacerV(value: Dimens.space24),
                 _PasswordInput(conPassword: _conPassword),
-
+                SpacerV(value: Dimens.space24),
                 SubmitButton(
                   title: "login",
                   onTap: () {
-                    cubit.formKey.currentState!.validate()
-                        ? () => context.read<LoginCubit>().login(
-                              RequestParamsLogin(
-                                email: _conEmail.text,
-                                password: _conPassword.text,
-                              ),
-                            )
-                        : null;
+                    if (cubit.formKey.currentState!.validate()) {
+                      context.read<LoginCubit>().login(
+                            RequestParamsLogin(
+                              email: _conEmail.text,
+                              password: _conPassword.text,
+                            ),
+                          );
+                    } else {
+                      final errors = cubit.formKey.currentState!.fields
+                          .map((key, field) => MapEntry(key, field.errorText))
+                          .entries
+                          .where((entry) => entry.value != null)
+                          .map((entry) => '${entry.key}: ${entry.value}')
+                          .toList();
+
+                      errors.join("\n").toToastError(context);
+                    }
                   },
                 ),
               ],
@@ -116,17 +143,19 @@ class _UsernameInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderField(
         name: "username",
-        validator: (v) {
-          return v.isValidEmailOrPhoneNumber();
-        },
+        initialValue: conEmail.text,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        // validator: (v) {
+        //   return (v).isValidEmailOrPhoneNumber();
+        // },
         builder: (FormFieldState field) {
           return CommonTextFormField(
+              onChanged: field.didChange,
+              // initialValue: field.value,
               controller: conEmail,
-              decoration: InputDecoration(
-                  labelText: "Adresse email ou numero de téléphone",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(35.0),
-                  )));
+              decoration: const InputDecoration(
+                labelText: "Adresse email ou numero de téléphone",
+              ));
         });
   }
 }
@@ -141,19 +170,22 @@ class _PasswordInput extends StatefulWidget {
 }
 
 class _PasswordInputState extends State<_PasswordInput> {
-  final password = TextEditingController();
-
   bool obscureText = true;
   @override
   Widget build(BuildContext context) {
     final IconData icon = obscureText ? Icons.visibility : Icons.visibility_off;
     return FormBuilderField(
         name: "password",
+        initialValue: widget.conPassword.text,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: FormBuilderValidators.compose([
-          FormBuilderValidators.required(),
+          FormBuilderValidators.required(
+              errorText: "Veuillez remplir ce champ"),
+          // FormBuilderValidators.min(5, errorText: "Minimum 5 caractères"),
         ]),
         builder: (FormFieldState field) {
           return CommonTextFormField(
+            onChanged: field.didChange,
             controller: widget.conPassword,
             decoration: InputDecoration(
                 labelText: "Mot de passe",

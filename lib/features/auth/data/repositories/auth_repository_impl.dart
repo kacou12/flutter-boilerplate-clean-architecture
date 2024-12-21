@@ -56,8 +56,9 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  FutureResult<User> get currentUser async {
+  FutureResult<User?> get currentUser async {
     try {
+      // await store.deleteData();
       final user = await store.loadData();
 
       if (user == null) {
@@ -112,11 +113,11 @@ class AuthRepositoryImpl implements AuthRepository {
         //   return Left(ServerFailure(message: errorMessage));
         // }
       } catch (e) {
-        return Left(ServerFailure(message: "$e"));
+        return Left(CacheFailure(message: "$e"));
       }
     } else {
-      return const Left(ServerFailure(
-          message: "Veuillez verifier votre connection internet"));
+      return const Left(
+          CacheFailure(message: "Veuillez verifier votre connection internet"));
     }
   }
 }

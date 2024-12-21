@@ -43,10 +43,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   FutureResult<void> logout() async {
-    final response = await dio.postRequest(
+    final response = await dio.putRequest(
       ListAPI.logout,
-      converter: (response) =>
-          EmptyResponse.fromJson(response as Map<String, dynamic>),
+      data: {"device_id": "71215494-78AD-4173-834F-9724447D71FA"},
+      converter: (response) => EmptyResponse.fromJson(response),
     );
     return response;
   }

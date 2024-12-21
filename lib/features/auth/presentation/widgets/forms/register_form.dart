@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:go_router/go_router.dart';
 import 'package:my/core/core.dart';
 import 'package:my/core/resources/dimens.dart';
 import 'package:my/core/widgets/buttons/submit_button.dart';
@@ -74,11 +73,10 @@ class _EmailInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderField(
         name: "email",
-        validator: (v) {
-          return FormBuilderValidators.email()(v?.trim());
-        },
+        validator: FormBuilderValidators.email(),
         builder: (FormFieldState field) {
           return CommonTextFormField(
+              onChanged: field.didChange,
               controller: _emailPhone,
               decoration: InputDecoration(
                   labelText: "Adresse email",
@@ -98,11 +96,12 @@ class _PhoneInput extends StatelessWidget {
     return FormBuilderField(
         name: "phone",
         validator: (v) {
-          return v.isValidPhoneNumber();
+          return (v as String).isValidPhoneNumber();
         },
         builder: (FormFieldState field) {
           return CommonTextFormField(
               controller: _conPhone,
+              onChanged: field.didChange,
               decoration: InputDecoration(
                   labelText: "Numero de téléphone",
                   border: OutlineInputBorder(
@@ -127,6 +126,7 @@ class _LastNameInput extends StatelessWidget {
         builder: (FormFieldState field) {
           return CommonTextFormField(
               controller: _conLastName,
+              onChanged: field.didChange,
               decoration: InputDecoration(
                   labelText: "last name",
                   border: OutlineInputBorder(
@@ -150,6 +150,7 @@ class _FirstNameInput extends StatelessWidget {
         ]),
         builder: (FormFieldState field) {
           return CommonTextFormField(
+              onChanged: field.didChange,
               controller: _conFirstName,
               decoration: InputDecoration(
                   labelText: "first name",
@@ -182,6 +183,7 @@ class _PasswordInputState extends State<_PasswordInput> {
         builder: (FormFieldState field) {
           return CommonTextFormField(
             controller: conPassword,
+            onChanged: field.didChange,
             decoration: InputDecoration(
                 labelText: "Mot de passe",
                 suffixIcon: InkWell(
@@ -236,6 +238,7 @@ class _ConfirmPasswordInputState extends State<_ConfirmPasswordInput> {
         builder: (FormFieldState field) {
           return CommonTextFormField(
             controller: conPassword,
+            onChanged: field.didChange,
             decoration: InputDecoration(
                 labelText: "confirmation du mot de passe",
                 suffixIcon: InkWell(

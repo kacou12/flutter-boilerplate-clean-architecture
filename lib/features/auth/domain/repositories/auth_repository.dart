@@ -7,7 +7,7 @@ abstract class AuthRepository {
   FutureResult<User> myProfile();
   FutureResult<User> register(RequestParamsRegister request);
   FutureResult<void> loggout();
-  FutureResult<User> get currentUser;
+  FutureResult<User?> get currentUser;
 }
 
 // PARAMS

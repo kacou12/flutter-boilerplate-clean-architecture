@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my/core/resources/images.dart';
+import 'package:my/core/services/router/page_routes.enum.dart';
 import 'package:my/core/widgets/buttons/submit_button.dart';
+import 'package:go_router/go_router.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -20,16 +23,16 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         body: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(
+        SizedBox(
           width: 150,
-          child: Image(image: AssetImage("assets/icons/swiit_logo_white.png")),
+          child: Image(image: AssetImage(Images.icLauncher)),
         ),
         SizedBox(
           height: height * 0.02,
         ),
         Text(
           "Welcome back, login to continue !",
-          style: GoogleFonts.poppins(color: Colors.white, fontSize: 12.sp),
+          style: GoogleFonts.poppins(color: Colors.black, fontSize: 12.sp),
         ),
         SizedBox(
           height: height * 0.02,
@@ -43,7 +46,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       title: "Se connecter",
                       isOutlined: true,
                       onTap: () {
-                        //  context.push(AppRoute.signInRoute),
+                        context.pushNamed(PageRoutes.login.name);
                       })),
               SizedBox(
                 width: width * 0.04,
@@ -52,7 +55,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   child: SubmitButton(
                 title: "S'inscrire",
                 onTap: () {
-                  // context.push(PageRoutes.signUpRoute);
+                  context.pushNamed(PageRoutes.register.name);
                 },
               ))
             ],

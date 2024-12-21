@@ -14,7 +14,7 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   RegisterCubit(this.registerCase) : super(RegisterInitial());
 
-  late GlobalKey<FormBuilderState> formKey;
+  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
 
   Future<void> register(RequestParamsRegister params) async {
     emit(RegisterLoading());
