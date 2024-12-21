@@ -1,7 +1,10 @@
+import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:my/core/api/dio_client.dart';
+import 'package:my/core/network/network_info.dart';
 import 'package:my/core/services/hive/hive.dart';
 import 'package:my/core/services/router/router.dart';
+import 'package:my/features/auth/data/datasources/auth_local_data_source.dart';
 import 'package:my/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:my/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:my/features/auth/domain/repositories/auth_repository.dart';

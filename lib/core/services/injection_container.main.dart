@@ -9,8 +9,8 @@ Future<void> injectionContainer({
   if (isHiveEnable) {
     await _initHiveBoxes(prefixBox: prefixBox);
   }
-  sl.registerSingleton<DioClient>(DioClient(auth: sl()));
-  sl.registerLazySingleton(() => AppRouter(authBloc: sl()));
+
+  _metaDependancies();
   _dataSources();
   _repositories();
   _useCase();
@@ -22,6 +22,18 @@ Future<void> _initHiveBoxes({
 }) async {
   await MainBoxStorage.initHive(prefixBox);
   sl.registerSingleton<MainBoxStorage>(MainBoxStorage());
+}
+
+void _metaDependancies() {
+  sl.registerLazySingleton<DioClient>(() => DioClient(auth: sl()));
+  sl.registerLazySingleton(() => AppRouter(authBloc: sl()));
+
+  sl.registerLazySingleton(() => DataConnectionChecker());
+  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
+
+  sl.registerLazySingleton<AuthLocalDataSource>(
+    () => AuthLocalDataSourceImpl(),
+  );
 }
 
 /// Register repositories
@@ -37,9 +49,6 @@ void _dataSources() {
   sl.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSourceImpl(sl()),
   );
-  // sl.registerLazySingleton<UsersRemoteDatasource>(
-  //   () => UsersRemoteDatasourceImpl(sl()),
-  // );
 }
 
 void _useCase() {
@@ -48,8 +57,6 @@ void _useCase() {
   sl.registerLazySingleton(() => LoginCase(sl()));
   sl.registerLazySingleton(() => LogoutCase(sl()));
   sl.registerLazySingleton(() => RegisterCase(sl()));
-  // sl.registerLazySingleton(() => PostRegister(sl()));
-  // sl.registerLazySingleton(() => PostGeneralToken(sl()));
 
   // /// Users
   sl.registerLazySingleton(() => MyprofileCase(sl()));
@@ -57,7 +64,10 @@ void _useCase() {
 
 void _cubit() {
   /// Auth
-  sl.registerFactory(() => RegisterCubit(sl()));
-  sl.registerFactory(() => LoginCubit(sl()));
-  sl.registerFactory(() => AuthBloc(sl(), sl(), sl(), sl()));
+  sl.registerLazySingleton(() => RegisterCubit(sl()));
+  sl.registerLazySingleton(() => LoginCubit(sl()));
+  sl.registerLazySingleton(() => AuthBloc(
+        sl(),
+        sl(),
+      ));
 }
