@@ -16,13 +16,12 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   @override
   Future<void> saveData(UserModel value) async {
     final local = MainBoxStorage<UserModel>(
-      cacheUser,
       fromJson: UserModel.fromJson,
       toJson: (data) => data.toJson(),
     );
 
     try {
-      await local.saveData(value);
+      await local.saveMapData(data: value, key: cacheUser);
     } catch (e) {
       throw CacheException(message: e.toString());
     }
@@ -31,13 +30,12 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   @override
   Future<UserModel?> loadData() async {
     final local = MainBoxStorage<UserModel>(
-      cacheUser,
       fromJson: UserModel.fromJson,
       toJson: (data) => data.toJson(),
     );
 
     try {
-      return (await local.loadData())!;
+      return (await local.loadMapData(cacheUser))!;
     } catch (e) {
       return null;
     }
@@ -46,10 +44,9 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   @override
   Future<void> deleteData() async {
     final local = MainBoxStorage<UserModel>(
-      cacheUser,
       fromJson: UserModel.fromJson,
       toJson: (data) => data.toJson(),
     );
-    await local.clearData();
+    await local.clearData(cacheUser);
   }
 }

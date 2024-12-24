@@ -19,7 +19,7 @@ class MyConsoleOutput extends ConsoleOutput {
 
 class EmptyResponse {
   EmptyResponse();
-  factory EmptyResponse.fromJson(Map<String, dynamic> json) {
+  factory EmptyResponse.fromJson(Null json) {
     return EmptyResponse();
   }
 

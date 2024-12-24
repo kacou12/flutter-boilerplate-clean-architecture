@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CommonTextFormField extends StatelessWidget {
-  final String name;
+  // final String name;
   final InputDecoration? decoration;
-  final String? initialValue;
+  // final String? initialValue;
   final TextEditingController? controller;
   final bool obscureText;
   final TextInputType? keyboardType;
@@ -20,12 +20,12 @@ class CommonTextFormField extends StatelessWidget {
   final EdgeInsets? scrollPadding;
   const CommonTextFormField(
       {super.key,
-      required this.name,
+      // required this.name,
       this.decoration,
       this.readOnly,
       this.onTap,
-      this.initialValue,
-      this.onChanged,
+      // this.initialValue,
+      required this.onChanged,
       this.validator,
       this.obscureText = false,
       this.keyboardType,
@@ -42,12 +42,12 @@ class CommonTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
         controller: controller,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
+        // autovalidateMode: AutovalidateMode.onUserInteraction,
         readOnly: readOnly ?? false,
         keyboardType: keyboardType,
-        validator: validator,
+        // initialValue: initialValue,
+        // validator: validator,
         obscureText: obscureText,
-        initialValue: initialValue,
         onChanged: onChanged,
         minLines: minLines,
         onTap: onTap,
@@ -69,7 +69,7 @@ class CommonTextFormField extends StatelessWidget {
 
   InputBorder get _border {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(35.0),
+      borderRadius: BorderRadius.circular(10),
     );
   }
 }

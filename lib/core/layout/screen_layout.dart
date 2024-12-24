@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 
 class ScreenLayout extends StatefulWidget {
   const ScreenLayout({
@@ -60,8 +57,6 @@ class _ScreenLayoutState extends State<ScreenLayout>
   Widget build(BuildContext context) {
     // purple: profil
     //whiet: feed, setting
-
-    final routePath = GoRouter.of(context).routeInformationProvider.value.uri;
 
     return Scaffold(
       appBar: PreferredSize(

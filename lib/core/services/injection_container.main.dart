@@ -3,17 +3,14 @@ part of 'injection_container.dart';
 final sl = GetIt.instance;
 
 Future<void> injectionContainer({
-  bool isUnitTest = false,
   bool isHiveEnable = true,
   String prefixBox = '',
 }) async {
-  /// For unit testing only
-  if (isUnitTest) await sl.reset();
-
   if (isHiveEnable) {
-    await _initHiveBoxes(isUnitTest: isUnitTest, prefixBox: prefixBox);
+    await _initHiveBoxes(prefixBox: prefixBox);
   }
-  sl.registerSingleton<DioClient>(DioClient());
+
+  _metaDependancies();
   _dataSources();
   _repositories();
   _useCase();
@@ -21,56 +18,56 @@ Future<void> injectionContainer({
 }
 
 Future<void> _initHiveBoxes({
-  bool isUnitTest = false,
   String prefixBox = '',
 }) async {
-  await MainBoxMixin.initHive(prefixBox);
-  sl.registerSingleton<MainBoxMixin>(MainBoxMixin());
+  await MainBoxStorage.initHive(prefixBox);
+  sl.registerSingleton<MainBoxStorage>(MainBoxStorage());
+}
+
+void _metaDependancies() {
+  sl.registerLazySingleton<DioClient>(() => DioClient(auth: sl()));
+  sl.registerLazySingleton(() => AppRouter(authBloc: sl()));
+
+  sl.registerLazySingleton(() => DataConnectionChecker());
+  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
+
+  sl.registerLazySingleton<AuthLocalDataSource>(
+    () => AuthLocalDataSourceImpl(),
+  );
 }
 
 /// Register repositories
 void _repositories() {
-  // sl.registerLazySingleton<AuthRepository>(
-  //   () => AuthRepositoryImpl(sl(), sl()),
-  // );
+  sl.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(sl(), sl(), sl()),
+  );
   // sl.registerLazySingleton<UsersRepository>(() => UsersRepositoryImpl(sl()));
 }
 
 /// Register dataSources
 void _dataSources() {
-  // sl.registerLazySingleton<AuthRemoteDatasource>(
-  //   () => AuthRemoteDatasourceImpl(sl()),
-  // );
-  // sl.registerLazySingleton<UsersRemoteDatasource>(
-  //   () => UsersRemoteDatasourceImpl(sl()),
-  // );
+  sl.registerLazySingleton<AuthRemoteDataSource>(
+    () => AuthRemoteDataSourceImpl(sl()),
+  );
 }
 
 void _useCase() {
   /// Auth
-  // sl.registerLazySingleton(() => PostLogin(sl()));
-  // sl.registerLazySingleton(() => PostLogout(sl()));
-  // sl.registerLazySingleton(() => PostRegister(sl()));
-  // sl.registerLazySingleton(() => PostGeneralToken(sl()));
+  sl.registerLazySingleton(() => CurrentUserCase(sl()));
+  sl.registerLazySingleton(() => LoginCase(sl()));
+  sl.registerLazySingleton(() => LogoutCase(sl()));
+  sl.registerLazySingleton(() => RegisterCase(sl()));
 
   // /// Users
-  // sl.registerLazySingleton(() => GetUsers(sl()));
-  // sl.registerLazySingleton(() => GetUser(sl()));
+  sl.registerLazySingleton(() => MyprofileCase(sl()));
 }
 
 void _cubit() {
   /// Auth
-  // sl.registerFactory(() => RegisterCubit(sl()));
-  // sl.registerFactory(() => AuthCubit(sl()));
-  // sl.registerFactory(() => GeneralTokenCubit(sl()));
-  // sl.registerFactory(() => LogoutCubit(sl()));
-
-  // /// General
-  // sl.registerFactory(() => ReloadFormCubit());
-
-  // /// Users
-  // sl.registerFactory(() => UserCubit(sl()));
-  // sl.registerFactory(() => UsersCubit(sl()));
-  // sl.registerFactory(() => SettingsCubit());
-  // sl.registerFactory(() => MainCubit());
+  sl.registerLazySingleton(() => RegisterCubit(sl()));
+  sl.registerLazySingleton(() => LoginCubit(sl()));
+  sl.registerLazySingleton(() => AuthBloc(
+        sl(),
+        sl(),
+      ));
 }

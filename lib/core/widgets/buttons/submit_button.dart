@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my/core/resources/resources.dart';
 
 class SubmitButton extends StatelessWidget {
   const SubmitButton({
@@ -47,13 +48,8 @@ class SubmitButton extends StatelessWidget {
 
   BoxDecoration _decoration() {
     return BoxDecoration(
-      gradient: isOutlined
-          ? null
-          : const LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: <Color>[Color(0xFF5a62a8), Color(0xFFa555a1)]),
-      borderRadius: BorderRadius.circular(5),
+      color: Palette.primary,
+      borderRadius: BorderRadius.circular(10),
       border: isOutlined
           ? Border.all(
               color: Colors.white,

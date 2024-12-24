@@ -5,7 +5,7 @@ import 'package:my/core/resources/resources.dart';
 import 'package:oktoast/oktoast.dart';
 
 extension StringExtension on String {
-  void toToastError(BuildContext context, {bool isUnitTest = false}) {
+  void toToastError(BuildContext context) {
     try {
       final message = isEmpty ? "error" : this;
 
@@ -63,7 +63,7 @@ extension StringExtension on String {
     }
   }
 
-  void toToastLoading(BuildContext context, {bool isUnitTest = false}) {
+  void toToastLoading(BuildContext context) {
     try {
       final message = isEmpty ? "loading" : this;
       //dismiss before show toast
@@ -122,6 +122,17 @@ extension StringExtensions on String? {
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(this!)) {
       return "Veuillez saisir un email valide";
+    }
+    return null;
+  }
+
+  String? isValidPhoneNumber() {
+    bool isValidNumber = this != null
+        ? RegExp(r"^(07|05|01|21|25|27)([0-9\s]{8})$").hasMatch(this!)
+        : false;
+
+    if (!isValidNumber) {
+      return "Veuillez saisir un numero de telephone valide";
     }
     return null;
   }

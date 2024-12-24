@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'dart:developer';
 
 // coverage:ignore-start
 class DioInterceptor extends Interceptor {
@@ -20,15 +21,15 @@ class DioInterceptor extends Interceptor {
     try {
       const JsonEncoder encoder = JsonEncoder.withIndent('  ');
       final String prettyJson = encoder.convert(options.data);
-      // log.d(
-      //   // ignore: unnecessary_null_comparison
-      //   "REQUEST ► ︎ ${options.method != null ? options.method.toUpperCase() : 'METHOD'} ${"${options.baseUrl}${options.path}"}\n\n"
-      //   "Headers:\n"
-      //   "$headerMessage\n"
-      //   "❖ QueryParameters : \n"
-      //   "Body: $prettyJson",
-      // );
-    } catch (e, stackTrace) {
+      log(
+        // ignore: unnecessary_null_comparison
+        "REQUEST ► ︎ ${options.method != null ? options.method.toUpperCase() : 'METHOD'} ${"${options.baseUrl}${options.path}"}\n\n"
+        "Headers:\n"
+        "$headerMessage\n"
+        "❖ QueryParameters : \n"
+        "Body: $prettyJson",
+      );
+    } catch (e) {
       // log.e("Failed to extract json request $e");
       // nonFatalError(error: e, stackTrace: stackTrace);
     }
@@ -54,14 +55,14 @@ class DioInterceptor extends Interceptor {
 
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
     final String prettyJson = encoder.convert(response.data);
-    // log.d(
-    //   // ignore: unnecessary_null_comparison
-    //   "◀ ︎RESPONSE ${response.statusCode} ${response.requestOptions != null ? (response.requestOptions.baseUrl + response.requestOptions.path) : 'URL'}\n\n"
-    //   "Headers:\n"
-    //   "$headerMessage\n"
-    //   "❖ Results : \n"
-    //   "Response: $prettyJson",
-    // );
+    log(
+      // ignore: unnecessary_null_comparison
+      "◀ ︎RESPONSE ${response.statusCode} ${response.requestOptions != null ? (response.requestOptions.baseUrl + response.requestOptions.path) : 'URL'}\n\n"
+      "Headers:\n"
+      "$headerMessage\n"
+      "❖ Results : \n"
+      "Response: $prettyJson",
+    );
     super.onResponse(response, handler);
   }
 }
