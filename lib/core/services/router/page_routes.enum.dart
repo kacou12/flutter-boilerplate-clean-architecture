@@ -4,7 +4,6 @@ enum PageRoutes {
 
   /// Home Page
   dashboard("/dashboard"),
-  settings("/settings"),
 
   // auth Page
   login("/auth/login"),
@@ -17,9 +16,16 @@ enum PageRoutes {
   // profile Page
   userProfile("/profile"),
   userProfileEdit("/profile/edit"),
-  userHome("/profile/home"),
 
-  onBoarding("/onBoarding");
+  onBoarding("/onBoarding"),
+
+  // NAVIGATION BAR
+  chat("/chat"),
+  settings("/settings"),
+  products("/products"),
+  userHome("/user_home"),
+
+  userProfil("/user_profil");
 
   const PageRoutes(this.path);
 

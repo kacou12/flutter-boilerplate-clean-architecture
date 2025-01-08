@@ -1,22 +1,20 @@
 part of 'router.dart';
 
-final rootNavigatorKey = GlobalKey<NavigatorState>();
-
 class AppRouter extends GoRouter {
   final AuthBloc authBloc;
 
   AppRouter({required this.authBloc})
       : super.routingConfig(
-          onException: (_, GoRouterState state, GoRouter router) {
-            router.go(PageRoutes.login.path);
-          },
-          refreshListenable: GoRouterRefreshStream(authBloc.stream),
-          observers: <NavigatorObserver>[
-            RouterObserver(),
-          ],
-          initialLocation: PageRoutes.splashScreen.path,
-          routingConfig: ValueNotifier<RoutingConfig>(
-            RoutingConfig(
+            onException: (_, GoRouterState state, GoRouter router) {
+              router.go(PageRoutes.login.path);
+            },
+            refreshListenable: GoRouterRefreshStream(authBloc.stream),
+            observers: <NavigatorObserver>[
+              RouterObserver(),
+            ],
+            initialLocation: PageRoutes.splashScreen.path,
+            navigatorKey: _rootNavigatorKey,
+            routingConfig: ValueNotifier<RoutingConfig>(RoutingConfig(
                 redirect: (context, state) async {
                   final isLoggedIn = authBloc.state.isAuthenticated;
 
@@ -51,11 +49,11 @@ class AppRouter extends GoRouter {
                       child: const RegisterScreen(),
                     ),
                   ),
-                  GoRoute(
-                    path: PageRoutes.userHome.path,
-                    name: PageRoutes.userHome.name,
-                    builder: (_, __) => const UsersScreen(),
-                  ),
+                  // GoRoute(
+                  //   path: PageRoutes.userHome.path,
+                  //   name: PageRoutes.userHome.name,
+                  //   builder: (_, __) => const UsersScreen(),
+                  // ),
                   GoRoute(
                     path: PageRoutes.onBoarding.path,
                     name: PageRoutes.onBoarding.name,
@@ -77,9 +75,66 @@ class AppRouter extends GoRouter {
                     },
                     builder: (context, state) => const SplashScreen(),
                   ),
-                ]),
-          ),
-        );
+                  StatefulShellRoute.indexedStack(
+                      builder: (context, state, child) =>
+                          BottomNavigationPage(child: child),
+                      branches: [
+                        StatefulShellBranch(
+                          navigatorKey: _userNavigatorKey,
+                          routes: [
+                            GoRoute(
+                                path: PageRoutes.userHome.path,
+                                name: PageRoutes.userHome.name,
+                                builder: (context, state) =>
+                                    const UsersScreen(),
+                                routes: [
+                                  GoRoute(
+                                    parentNavigatorKey: _rootNavigatorKey,
+                                    path: PageRoutes.userProfil.path,
+                                    name: PageRoutes.userProfil.name,
+                                    builder: (context, state) =>
+                                        const UsersProfilScreen(),
+                                  )
+                                ]),
+                          ],
+                        ),
+                        StatefulShellBranch(
+                          // navigatorKey: _chatNavigatorKey,
+                          routes: [
+                            GoRoute(
+                              path: PageRoutes.chat.path,
+                              name: PageRoutes.chat.name,
+                              // parentNavigatorKey: _shellNavigatorKey,
+                              builder: (context, state) => const ChatScreen(),
+                            ),
+                          ],
+                        ),
+                        StatefulShellBranch(
+                          // navigatorKey: _settingsNavigatorKey,
+                          routes: [
+                            GoRoute(
+                              path: PageRoutes.settings.path,
+                              name: PageRoutes.settings.name,
+                              // parentNavigatorKey: _shellNavigatorKey,
+                              builder: (context, state) =>
+                                  const SettingsScreen(),
+                            ),
+                          ],
+                        ),
+                        StatefulShellBranch(
+                          // navigatorKey: _productsNavigatorKey,
+                          routes: [
+                            GoRoute(
+                              path: PageRoutes.products.path,
+                              name: PageRoutes.products.name,
+                              // parentNavigatorKey: _rootNavigatorKey,
+                              builder: (context, state) =>
+                                  const ProductsScreen(),
+                            )
+                          ],
+                        )
+                      ]),
+                ])));
 }
 
 class GoRouterRefreshStream extends ChangeNotifier {
