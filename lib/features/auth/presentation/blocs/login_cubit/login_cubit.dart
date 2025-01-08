@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:my/core/errors/failures.dart';
+import 'package:my/features/auth/data/payload/request_params_login_payload.dart';
 import 'package:my/features/auth/domain/entities/user.dart';
-import 'package:my/features/auth/domain/repositories/auth_repository.dart';
 import 'package:my/features/auth/domain/usecases/login_case.dart';
 
 part 'login_state.dart';
@@ -15,7 +15,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   final LoginCase loginCase;
 
-  Future<void> login(RequestParamsLogin params) async {
+  Future<void> login(RequestParamsLoginPayload params) async {
     emit(LoginLoading());
     final data = await loginCase.call(params);
 
