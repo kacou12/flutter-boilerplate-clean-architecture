@@ -4,6 +4,8 @@ import 'package:my/core/network/network_info.dart';
 import 'package:my/core/utils/typedefs.dart';
 import 'package:my/features/auth/data/datasources/auth_local_data_source.dart';
 import 'package:my/features/auth/data/datasources/auth_remote_data_source.dart';
+import 'package:my/features/auth/data/payload/request_params_login_payload.dart';
+import 'package:my/features/auth/data/payload/request_params_register_payload.dart';
 import 'package:my/features/auth/domain/entities/requests/request_auth.dart';
 import 'package:my/features/auth/domain/entities/user.dart';
 import 'package:my/features/auth/domain/repositories/auth_repository.dart';
@@ -20,7 +22,7 @@ class AuthRepositoryImpl implements AuthRepository {
   );
 
   @override
-  FutureResult<User> login(RequestParamsLogin params) async {
+  FutureResult<User> login(RequestParamsLoginPayload params) async {
     if (await networkInfo.isConnected) {
       final response = await remoteDataSource.login(
           requests:
@@ -83,7 +85,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  FutureResult<User> register(RequestParamsRegister request) async {
+  FutureResult<User> register(RequestParamsRegisterPayload request) async {
     if (await networkInfo.isConnected) {
       try {
         final response = await remoteDataSource.register(

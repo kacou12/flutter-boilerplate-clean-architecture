@@ -17,6 +17,8 @@ class BottomNavigationPage extends StatefulWidget {
 }
 
 class _BottomNavigationPageState extends State<BottomNavigationPage> {
+  int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -35,7 +37,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
           onTap: (index) async {
             widget.child.goBranch(
               index,
-              initialLocation: index == widget.child.currentIndex,
+              initialLocation: index == currentIndex,
             );
             setState(() {});
           },
@@ -68,19 +70,19 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
               ),
               label: '',
             ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/icons/tabs-icons/map.svg',
-                colorFilter: widget.child.currentIndex == 3
-                    ? null
-                    : const ColorFilter.mode(Palette.primary, BlendMode.srcIn),
-              ),
-              label: '',
-            ),
+            // BottomNavigationBarItem(
+            //   icon: SvgPicture.asset(
+            //     'assets/icons/tabs-icons/map.svg',
+            //     colorFilter: widget.child.currentIndex == 3
+            //         ? null
+            //         : const ColorFilter.mode(Palette.primary, BlendMode.srcIn),
+            //   ),
+            //   label: '',
+            // ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icons/tabs-icons/more.svg',
-                colorFilter: widget.child.currentIndex == 4
+                colorFilter: widget.child.currentIndex == 3
                     ? null
                     : const ColorFilter.mode(Palette.primary, BlendMode.srcIn),
               ),

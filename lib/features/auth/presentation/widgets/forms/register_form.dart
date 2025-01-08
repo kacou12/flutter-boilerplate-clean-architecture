@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -7,7 +9,7 @@ import 'package:my/core/resources/dimens.dart';
 import 'package:my/core/widgets/buttons/submit_button.dart';
 import 'package:my/core/widgets/forms/common_text_form_field.dart';
 import 'package:my/core/widgets/my_form_builder.dart';
-import 'package:my/features/auth/domain/repositories/auth_repository.dart';
+import 'package:my/features/auth/data/payload/request_params_register_payload.dart';
 import 'package:my/features/auth/presentation/blocs/register_cubit/register_cubit.dart';
 
 class RegisterForm extends StatelessWidget {
@@ -29,13 +31,9 @@ class RegisterForm extends StatelessWidget {
         data[key] = value.value;
       });
 
-      context.read<RegisterCubit>().register(RequestParamsRegister(
-            email: data['email'],
-            password: data['password'],
-            firstName: data['fisrtName'],
-            lastName: data['lastName'],
-            phone: data['phone'],
-          ));
+      context
+          .read<RegisterCubit>()
+          .register(RequestParamsRegisterPayload.fromJson(json.encode(data)));
     }
 
     return MyFormBuilder(

@@ -61,6 +61,7 @@ class UsersScreen extends StatelessWidget {
     var height = MediaQuery.sizeOf(context).height;
 
     return Scaffold(
+      appBar: AppBar(),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state.isUnauthenticated) {
@@ -79,13 +80,21 @@ class UsersScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "sectionTitle",
+                    "user home",
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.w500,
                         // color: const Color.fromARGB(255, 113, 113, 113)),
                         color: Colors.black),
                   ),
-                  Text(state.user?.name ?? "loading"),
+                  SizedBox(
+                    height: height * 0.02,
+                  ),
+                  SubmitButton(
+                    title: "go detail",
+                    onTap: () {
+                      context.goNamed(PageRoutes.userProfil.name);
+                    },
+                  ),
                   SizedBox(
                     height: height * 0.02,
                   ),

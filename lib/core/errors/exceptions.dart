@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
-import 'dart:convert';
 
 class ServerException extends Equatable implements Exception {
   const ServerException({required this.message, required this.statusCode});
