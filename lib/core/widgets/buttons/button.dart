@@ -29,12 +29,12 @@ class Button extends StatelessWidget {
         onPressed: onPressed,
         style: TextButton.styleFrom(
           backgroundColor: color ?? Theme.of(context).primaryColor,
-          foregroundColor:
-              Theme.of(context).extension<LzyctColors>()!.buttonText,
-          disabledBackgroundColor: Theme.of(context)
-              .extension<LzyctColors>()!
-              .buttonText
-              ?.withOpacity(0.5),
+          foregroundColor: Theme.of(
+            context,
+          ).extension<LzyctColors>()!.buttonText,
+          disabledBackgroundColor: Theme.of(
+            context,
+          ).extension<LzyctColors>()!.buttonText?.withValues(alpha: 0.5),
           padding: EdgeInsets.symmetric(
             horizontal: Dimens.space24,
             vertical: Dimens.space12,
@@ -48,8 +48,8 @@ class Button extends StatelessWidget {
         child: Text(
           title.toUpperCase(),
           style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                color: Theme.of(context).extension<LzyctColors>()!.background,
-              ),
+            color: Theme.of(context).extension<LzyctColors>()!.background,
+          ),
           textAlign: TextAlign.center,
         ),
       ),

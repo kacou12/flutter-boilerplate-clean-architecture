@@ -34,10 +34,9 @@ class _DropDownState<T> extends State<DropDown<T>> {
           if (widget.hintIsVisible) ...{
             Text(
               widget.hint ?? "",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodySmall
-                  ?.copyWith(color: Theme.of(context).hintColor),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).hintColor,
+              ),
             ),
             SpacerV(value: Dimens.space6),
           },
@@ -103,7 +102,7 @@ class _DropDownState<T> extends State<DropDown<T>> {
                   ),
                 ),
               ),
-              value: widget.value,
+              initialValue: widget.value,
               items: widget.items,
               onChanged: widget.onChanged,
             ),

@@ -25,11 +25,15 @@ part 'router.main.dart';
 final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 final _shellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'sectionANav');
 
-final _userNavigatorKey =
-    GlobalKey<NavigatorState>(debugLabel: PageRoutes.userHome.name);
-final _chatNavigatorKey =
-    GlobalKey<NavigatorState>(debugLabel: PageRoutes.chat.name);
-final _settingsNavigatorKey =
-    GlobalKey<NavigatorState>(debugLabel: PageRoutes.settings.name);
-final _productsNavigatorKey =
-    GlobalKey<NavigatorState>(debugLabel: PageRoutes.products.name);
+final _userNavigatorKey = GlobalKey<NavigatorState>(
+  debugLabel: PageRoutes.userHome.name,
+);
+final _chatNavigatorKey = GlobalKey<NavigatorState>(
+  debugLabel: PageRoutes.chat.name,
+);
+final _settingsNavigatorKey = GlobalKey<NavigatorState>(
+  debugLabel: PageRoutes.settings.name,
+);
+final _productsNavigatorKey = GlobalKey<NavigatorState>(
+  debugLabel: PageRoutes.products.name,
+);

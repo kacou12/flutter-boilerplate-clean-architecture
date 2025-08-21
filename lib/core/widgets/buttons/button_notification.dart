@@ -16,10 +16,7 @@ class ButtonNotification extends StatelessWidget {
               left: 0,
               top: 0,
               bottom: 0,
-              child: Icon(
-                Icons.notifications_outlined,
-                size: Dimens.space30,
-              ),
+              child: Icon(Icons.notifications_outlined, size: Dimens.space30),
             ),
             Positioned(
               right: Dimens.space4,
@@ -32,10 +29,10 @@ class ButtonNotification extends StatelessWidget {
                     child: Text(
                       "1",
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                            color: Theme.of(context)
-                                .extension<LzyctColors>()!
-                                .background,
-                          ),
+                        color: Theme.of(
+                          context,
+                        ).extension<LzyctColors>()!.background,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -46,7 +43,6 @@ class ButtonNotification extends StatelessWidget {
         ),
       ),
       onPressed: () async {
-        ///TODO: Go to notifications page
         // context.goTo(AppRoute.notifications);
       },
     );

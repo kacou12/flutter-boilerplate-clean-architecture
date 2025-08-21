@@ -4,137 +4,136 @@ class AppRouter extends GoRouter {
   final AuthBloc authBloc;
 
   AppRouter({required this.authBloc})
-      : super.routingConfig(
-            onException: (_, GoRouterState state, GoRouter router) {
-              router.go(PageRoutes.login.path);
-            },
-            refreshListenable: GoRouterRefreshStream(authBloc.stream),
-            observers: <NavigatorObserver>[
-              RouterObserver(),
-            ],
-            initialLocation: PageRoutes.splashScreen.path,
-            navigatorKey: _rootNavigatorKey,
-            routingConfig: ValueNotifier<RoutingConfig>(RoutingConfig(
-                redirect: (context, state) async {
-                  final isLoggedIn = authBloc.state.isAuthenticated;
+    : super.routingConfig(
+        onException: (_, GoRouterState state, GoRouter router) {
+          router.go(PageRoutes.login.path);
+        },
+        refreshListenable: GoRouterRefreshStream(authBloc.stream),
+        observers: <NavigatorObserver>[RouterObserver()],
+        initialLocation: PageRoutes.splashScreen.path,
+        navigatorKey: _rootNavigatorKey,
+        routingConfig: ValueNotifier<RoutingConfig>(
+          RoutingConfig(
+            redirect: (context, state) async {
+              final isLoggedIn = authBloc.state.isAuthenticated;
 
-                  if (!isLoggedIn) {
-                    if (state.matchedLocation == PageRoutes.onBoarding.path) {
-                      return PageRoutes.onBoarding.path;
-                    } else if (state.matchedLocation == PageRoutes.login.path) {
-                      return PageRoutes.login.path;
-                    } else if (state.matchedLocation ==
-                        PageRoutes.splashScreen.path) {
-                      return PageRoutes.splashScreen.path;
-                    } else if (state.matchedLocation ==
-                        PageRoutes.register.path) {
-                      return PageRoutes.register.path;
-                    } else {
-                      return null;
-                    }
+              if (!isLoggedIn) {
+                if (state.matchedLocation == PageRoutes.onBoarding.path) {
+                  return PageRoutes.onBoarding.path;
+                } else if (state.matchedLocation == PageRoutes.login.path) {
+                  return PageRoutes.login.path;
+                } else if (state.matchedLocation ==
+                    PageRoutes.splashScreen.path) {
+                  return PageRoutes.splashScreen.path;
+                } else if (state.matchedLocation == PageRoutes.register.path) {
+                  return PageRoutes.register.path;
+                } else {
+                  return null;
+                }
+              }
+              return null;
+            },
+            routes: [
+              GoRoute(
+                path: PageRoutes.login.path,
+                name: PageRoutes.login.name,
+                builder: (_, __) => const LoginScreen(),
+              ),
+              GoRoute(
+                path: PageRoutes.register.path,
+                name: PageRoutes.register.name,
+                builder: (_, __) => BlocProvider(
+                  create: (_) => sl<RegisterCubit>(),
+                  child: const RegisterScreen(),
+                ),
+              ),
+              // GoRoute(
+              //   path: PageRoutes.userHome.path,
+              //   name: PageRoutes.userHome.name,
+              //   builder: (_, __) => const UsersScreen(),
+              // ),
+              GoRoute(
+                path: PageRoutes.onBoarding.path,
+                name: PageRoutes.onBoarding.name,
+                builder: (_, __) => const OnBoardingScreen(),
+              ),
+              GoRoute(
+                path: PageRoutes.splashScreen.path,
+                name: PageRoutes.splashScreen.name,
+                redirect: (context, state) async {
+                  final mainBoxStorage = sl<MainBoxStorage>();
+
+                  if (mainBoxStorage.isFirstTime()) {
+                    mainBoxStorage.cacheFirstTimer();
+                    return PageRoutes.onBoarding.path;
                   }
+
                   return null;
                 },
-                routes: [
-                  GoRoute(
-                    path: PageRoutes.login.path,
-                    name: PageRoutes.login.name,
-                    builder: (_, __) => const LoginScreen(),
+                builder: (context, state) => const SplashScreen(),
+              ),
+              StatefulShellRoute.indexedStack(
+                builder: (context, state, child) =>
+                    BottomNavigationPage(child: child),
+                branches: [
+                  StatefulShellBranch(
+                    navigatorKey: _userNavigatorKey,
+                    routes: [
+                      GoRoute(
+                        path: PageRoutes.userHome.path,
+                        name: PageRoutes.userHome.name,
+                        builder: (context, state) => const UsersScreen(),
+                        routes: [
+                          GoRoute(
+                            parentNavigatorKey: _rootNavigatorKey,
+                            path: PageRoutes.userProfil.path,
+                            name: PageRoutes.userProfil.name,
+                            builder: (context, state) =>
+                                const UsersProfilScreen(),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  GoRoute(
-                    path: PageRoutes.register.path,
-                    name: PageRoutes.register.name,
-                    builder: (_, __) => BlocProvider(
-                      create: (_) => sl<RegisterCubit>(),
-                      child: const RegisterScreen(),
-                    ),
+                  StatefulShellBranch(
+                    // navigatorKey: _chatNavigatorKey,
+                    routes: [
+                      GoRoute(
+                        path: PageRoutes.chat.path,
+                        name: PageRoutes.chat.name,
+                        // parentNavigatorKey: _shellNavigatorKey,
+                        builder: (context, state) => const ChatScreen(),
+                      ),
+                    ],
                   ),
-                  // GoRoute(
-                  //   path: PageRoutes.userHome.path,
-                  //   name: PageRoutes.userHome.name,
-                  //   builder: (_, __) => const UsersScreen(),
-                  // ),
-                  GoRoute(
-                    path: PageRoutes.onBoarding.path,
-                    name: PageRoutes.onBoarding.name,
-                    builder: (_, __) => const OnBoardingScreen(),
+                  StatefulShellBranch(
+                    // navigatorKey: _settingsNavigatorKey,
+                    routes: [
+                      GoRoute(
+                        path: PageRoutes.settings.path,
+                        name: PageRoutes.settings.name,
+                        // parentNavigatorKey: _shellNavigatorKey,
+                        builder: (context, state) => const SettingsScreen(),
+                      ),
+                    ],
                   ),
-                  GoRoute(
-                    path: PageRoutes.splashScreen.path,
-                    name: PageRoutes.splashScreen.name,
-                    redirect: (context, state) async {
-                      final mainBoxStorage = sl<MainBoxStorage>();
-
-                      // TODO : check this  only if used onboarding
-                      if (mainBoxStorage.isFirstTime()) {
-                        mainBoxStorage.cacheFirstTimer();
-                        return PageRoutes.onBoarding.path;
-                      }
-
-                      return null;
-                    },
-                    builder: (context, state) => const SplashScreen(),
+                  StatefulShellBranch(
+                    // navigatorKey: _productsNavigatorKey,
+                    routes: [
+                      GoRoute(
+                        path: PageRoutes.products.path,
+                        name: PageRoutes.products.name,
+                        // parentNavigatorKey: _rootNavigatorKey,
+                        builder: (context, state) => const ProductsScreen(),
+                      ),
+                    ],
                   ),
-                  StatefulShellRoute.indexedStack(
-                      builder: (context, state, child) =>
-                          BottomNavigationPage(child: child),
-                      branches: [
-                        StatefulShellBranch(
-                          navigatorKey: _userNavigatorKey,
-                          routes: [
-                            GoRoute(
-                                path: PageRoutes.userHome.path,
-                                name: PageRoutes.userHome.name,
-                                builder: (context, state) =>
-                                    const UsersScreen(),
-                                routes: [
-                                  GoRoute(
-                                    parentNavigatorKey: _rootNavigatorKey,
-                                    path: PageRoutes.userProfil.path,
-                                    name: PageRoutes.userProfil.name,
-                                    builder: (context, state) =>
-                                        const UsersProfilScreen(),
-                                  )
-                                ]),
-                          ],
-                        ),
-                        StatefulShellBranch(
-                          // navigatorKey: _chatNavigatorKey,
-                          routes: [
-                            GoRoute(
-                              path: PageRoutes.chat.path,
-                              name: PageRoutes.chat.name,
-                              // parentNavigatorKey: _shellNavigatorKey,
-                              builder: (context, state) => const ChatScreen(),
-                            ),
-                          ],
-                        ),
-                        StatefulShellBranch(
-                          // navigatorKey: _settingsNavigatorKey,
-                          routes: [
-                            GoRoute(
-                              path: PageRoutes.settings.path,
-                              name: PageRoutes.settings.name,
-                              // parentNavigatorKey: _shellNavigatorKey,
-                              builder: (context, state) =>
-                                  const SettingsScreen(),
-                            ),
-                          ],
-                        ),
-                        StatefulShellBranch(
-                          // navigatorKey: _productsNavigatorKey,
-                          routes: [
-                            GoRoute(
-                              path: PageRoutes.products.path,
-                              name: PageRoutes.products.name,
-                              // parentNavigatorKey: _rootNavigatorKey,
-                              builder: (context, state) =>
-                                  const ProductsScreen(),
-                            )
-                          ],
-                        )
-                      ]),
-                ])));
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
 }
 
 class GoRouterRefreshStream extends ChangeNotifier {
