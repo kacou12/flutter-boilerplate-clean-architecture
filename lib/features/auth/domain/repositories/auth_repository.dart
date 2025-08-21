@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:my/core/utils/typedefs.dart';
-import 'package:my/features/auth/data/models/user_model.dart';
+import 'package:my/features/auth/domain/entities/user.dart';
 
 abstract class AuthRepository {
-  FutureResult<UserModel> login(RequestParamsLogin request);
-  FutureResult<UserModel> myProfile();
-  FutureResult<UserModel> register(RequestParamsRegister request);
+  FutureResult<User> login(RequestParamsLogin request);
+  FutureResult<User> myProfile();
+  FutureResult<User> register(RequestParamsRegister request);
   FutureResult<void> loggout();
-  FutureResult<UserModel?> get currentUser;
+  FutureResult<User?> get currentUser;
 }
 
 // PARAMS

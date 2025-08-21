@@ -11,7 +11,7 @@ import 'package:my/core/services/router/page_routes.enum.dart';
 import 'package:my/core/widgets/buttons/submit_button.dart';
 import 'package:my/core/widgets/forms/common_text_form_field.dart';
 import 'package:my/core/widgets/my_form_builder.dart';
-import 'package:my/features/auth/data/repositories/auth/auth_repository.dart';
+import 'package:my/features/auth/domain/repositories/auth_repository.dart';
 import 'package:my/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:my/features/auth/presentation/blocs/login_cubit/login_cubit.dart';
 
@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     title: "Register",
                     onPressed: () {
                       // TODO : implement register
-                      context.pushNamed(PageRoutes.register.name);
+                      // context.pushNamed(Routes.register.name);
                     },
                   ),
                 ],
