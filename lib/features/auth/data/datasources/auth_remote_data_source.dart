@@ -2,7 +2,7 @@ import 'package:my/core/api/dio_client.dart';
 import 'package:my/core/core.dart';
 import 'package:my/core/utils/typedefs.dart';
 import 'package:my/features/auth/data/models/user_model.dart';
-import 'package:my/features/auth/domain/entities/requests/request_auth.dart';
+import 'package:my/features/auth/data/payload/requests/request_auth.dart';
 
 abstract class AuthRemoteDataSource {
   FutureResult<UserModel> login({required RequestLogin requests});
