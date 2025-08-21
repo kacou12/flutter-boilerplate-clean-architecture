@@ -7,7 +7,7 @@ class AuthState extends Equatable {
   });
 
   final AuthStatus status;
-  final User? user;
+  final UserModel? user;
 
   get isAuthenticated => status == AuthStatus.authenticated;
 
@@ -16,7 +16,7 @@ class AuthState extends Equatable {
   factory AuthState.unknown() =>
       const AuthState(status: AuthStatus.unknown, user: null);
 
-  factory AuthState.authenticated(User user) =>
+  factory AuthState.authenticated(UserModel user) =>
       AuthState(status: AuthStatus.authenticated, user: user);
 
   factory AuthState.unauthenticated() =>

@@ -4,9 +4,9 @@ import 'package:my/core/network/network_info.dart';
 import 'package:my/core/utils/typedefs.dart';
 import 'package:my/features/auth/data/datasources/auth_local_data_source.dart';
 import 'package:my/features/auth/data/datasources/auth_remote_data_source.dart';
-import 'package:my/features/auth/domain/entities/requests/request_auth.dart';
-import 'package:my/features/auth/domain/entities/user.dart';
-import 'package:my/features/auth/domain/repositories/auth_repository.dart';
+import 'package:my/features/auth/data/models/user_model.dart';
+import 'package:my/features/auth/data/payload/requests/request_auth.dart';
+import 'package:my/features/auth/data/repositories/auth/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
@@ -20,7 +20,7 @@ class AuthRepositoryImpl implements AuthRepository {
   );
 
   @override
-  FutureResult<User> login(RequestParamsLogin params) async {
+  FutureResult<UserModel> login(RequestParamsLogin params) async {
     if (await networkInfo.isConnected) {
       final response = await remoteDataSource.login(
           requests:
@@ -39,7 +39,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  FutureResult<User> myProfile() async {
+  FutureResult<UserModel> myProfile() async {
     if (await networkInfo.isConnected) {
       final response = await remoteDataSource.myProfile();
 
@@ -56,7 +56,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  FutureResult<User?> get currentUser async {
+  FutureResult<UserModel?> get currentUser async {
     try {
       // await store.deleteData();
       final user = await store.loadData();
@@ -83,7 +83,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  FutureResult<User> register(RequestParamsRegister request) async {
+  FutureResult<UserModel> register(RequestParamsRegister request) async {
     if (await networkInfo.isConnected) {
       try {
         final response = await remoteDataSource.register(
