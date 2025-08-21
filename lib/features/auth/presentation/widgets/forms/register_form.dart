@@ -7,7 +7,7 @@ import 'package:my/core/resources/dimens.dart';
 import 'package:my/core/widgets/buttons/submit_button.dart';
 import 'package:my/core/widgets/forms/common_text_form_field.dart';
 import 'package:my/core/widgets/my_form_builder.dart';
-import 'package:my/features/auth/domain/repositories/auth_repository.dart';
+import 'package:my/features/auth/data/repositories/auth/auth_repository.dart';
 import 'package:my/features/auth/presentation/blocs/register_cubit/register_cubit.dart';
 
 class RegisterForm extends StatelessWidget {
