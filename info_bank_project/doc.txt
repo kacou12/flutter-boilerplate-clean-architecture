@@ -1,0 +1,40 @@
+🔐 Authentification & Sécurité
+
+otp_codes - Codes OTP pour la vérification (login, transactions)
+settings - Paramètres utilisateur (sécurité, notifications, app)
+Champs pinCode et biometricEnabled dans users
+
+💱 Échange de devises
+
+exchanges - Historique des échanges de devises
+currencies - Liste des devises avec taux de change en temps réel
+
+🔋 Recharges & Factures
+
+recharges - Historique des recharges (mobile, électricité)
+recharge_providers - Fournisseurs de recharge avec logos et montants
+bills amélioré avec numéros de facture
+
+💳 Cartes améliorées
+
+Informations complètes des cartes (Visa, Mastercard)
+Limites de dépenses quotidiennes/mensuelles
+Couleurs personnalisées
+
+📊 Analytics enrichi
+
+Données de tendances hebdomadaires/mensuelles
+Répartition par catégories
+Taux d'épargne
+
+🎯 Fonctionnalités couvertes par votre maquette :
+✅ Sign In/Up - Authentification avec OTP
+✅ Home Dashboard - Solde, cartes, transactions récentes
+✅ Search & Exchange - Recherche et échange de devises
+✅ Transactions - Historique complet avec filtres
+✅ Transfer Money - Virements vers contacts
+✅ Recharge - Mobile, électricité, etc.
+✅ Pay Bills - Paiement de factures
+✅ Cards Management - Gestion des cartes
+✅ Settings - Paramètres complets
+✅ Savings Goals - Objectifs d'épargne

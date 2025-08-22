@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:my/core/layout/bottom_navigation_bar.dart';
+import 'package:my/core/layout/screen_layout.dart';
 import 'package:my/core/services/hive/hive.dart';
 import 'package:my/core/services/injection_container.dart';
 import 'package:my/core/services/router/page_routes.enum.dart';

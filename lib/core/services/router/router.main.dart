@@ -73,8 +73,7 @@ class AppRouter extends GoRouter {
                 builder: (context, state) => const SplashScreen(),
               ),
               StatefulShellRoute.indexedStack(
-                builder: (context, state, child) =>
-                    BottomNavigationPage(child: child),
+                builder: (context, state, child) => ScreenLayout(child: child),
                 branches: [
                   StatefulShellBranch(
                     navigatorKey: _userNavigatorKey,
@@ -96,7 +95,7 @@ class AppRouter extends GoRouter {
                     ],
                   ),
                   StatefulShellBranch(
-                    // navigatorKey: _chatNavigatorKey,
+                    navigatorKey: _chatNavigatorKey,
                     routes: [
                       GoRoute(
                         path: PageRoutes.chat.path,
@@ -107,7 +106,7 @@ class AppRouter extends GoRouter {
                     ],
                   ),
                   StatefulShellBranch(
-                    // navigatorKey: _settingsNavigatorKey,
+                    navigatorKey: _settingsNavigatorKey,
                     routes: [
                       GoRoute(
                         path: PageRoutes.settings.path,
@@ -118,7 +117,7 @@ class AppRouter extends GoRouter {
                     ],
                   ),
                   StatefulShellBranch(
-                    // navigatorKey: _productsNavigatorKey,
+                    navigatorKey: _productsNavigatorKey,
                     routes: [
                       GoRoute(
                         path: PageRoutes.products.path,

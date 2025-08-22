@@ -1,0 +1,651 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "firstName": "David",
+      "lastName": "Johnson",
+      "email": "david.johnson@email.com",
+      "phone": "+1234567890",
+      "dateOfBirth": "1990-05-15",
+      "address": {
+        "street": "123 Main St",
+        "city": "New York",
+        "state": "NY",
+        "zipCode": "10001",
+        "country": "USA"
+      },
+      "profileImage": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150",
+      "isVerified": true,
+      "pinCode": "1234",
+      "biometricEnabled": true,
+      "createdAt": "2024-01-15T08:30:00Z",
+      "lastLogin": "2024-08-22T14:30:00Z",
+      "settings": {
+        "notifications": true,
+        "biometricAuth": true,
+        "language": "en",
+        "currency": "USD",
+        "darkMode": false
+      }
+    },
+    {
+      "id": 2,
+      "firstName": "Sarah",
+      "lastName": "Williams",
+      "email": "sarah.w@email.com",
+      "phone": "+1987654321",
+      "dateOfBirth": "1985-12-20",
+      "profileImage": "https://images.unsplash.com/photo-1494790108755-2616b612b793?w=150",
+      "isVerified": true,
+      "pinCode": "5678",
+      "biometricEnabled": false,
+      "createdAt": "2024-02-10T10:15:00Z",
+      "lastLogin": "2024-08-22T09:45:00Z"
+    }
+  ],
+  "accounts": [
+    {
+      "id": 1,
+      "userId": 1,
+      "accountNumber": "****1234",
+      "accountName": "Main Account",
+      "balance": 12420.75,
+      "currency": "USD",
+      "isActive": true,
+      "isPrimary": true,
+      "createdAt": "2024-01-15T08:30:00Z",
+      "cardInfo": {
+        "cardNumber": "4532 **** **** 1234",
+        "cardType": "visa",
+        "expiryDate": "12/27",
+        "cvv": "123",
+        "cardHolderName": "David Johnson",
+        "cardColor": "#6366F1",
+        "isVirtual": false
+      }
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "accountNumber": "****5678",
+      "accountName": "Savings",
+      "balance": 8750.30,
+      "currency": "USD",
+      "isActive": true,
+      "isPrimary": false,
+      "createdAt": "2024-01-20T10:00:00Z",
+      "cardInfo": {
+        "cardNumber": "5555 **** **** 5678",
+        "cardType": "mastercard",
+        "expiryDate": "10/28",
+        "cvv": "456",
+        "cardHolderName": "David Johnson",
+        "cardColor": "#10B981",
+        "isVirtual": false
+      }
+    }
+  ],
+  "transactions": [
+    {
+      "id": 1,
+      "accountId": 1,
+      "type": "expense",
+      "category": "food",
+      "amount": -25.50,
+      "title": "Starbucks Coffee",
+      "description": "Morning coffee purchase",
+      "merchant": "Starbucks",
+      "date": "2024-08-22T08:30:00Z",
+      "status": "completed",
+      "paymentMethod": "card",
+      "location": "New York, NY",
+      "icon": "☕",
+      "categoryColor": "#F59E0B",
+      "transactionId": "TXN001234567"
+    },
+    {
+      "id": 2,
+      "accountId": 1,
+      "type": "income",
+      "category": "transfer",
+      "amount": 500.00,
+      "title": "Money Received",
+      "description": "Transfer from Sarah Williams",
+      "merchant": "Sarah Williams",
+      "date": "2024-08-21T15:30:00Z",
+      "status": "completed",
+      "paymentMethod": "transfer",
+      "icon": "💰",
+      "categoryColor": "#10B981",
+      "transactionId": "TXN001234568",
+      "senderImage": "https://images.unsplash.com/photo-1494790108755-2616b612b793?w=50"
+    },
+    {
+      "id": 3,
+      "accountId": 1,
+      "type": "expense",
+      "category": "transport",
+      "amount": -45.20,
+      "title": "Uber Ride",
+      "description": "Trip to downtown",
+      "merchant": "Uber",
+      "date": "2024-08-20T18:45:00Z",
+      "status": "completed",
+      "paymentMethod": "card",
+      "location": "Manhattan, NY",
+      "icon": "🚗",
+      "categoryColor": "#EF4444",
+      "transactionId": "TXN001234569"
+    },
+    {
+      "id": 4,
+      "accountId": 1,
+      "type": "expense",
+      "category": "shopping",
+      "amount": -189.99,
+      "title": "Amazon Purchase",
+      "description": "Online shopping",
+      "merchant": "Amazon",
+      "date": "2024-08-19T14:20:00Z",
+      "status": "completed",
+      "paymentMethod": "card",
+      "location": "Online",
+      "icon": "🛍️",
+      "categoryColor": "#8B5CF6",
+      "transactionId": "TXN001234570"
+    }
+  ],
+  "contacts": [
+    {
+      "id": 1,
+      "userId": 1,
+      "name": "Sarah Williams",
+      "email": "sarah.w@email.com",
+      "phone": "+1555123456",
+      "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b793?w=150",
+      "accountNumber": "****3456",
+      "bankName": "iBank",
+      "isFavorite": true,
+      "isFrequent": true,
+      "lastTransactionDate": "2024-08-21T15:30:00Z",
+      "lastTransactionAmount": 500.00
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "name": "John Smith",
+      "email": "john.smith@email.com",
+      "phone": "+1555789012",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
+      "accountNumber": "****7890",
+      "bankName": "Chase Bank",
+      "isFavorite": false,
+      "isFrequent": true,
+      "lastTransactionDate": "2024-08-15T12:00:00Z",
+      "lastTransactionAmount": 150.00
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "name": "Emily Davis",
+      "email": "emily.d@email.com",
+      "phone": "+1555345678",
+      "avatar": "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=150",
+      "accountNumber": "****2345",
+      "bankName": "Bank of America",
+      "isFavorite": true,
+      "isFrequent": false,
+      "lastTransactionDate": "2024-08-10T09:15:00Z",
+      "lastTransactionAmount": 75.00
+    }
+  ],
+  "transfers": [
+    {
+      "id": 1,
+      "fromAccountId": 1,
+      "toContactId": 1,
+      "fromUserId": 1,
+      "amount": 250.00,
+      "currency": "USD",
+      "description": "Lunch money",
+      "date": "2024-08-22T12:00:00Z",
+      "status": "completed",
+      "transferType": "contact",
+      "fees": 0.00,
+      "transactionId": "TRF001234567",
+      "recipientName": "Sarah Williams",
+      "recipientImage": "https://images.unsplash.com/photo-1494790108755-2616b612b793?w=50"
+    },
+    {
+      "id": 2,
+      "fromAccountId": 1,
+      "toAccountId": 2,
+      "fromUserId": 1,
+      "toUserId": 1,
+      "amount": 500.00,
+      "currency": "USD",
+      "description": "Monthly Savings",
+      "date": "2024-08-18T10:00:00Z",
+      "status": "completed",
+      "transferType": "internal",
+      "fees": 0.00,
+      "transactionId": "TRF001234568"
+    }
+  ],
+  "exchanges": [
+    {
+      "id": 1,
+      "userId": 1,
+      "fromCurrency": "USD",
+      "toCurrency": "EUR",
+      "fromAmount": 1000.00,
+      "toAmount": 920.50,
+      "exchangeRate": 0.9205,
+      "fees": 5.00,
+      "date": "2024-08-21T14:30:00Z",
+      "status": "completed",
+      "transactionId": "EXC001234567"
+    }
+  ],
+  "currencies": [
+    {
+      "code": "USD",
+      "name": "US Dollar",
+      "symbol": "$",
+      "flag": "🇺🇸",
+      "rate": 1.0000
+    },
+    {
+      "code": "EUR",
+      "name": "Euro",
+      "symbol": "€",
+      "flag": "🇪🇺",
+      "rate": 0.9205
+    },
+    {
+      "code": "GBP",
+      "name": "British Pound",
+      "symbol": "£",
+      "flag": "🇬🇧",
+      "rate": 0.7850
+    },
+    {
+      "code": "CAD",
+      "name": "Canadian Dollar",
+      "symbol": "C$",
+      "flag": "🇨🇦",
+      "rate": 1.3456
+    },
+    {
+      "code": "JPY",
+      "name": "Japanese Yen",
+      "symbol": "¥",
+      "flag": "🇯🇵",
+      "rate": 149.30
+    }
+  ],
+  "recharges": [
+    {
+      "id": 1,
+      "userId": 1,
+      "type": "mobile",
+      "provider": "Verizon",
+      "providerLogo": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=100",
+      "phoneNumber": "+1234567890",
+      "amount": 25.00,
+      "currency": "USD",
+      "date": "2024-08-20T16:30:00Z",
+      "status": "completed",
+      "transactionId": "RCH001234567"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "type": "electricity",
+      "provider": "ConEd",
+      "providerLogo": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=100",
+      "accountNumber": "ACC123456789",
+      "amount": 127.50,
+      "currency": "USD",
+      "date": "2024-08-18T10:00:00Z",
+      "status": "completed",
+      "transactionId": "RCH001234568"
+    }
+  ],
+  "recharge_providers": [
+    {
+      "id": 1,
+      "name": "Verizon",
+      "type": "mobile",
+      "logo": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=100",
+      "minAmount": 10.00,
+      "maxAmount": 200.00,
+      "denominations": [10, 15, 25, 50, 100]
+    },
+    {
+      "id": 2,
+      "name": "AT&T",
+      "type": "mobile",
+      "logo": "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=100",
+      "minAmount": 10.00,
+      "maxAmount": 200.00,
+      "denominations": [10, 15, 25, 50, 100]
+    },
+    {
+      "id": 3,
+      "name": "ConEd",
+      "type": "electricity",
+      "logo": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=100",
+      "minAmount": 25.00,
+      "maxAmount": 500.00,
+      "denominations": []
+    },
+    {
+      "id": 4,
+      "name": "National Grid",
+      "type": "electricity",
+      "logo": "https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=100",
+      "minAmount": 25.00,
+      "maxAmount": 500.00,
+      "denominations": []
+    }
+  ],
+  "bills": [
+    {
+      "id": 1,
+      "userId": 1,
+      "name": "Electric Bill",
+      "company": "ConEd",
+      "logo": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=100",
+      "amount": 127.50,
+      "dueDate": "2024-08-25",
+      "billNumber": "BILL123456789",
+      "frequency": "monthly",
+      "isAutoPay": true,
+      "status": "pending",
+      "category": "utilities",
+      "accountId": 1
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "name": "Internet Bill",
+      "company": "Verizon",
+      "logo": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=100",
+      "amount": 79.99,
+      "dueDate": "2024-08-28",
+      "billNumber": "BILL987654321",
+      "frequency": "monthly",
+      "isAutoPay": true,
+      "status": "pending",
+      "category": "utilities",
+      "accountId": 1
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "name": "Netflix Subscription",
+      "company": "Netflix",
+      "logo": "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=100",
+      "amount": 15.49,
+      "dueDate": "2024-08-30",
+      "billNumber": "SUB456789123",
+      "frequency": "monthly",
+      "isAutoPay": true,
+      "status": "pending",
+      "category": "entertainment",
+      "accountId": 1
+    }
+  ],
+  "savings_goals": [
+    {
+      "id": 1,
+      "userId": 1,
+      "name": "Emergency Fund",
+      "description": "Build 6 months emergency fund",
+      "targetAmount": 15000.00,
+      "currentAmount": 8750.00,
+      "currency": "USD",
+      "targetDate": "2024-12-31",
+      "category": "emergency",
+      "color": "#EF4444",
+      "icon": "🚨",
+      "isActive": true,
+      "monthlyContribution": 500.00,
+      "createdAt": "2024-03-01T00:00:00Z"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "name": "Vacation Fund",
+      "description": "Trip to Europe next summer",
+      "targetAmount": 5000.00,
+      "currentAmount": 2300.00,
+      "currency": "USD",
+      "targetDate": "2025-06-01",
+      "category": "travel",
+      "color": "#10B981",
+      "icon": "✈️",
+      "isActive": true,
+      "monthlyContribution": 200.00,
+      "createdAt": "2024-01-15T00:00:00Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Food & Dining",
+      "slug": "food",
+      "icon": "🍽️",
+      "color": "#F59E0B"
+    },
+    {
+      "id": 2,
+      "name": "Transportation",
+      "slug": "transport",
+      "icon": "🚗",
+      "color": "#EF4444"
+    },
+    {
+      "id": 3,
+      "name": "Shopping",
+      "slug": "shopping",
+      "icon": "🛍️",
+      "color": "#8B5CF6"
+    },
+    {
+      "id": 4,
+      "name": "Entertainment",
+      "slug": "entertainment",
+      "icon": "🎬",
+      "color": "#EC4899"
+    },
+    {
+      "id": 5,
+      "name": "Bills & Utilities",
+      "slug": "bills",
+      "icon": "📋",
+      "color": "#6B7280"
+    },
+    {
+      "id": 6,
+      "name": "Transfer",
+      "slug": "transfer",
+      "icon": "💰",
+      "color": "#10B981"
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "userId": 1,
+      "title": "Money Received",
+      "message": "You received $500.00 from Sarah Williams",
+      "type": "transaction",
+      "isRead": false,
+      "createdAt": "2024-08-22T14:30:00Z",
+      "data": {
+        "transactionId": 2,
+        "amount": 500.00,
+        "sender": "Sarah Williams"
+      }
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "title": "Bill Reminder",
+      "message": "Your Electric Bill ($127.50) is due in 3 days",
+      "type": "bill",
+      "isRead": false,
+      "createdAt": "2024-08-22T09:00:00Z",
+      "data": {
+        "billId": 1,
+        "amount": 127.50,
+        "dueDate": "2024-08-25"
+      }
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "title": "Card Transaction",
+      "message": "Card payment of $25.50 at Starbucks",
+      "type": "transaction",
+      "isRead": true,
+      "createdAt": "2024-08-22T08:35:00Z",
+      "data": {
+        "transactionId": 1,
+        "amount": -25.50,
+        "merchant": "Starbucks"
+      }
+    }
+  ],
+  "cards": [
+    {
+      "id": 1,
+      "userId": 1,
+      "accountId": 1,
+      "cardNumber": "4532 **** **** 1234",
+      "cardType": "visa",
+      "cardName": "Primary Card",
+      "cardHolderName": "David Johnson",
+      "expiryDate": "12/27",
+      "cvv": "123",
+      "isActive": true,
+      "isVirtual": false,
+      "cardColor": "#6366F1",
+      "spendingLimit": 2000.00,
+      "dailySpent": 245.50,
+      "monthlySpent": 1847.30
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "accountId": 2,
+      "cardNumber": "5555 **** **** 5678",
+      "cardType": "mastercard",
+      "cardName": "Savings Card",
+      "cardHolderName": "David Johnson",
+      "expiryDate": "10/28",
+      "cvv": "456",
+      "isActive": true,
+      "isVirtual": false,
+      "cardColor": "#10B981",
+      "spendingLimit": 1000.00,
+      "dailySpent": 0.00,
+      "monthlySpent": 325.80
+    }
+  ],
+  "settings": [
+    {
+      "id": 1,
+      "userId": 1,
+      "category": "security",
+      "key": "biometric_auth",
+      "value": true,
+      "label": "Biometric Authentication"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "category": "security",
+      "key": "two_factor_auth",
+      "value": false,
+      "label": "Two-Factor Authentication"
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "category": "notifications",
+      "key": "push_notifications",
+      "value": true,
+      "label": "Push Notifications"
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "category": "notifications",
+      "key": "email_notifications",
+      "value": true,
+      "label": "Email Notifications"
+    },
+    {
+      "id": 5,
+      "userId": 1,
+      "category": "app",
+      "key": "dark_mode",
+      "value": false,
+      "label": "Dark Mode"
+    },
+    {
+      "id": 6,
+      "userId": 1,
+      "category": "app",
+      "key": "language",
+      "value": "en",
+      "label": "Language"
+    }
+  ],
+  "analytics": [
+    {
+      "id": 1,
+      "userId": 1,
+      "period": "monthly",
+      "year": 2024,
+      "month": 8,
+      "totalIncome": 3700.00,
+      "totalExpenses": 1547.30,
+      "netIncome": 2152.70,
+      "savingsRate": 58.2,
+      "topExpenseCategory": "shopping",
+      "categoryBreakdown": {
+        "food": 156.30,
+        "transport": 245.20,
+        "shopping": 643.99,
+        "entertainment": 89.50,
+        "bills": 412.31
+      },
+      "weeklySpending": [245.50, 189.30, 412.80, 699.70],
+      "monthlyTrend": [1420.30, 1650.80, 1547.30]
+    }
+  ],
+  "otp_codes": [
+    {
+      "id": 1,
+      "userId": 1,
+      "phone": "+1234567890",
+      "code": "123456",
+      "expiresAt": "2024-08-22T15:05:00Z",
+      "isUsed": false,
+      "purpose": "login"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "phone": "+1234567890",
+      "code": "789012",
+      "expiresAt": "2024-08-22T15:10:00Z",
+      "isUsed": false,
+      "purpose": "transaction"
+    }
+  ]
+}

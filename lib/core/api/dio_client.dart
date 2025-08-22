@@ -54,10 +54,7 @@ class DioClient {
           }
           return handler.next(options);
         },
-        onResponse: (response, handler) {
-          print("");
-          return handler.next(response);
-        },
+
         onError: (DioException error, handler) async {
           if (error.response?.statusCode == 401) {
             try {
