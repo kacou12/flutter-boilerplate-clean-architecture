@@ -1,12 +1,12 @@
 abstract class ListAPI {
   /// Auth
-  static const String generalToken = "/user/general";
+  static const String generalToken = "/auth/general";
   static const String user = "/user";
-  static const String login = "/user/login";
-  static const String register = "/user/register";
-  static const String myProfile = "/user/profile/me";
-  static const String logout = "/user/logout";
-  static const String refresh = "/user/refresh";
+  static const String login = "/auth/login";
+  static const String register = "/auth/register";
+  static const String myProfile = "/auth/profile";
+  static const String logout = "/auth/logout";
+  static const String refresh = "/auth/refresh";
 
   /// User
   static const String users = "/user/all";

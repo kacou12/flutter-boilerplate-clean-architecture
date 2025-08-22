@@ -26,8 +26,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   /// Controller
-  final _conEmail = TextEditingController(text: "abc");
-  final _conPassword = TextEditingController(text: "testtest");
+  final _conEmail = TextEditingController(text: "test@gmail.com");
+  final _conPassword = TextEditingController(text: "3Uek4Co3nhKfICJ");
 
   LoginCubit get cubit {
     return context.read<LoginCubit>();
@@ -142,7 +142,7 @@ class _UsernameInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormBuilderField(
-      name: "username",
+      name: "email",
       initialValue: conEmail.text,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       // validator: (v) {
