@@ -9,8 +9,11 @@ abstract class AuthRemoteDataSource {
 
   FutureResult<UserModel> myProfile();
   FutureResult<UserModel> register({required RequestRegister requests});
-
   FutureResult<void> logout();
+
+  FutureResult<Map<String, String>> sendPasswordReset(String email);
+  FutureResult<bool> verifyResetCode(String code);
+  FutureResult<bool> resetPassword(String newPassword, String confirmPassword);
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -60,6 +63,39 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           UserModel.fromJson(response as Map<String, dynamic>),
     );
 
+    return response;
+  }
+
+  @override
+  FutureResult<Map<String, String>> sendPasswordReset(String email) async {
+    final response = await dio.postRequest(
+      ListAPI.forgotPassword,
+      data: {'email': email},
+      converter: (response) => response as Map<String, String>,
+    );
+    return response;
+  }
+
+  @override
+  FutureResult<bool> verifyResetCode(String code) async {
+    final response = await dio.postRequest(
+      ListAPI.verifyResetCode,
+      data: {'code': code},
+      converter: (response) => response as bool,
+    );
+    return response;
+  }
+
+  @override
+  FutureResult<bool> resetPassword(
+    String newPassword,
+    String confirmPassword,
+  ) async {
+    final response = await dio.postRequest(
+      ListAPI.resetPassword,
+      data: {'newPassword': newPassword, 'confirmPassword': confirmPassword},
+      converter: (response) => response as bool,
+    );
     return response;
   }
 }

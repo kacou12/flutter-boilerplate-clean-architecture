@@ -9,7 +9,13 @@ import 'package:my/core/services/injection_container.dart';
 import 'package:my/core/services/router/page_routes.enum.dart';
 import 'package:my/core/services/router/router_observer.dart';
 import 'package:my/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:my/features/auth/presentation/blocs/forget_password_bloc/forgot_password_bloc.dart';
+import 'package:my/features/auth/presentation/blocs/forget_password_bloc/forgot_password_state.dart';
 import 'package:my/features/auth/presentation/blocs/register_cubit/register_cubit.dart';
+import 'package:my/features/auth/presentation/pages/forget_password/password_success_screen.dart';
+import 'package:my/features/auth/presentation/pages/forget_password/reset_password_screen.dart';
+import 'package:my/features/auth/presentation/pages/forget_password/forgot_password_code_screen.dart';
+import 'package:my/features/auth/presentation/pages/forget_password/forgot_password_email_screen.dart';
 import 'package:my/features/auth/presentation/pages/login_screen.dart';
 import 'package:my/features/auth/presentation/pages/onboarding_screen.dart';
 import 'package:my/features/auth/presentation/pages/register_screen.dart';
@@ -23,7 +29,7 @@ import 'package:my/features/users/users_screen.dart';
 part 'router.main.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
-final _shellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'sectionANav');
+// final _shellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'sectionANav');
 
 final _userNavigatorKey = GlobalKey<NavigatorState>(
   debugLabel: PageRoutes.userHome.name,
