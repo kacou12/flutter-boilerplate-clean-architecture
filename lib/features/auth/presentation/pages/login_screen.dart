@@ -105,6 +105,12 @@ class _LoginScreenState extends State<LoginScreen> {
             SpacerV(value: Dimens.space24),
             _PasswordInput(conPassword: _conPassword),
             SpacerV(value: Dimens.space24),
+            ButtonText(
+              title: "Forgot your password ?",
+              onPressed: () {
+                context.pushNamed(PageRoutes.forgotPassword.name);
+              },
+            ),
             SubmitButton(
               title: "login",
               onTap: () {

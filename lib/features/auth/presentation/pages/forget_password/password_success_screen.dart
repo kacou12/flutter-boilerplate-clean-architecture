@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my/core/services/router/page_routes.enum.dart';
 
 class PasswordSuccessScreen extends StatelessWidget {
   const PasswordSuccessScreen({super.key});
@@ -48,7 +49,7 @@ class PasswordSuccessScreen extends StatelessWidget {
               height: 56,
               child: ElevatedButton(
                 onPressed: () {
-                  context.go('/login');
+                  context.go(PageRoutes.login.name);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF4C6EF5),

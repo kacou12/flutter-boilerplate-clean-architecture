@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my/core/services/router/page_routes.enum.dart';
 
 import 'package:my/features/auth/presentation/blocs/forget_password_bloc/forgot_password_bloc.dart';
 import 'package:my/features/auth/presentation/blocs/forget_password_bloc/forgot_password_event.dart';
@@ -45,7 +46,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       body: BlocListener<ForgotPasswordBloc, ForgotPasswordState>(
         listener: (context, state) {
           if (state is ForgotPasswordSuccess) {
-            context.pushNamed('password-success');
+            context.pushNamed(PageRoutes.successResetPassword.name);
           } else if (state is ForgotPasswordFailure) {
             ScaffoldMessenger.of(
               context,
