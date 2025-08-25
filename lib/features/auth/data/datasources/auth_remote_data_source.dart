@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:my/core/api/dio_client.dart';
 import 'package:my/core/core.dart';
 import 'package:my/core/utils/typedefs.dart';
@@ -68,22 +69,46 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   FutureResult<Map<String, String>> sendPasswordReset(String email) async {
-    final response = await dio.postRequest(
-      ListAPI.forgotPassword,
-      data: {'email': email},
-      converter: (response) => response as Map<String, String>,
-    );
-    return response;
+    // final response = await dio.postRequest(
+    //   ListAPI.forgotPassword,
+    //   data: {'email': email},
+    //   converter: (response) => response as Map<String, String>,
+    // );
+    // return response;
+
+    try {
+      return Future.delayed(
+        Duration(seconds: 2),
+      ).then((value) => Right({'email': email}));
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          message: "Error Occurred: It's not your fault, it's ours",
+          statusCode: 500,
+        ),
+      );
+    }
   }
 
   @override
   FutureResult<bool> verifyResetCode(String code) async {
-    final response = await dio.postRequest(
-      ListAPI.verifyResetCode,
-      data: {'code': code},
-      converter: (response) => response as bool,
-    );
-    return response;
+    // final response = await dio.postRequest(
+    //   ListAPI.verifyResetCode,
+    //   data: {'code': code},
+    //   converter: (response) => response as bool,
+    // );
+    // return response;
+
+    try {
+      return Future.delayed(Duration(seconds: 2)).then((value) => Right(true));
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          message: "Error Occurred: It's not your fault, it's ours",
+          statusCode: 500,
+        ),
+      );
+    }
   }
 
   @override
@@ -91,11 +116,22 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     String newPassword,
     String confirmPassword,
   ) async {
-    final response = await dio.postRequest(
-      ListAPI.resetPassword,
-      data: {'newPassword': newPassword, 'confirmPassword': confirmPassword},
-      converter: (response) => response as bool,
-    );
-    return response;
+    // final response = await dio.postRequest(
+    //   ListAPI.resetPassword,
+    //   data: {'newPassword': newPassword, 'confirmPassword': confirmPassword},
+    //   converter: (response) => response as bool,
+    // );
+    // return response;
+
+    try {
+      return Future.delayed(Duration(seconds: 2)).then((value) => Right(true));
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          message: "Error Occurred: It's not your fault, it's ours",
+          statusCode: 500,
+        ),
+      );
+    }
   }
 }

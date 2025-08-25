@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my/core/services/router/page_routes.enum.dart';
 import 'package:my/features/auth/presentation/blocs/forget_password_bloc/forgot_password_bloc.dart';
 import 'package:my/features/auth/presentation/blocs/forget_password_bloc/forgot_password_event.dart';
 import 'package:my/features/auth/presentation/blocs/forget_password_bloc/forgot_password_state.dart';
@@ -156,7 +157,7 @@ class _ForgotPasswordCodeScreenState extends State<ForgotPasswordCodeScreen> {
       body: BlocListener<ForgotPasswordBloc, ForgotPasswordState>(
         listener: (context, state) {
           if (state is ForgotPasswordCodeVerified) {
-            context.pushNamed('change-password');
+            context.pushNamed(PageRoutes.resetPassword.name);
           } else if (state is ForgotPasswordFailure) {
             setState(() {
               code = '';

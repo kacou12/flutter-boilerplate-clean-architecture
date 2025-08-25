@@ -47,14 +47,46 @@ class AppRouter extends GoRouter {
                   child: const RegisterScreen(),
                 ),
               ),
-              GoRoute(
-                path: PageRoutes.forgotPassword.path,
-                name: PageRoutes.forgotPassword.name,
-                builder: (_, __) => BlocProvider(
+              // GoRoute(
+              //   path: PageRoutes.forgotPassword.path,
+              //   name: PageRoutes.forgotPassword.name,
+              //   builder: (_, __) => BlocProvider(
+              //     create: (_) => sl<ForgotPasswordBloc>(),
+              //     lazy: false,
+              //     child: const ForgotPasswordEmailScreen(),
+              //   ),
+              //   routes: [
+              //     GoRoute(
+              //       path: PageRoutes.forgotPasswordCode.path,
+              //       name: PageRoutes.forgotPasswordCode.name,
+              //       builder: (_, state) => ForgotPasswordCodeScreen(
+              //         emailSentState: state.extra as ForgotPasswordEmailSent,
+              //       ),
+              //     ),
+              //     GoRoute(
+              //       path: PageRoutes.resetPassword.path,
+              //       name: PageRoutes.resetPassword.name,
+              //       builder: (_, __) => const ResetPasswordScreen(),
+              //     ),
+              //     GoRoute(
+              //       path: PageRoutes.successResetPassword.path,
+              //       name: PageRoutes.successResetPassword.name,
+              //       builder: (_, __) => const PasswordSuccessScreen(),
+              //     ),
+              //   ],
+              // ),
+              ShellRoute(
+                builder: (context, state, child) => BlocProvider(
                   create: (_) => sl<ForgotPasswordBloc>(),
-                  child: const ForgotPasswordEmailScreen(),
+                  lazy: false,
+                  child: child, // L'enfant sera injecté ici
                 ),
                 routes: [
+                  GoRoute(
+                    path: PageRoutes.forgotPassword.path,
+                    name: PageRoutes.forgotPassword.name,
+                    builder: (_, __) => const ForgotPasswordEmailScreen(),
+                  ),
                   GoRoute(
                     path: PageRoutes.forgotPasswordCode.path,
                     name: PageRoutes.forgotPasswordCode.name,
@@ -74,11 +106,6 @@ class AppRouter extends GoRouter {
                   ),
                 ],
               ),
-              // GoRoute(
-              //   path: PageRoutes.userHome.path,
-              //   name: PageRoutes.userHome.name,
-              //   builder: (_, __) => const UsersScreen(),
-              // ),
               GoRoute(
                 path: PageRoutes.onBoarding.path,
                 name: PageRoutes.onBoarding.name,

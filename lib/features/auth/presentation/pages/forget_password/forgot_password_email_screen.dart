@@ -15,7 +15,7 @@ class ForgotPasswordEmailScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordEmailScreenState extends State<ForgotPasswordEmailScreen> {
-  final _emailController = TextEditingController();
+  final _emailController = TextEditingController(text: "test@gmail.com");
 
   @override
   void dispose() {
@@ -42,7 +42,7 @@ class _ForgotPasswordEmailScreenState extends State<ForgotPasswordEmailScreen> {
       body: BlocListener<ForgotPasswordBloc, ForgotPasswordState>(
         listener: (context, state) {
           if (state is ForgotPasswordEmailSent) {
-            context.pushNamed(PageRoutes.forgotPassword.name, extra: state);
+            context.pushNamed(PageRoutes.forgotPasswordCode.name, extra: state);
           } else if (state is ForgotPasswordFailure) {
             ScaffoldMessenger.of(
               context,
