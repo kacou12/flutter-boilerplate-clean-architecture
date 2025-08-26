@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:my/core/helper/helper_constant.dart';
+import 'package:my/core/utils/constants/network_constants.dart';
 import 'package:my/core/utils/typedefs.dart';
 
 enum ActiveTheme {
@@ -15,11 +16,22 @@ enum ActiveTheme {
   const ActiveTheme(this.mode);
 }
 
+class _CacheEntry {
+  final dynamic value;
+  final DateTime? expiry;
+  final bool canExpired;
+
+  _CacheEntry(this.value, Duration? ttl, {this.canExpired = true})
+    : expiry = canExpired
+          ? null
+          : DateTime.now().add(
+              ttl ?? NetworkConstants.defaultDataCachedDuration,
+            );
+  bool get isExpired => !canExpired ? false : DateTime.now().isAfter(expiry!);
+}
+
 class MainBoxStorage<T> {
-  MainBoxStorage({
-    this.fromJson,
-    this.toJson,
-  });
+  MainBoxStorage({this.fromJson, this.toJson});
 
   // final String _key;
   final FromJsonFunction<T>? fromJson;
@@ -34,16 +46,32 @@ class MainBoxStorage<T> {
     mainBox = await Hive.openBox("$prefixBox$_boxName");
   }
 
-  Future<void> saveMapData({required String key, required T data}) async {
+  Future<void> saveMapData({
+    required String key,
+    required T data,
+    Duration? ttl,
+    bool canExpired = true,
+  }) async {
     final encodedData = jsonEncode(toJson!(data));
-    await mainBox?.put(key, encodedData);
+    await mainBox?.put(
+      key,
+      _CacheEntry(encodedData, ttl, canExpired: canExpired),
+    );
   }
 
   Future<T?> loadMapData(String key) async {
     try {
-      final storedData = mainBox?.get(key);
-      if (storedData != null && storedData.isNotEmpty) {
-        final decodedData = jsonDecode(storedData) as Map<String, dynamic>;
+      final _CacheEntry storedData = mainBox?.get(key);
+      if (storedData.canExpired &&
+          DateTime.now().isAfter(
+            DateTime.parse(storedData.expiry!.toIso8601String()),
+          )) {
+        await invalidateOrClearData(key);
+        return null;
+      }
+      if (storedData.value != null) {
+        final decodedData =
+            jsonDecode(storedData.value) as Map<String, dynamic>;
         return fromJson!(decodedData);
       }
     } catch (e) {
@@ -53,7 +81,7 @@ class MainBoxStorage<T> {
     return null;
   }
 
-  Future<void> clearData(String key) async {
+  Future<void> invalidateOrClearData(String key) async {
     await mainBox?.delete(key);
   }
 

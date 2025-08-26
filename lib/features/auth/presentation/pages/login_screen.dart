@@ -154,6 +154,12 @@ class _UsernameInput extends StatelessWidget {
       // validator: (v) {
       //   return (v).isValidEmailOrPhoneNumber();
       // },
+      validator: FormBuilderValidators.compose([
+        FormBuilderValidators.email(
+          errorText: "Veuillez saisir un email valide",
+        ),
+        // FormBuilderValidators.min(5, errorText: "Minimum 5 caractères"),
+      ]),
       builder: (FormFieldState field) {
         return CommonTextFormField(
           onChanged: field.didChange,

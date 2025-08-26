@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my/core/services/router/page_routes.enum.dart';
+import 'package:my/core/widgets/forms/common_text_form_field.dart';
 import 'package:my/features/auth/presentation/blocs/forget_password_bloc/forgot_password_bloc.dart';
 import 'package:my/features/auth/presentation/blocs/forget_password_bloc/forgot_password_event.dart';
 import 'package:my/features/auth/presentation/blocs/forget_password_bloc/forgot_password_state.dart';
@@ -60,20 +63,7 @@ class _ForgotPasswordEmailScreenState extends State<ForgotPasswordEmailScreen> {
                 style: TextStyle(fontSize: 14, color: Colors.grey),
               ),
               const SizedBox(height: 16),
-              TextField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  hintText: 'Email',
-                  hintStyle: TextStyle(color: Colors.grey),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue),
-                  ),
-                ),
-              ),
+              _EmailInput(conEmail: _emailController),
               const SizedBox(height: 32),
               RichText(
                 text: const TextSpan(
@@ -123,6 +113,40 @@ class _ForgotPasswordEmailScreenState extends State<ForgotPasswordEmailScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _EmailInput extends StatelessWidget {
+  const _EmailInput({required this.conEmail});
+
+  final TextEditingController conEmail;
+
+  @override
+  Widget build(BuildContext context) {
+    return FormBuilderField(
+      name: "email",
+      initialValue: conEmail.text,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      // validator: (v) {
+      //   return (v).isValidEmailOrPhoneNumber();
+      // },
+      validator: FormBuilderValidators.compose([
+        FormBuilderValidators.email(
+          errorText: "Veuillez saisir un email valide",
+        ),
+        // FormBuilderValidators.min(5, errorText: "Minimum 5 caractères"),
+      ]),
+      builder: (FormFieldState field) {
+        return CommonTextFormField(
+          onChanged: field.didChange,
+          // initialValue: field.value,
+          controller: conEmail,
+          decoration: const InputDecoration(
+            labelText: "Adresse email ou numero de téléphone",
+          ),
+        );
+      },
     );
   }
 }

@@ -29,7 +29,9 @@ import 'package:my/features/users/users_screen.dart';
 part 'router.main.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
-// final _shellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'sectionANav');
+final _forgotPasswordNavigatorKey = GlobalKey<NavigatorState>(
+  debugLabel: 'sectionANav',
+);
 
 final _userNavigatorKey = GlobalKey<NavigatorState>(
   debugLabel: PageRoutes.userHome.name,

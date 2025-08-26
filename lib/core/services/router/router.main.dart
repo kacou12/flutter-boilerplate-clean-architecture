@@ -76,10 +76,11 @@ class AppRouter extends GoRouter {
               //   ],
               // ),
               ShellRoute(
+                navigatorKey: _forgotPasswordNavigatorKey,
                 builder: (context, state, child) => BlocProvider(
                   create: (_) => sl<ForgotPasswordBloc>(),
                   lazy: false,
-                  child: child, // L'enfant sera injecté ici
+                  child: child,
                 ),
                 routes: [
                   GoRoute(

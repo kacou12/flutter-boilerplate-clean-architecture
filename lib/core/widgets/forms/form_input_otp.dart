@@ -18,18 +18,16 @@ class FormInputOtp extends StatelessWidget {
       },
       controller: controller,
       maxLength: 1,
-      keyboardType: TextInputType.number,
+      keyboardType: TextInputType.numberWithOptions(decimal: false),
       textAlign: TextAlign.center,
-      style: Theme.of(context)
-          .textTheme
-          .bodyMedium
-          ?.copyWith(color: const Color(0xFFBBBDBF)),
+      style: Theme.of(
+        context,
+      ).textTheme.bodyMedium?.copyWith(color: const Color(0xFFBBBDBF)),
       decoration: InputDecoration(
         counterText: '',
-        labelStyle: Theme.of(context)
-            .textTheme
-            .bodyMedium
-            ?.copyWith(color: const Color(0xFFBBBDBF)),
+        labelStyle: Theme.of(
+          context,
+        ).textTheme.bodyMedium?.copyWith(color: const Color(0xFFBBBDBF)),
       ),
     );
   }

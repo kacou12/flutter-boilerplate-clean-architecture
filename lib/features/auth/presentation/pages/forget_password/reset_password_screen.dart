@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my/core/services/router/page_routes.enum.dart';
+import 'package:my/core/widgets/forms/common_text_form_field.dart';
 
 import 'package:my/features/auth/presentation/blocs/forget_password_bloc/forgot_password_bloc.dart';
 import 'package:my/features/auth/presentation/blocs/forget_password_bloc/forgot_password_event.dart';
@@ -17,8 +20,6 @@ class ResetPasswordScreen extends StatefulWidget {
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final _newPasswordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  bool _obscureNew = true;
-  bool _obscureConfirm = true;
 
   @override
   void dispose() {
@@ -64,48 +65,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 style: TextStyle(fontSize: 14, color: Colors.grey),
               ),
               const SizedBox(height: 16),
-              TextField(
-                controller: _newPasswordController,
-                obscureText: _obscureNew,
-                decoration: InputDecoration(
-                  hintText: 'New password',
-                  hintStyle: const TextStyle(color: Colors.grey),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _obscureNew ? Icons.visibility_off : Icons.visibility,
-                    ),
-                    onPressed: () => setState(() => _obscureNew = !_obscureNew),
-                  ),
-                  enabledBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
-                  focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue),
-                  ),
-                ),
-              ),
+              _PasswordInput(conPassword: _newPasswordController),
               const SizedBox(height: 24),
-              TextField(
-                controller: _confirmPasswordController,
-                obscureText: _obscureConfirm,
-                decoration: InputDecoration(
-                  hintText: 'Confirm password',
-                  hintStyle: const TextStyle(color: Colors.grey),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _obscureConfirm ? Icons.visibility_off : Icons.visibility,
-                    ),
-                    onPressed: () =>
-                        setState(() => _obscureConfirm = !_obscureConfirm),
-                  ),
-                  enabledBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
-                  focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue),
-                  ),
-                ),
-              ),
+              _PasswordInput(conPassword: _confirmPasswordController),
+              const SizedBox(height: 24),
               const Spacer(),
               BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
                 builder: (context, state) {
@@ -150,6 +113,52 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _PasswordInput extends StatefulWidget {
+  const _PasswordInput({required this.conPassword});
+
+  final TextEditingController conPassword;
+
+  @override
+  State<_PasswordInput> createState() => _PasswordInputState();
+}
+
+class _PasswordInputState extends State<_PasswordInput> {
+  bool obscureText = true;
+  @override
+  Widget build(BuildContext context) {
+    final IconData icon = obscureText ? Icons.visibility : Icons.visibility_off;
+    return FormBuilderField(
+      name: "password",
+      initialValue: widget.conPassword.text,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: FormBuilderValidators.compose([
+        FormBuilderValidators.required(errorText: "Veuillez remplir ce champ"),
+        // FormBuilderValidators.min(5, errorText: "Minimum 5 caractères"),
+      ]),
+      builder: (FormFieldState field) {
+        return CommonTextFormField(
+          onChanged: field.didChange,
+          controller: widget.conPassword,
+          decoration: InputDecoration(
+            labelText: "Mot de passe",
+            suffixIcon: InkWell(
+              onTap: () {
+                setState(() {
+                  obscureText = !obscureText;
+                });
+              },
+              child: Icon(icon, color: Theme.of(context).colorScheme.primary),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(35.0),
+            ),
+          ),
+        );
+      },
     );
   }
 }

@@ -21,7 +21,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
     );
 
     try {
-      await local.saveMapData(data: value, key: cacheUser);
+      await local.saveMapData(data: value, key: cacheUser, canExpired: false);
     } catch (e) {
       throw CacheException(message: e.toString());
     }
@@ -47,6 +47,6 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
       fromJson: UserModel.fromJson,
       toJson: (data) => data.toJson(),
     );
-    await local.clearData(cacheUser);
+    await local.invalidateOrClearData(cacheUser);
   }
 }
