@@ -116,8 +116,8 @@ class AppRouter extends GoRouter {
                 path: PageRoutes.splashScreen.path,
                 name: PageRoutes.splashScreen.name,
                 redirect: (context, state) async {
-                  final mainBoxStorage =
-                      sl<MainBoxStorage<Map<String, dynamic>>>();
+                  final mainBoxStorage = sl<MainBoxStorage>();
+                  // sl<MainBoxStorage>();
 
                   final preferences = AppPreferences(mainBoxStorage);
 

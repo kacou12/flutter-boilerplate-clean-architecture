@@ -18,7 +18,6 @@ Future<void> injectionContainer({
 
 Future<void> _initHiveBoxes({String prefixBox = ''}) async {
   await MainBoxStorage.initialize(prefixBox);
-
   sl.registerSingleton<MainBoxStorage>(MainBoxStorage());
 }
 

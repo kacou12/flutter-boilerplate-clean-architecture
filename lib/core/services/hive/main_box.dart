@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:my/core/core.dart';
@@ -18,12 +19,24 @@ enum ActiveTheme {
 
 class CacheEntry {
   final String value;
+
   final DateTime? expiry;
 
   CacheEntry(this.value, Duration? ttl)
     : expiry = ttl != null ? DateTime.now().add(ttl) : null;
 
+  CacheEntry.fromJson(Map<String, dynamic> json)
+    : value = json['value'],
+      expiry = json['expiry'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(json['expiry'])
+          : null;
+
   bool get isExpired => expiry?.isBefore(DateTime.now()) ?? false;
+
+  Map<String, dynamic> toJson() => {
+    'value': value,
+    'expiry': expiry?.millisecondsSinceEpoch,
+  };
 }
 
 abstract class StorageInterface<T> {
@@ -45,6 +58,7 @@ class MainBoxStorage<T> implements StorageInterface<T> {
   static late Box box;
 
   static Future<void> initialize<T>(String boxName) async {
+    await Hive.initFlutter();
     box = await Hive.openBox(boxName);
   }
 
@@ -69,7 +83,7 @@ class MainBoxStorage<T> implements StorageInterface<T> {
       final effectiveTtl = hasExpiration ? ttl : null;
       final entry = CacheEntry(encodedData, effectiveTtl);
 
-      await box.put(key, entry);
+      await box.put(key, entry.toJson());
     } catch (e) {
       throw StorageException('Failed to save data for key: $key', e);
     }
@@ -78,9 +92,12 @@ class MainBoxStorage<T> implements StorageInterface<T> {
   @override
   Future<T?> load(String key) async {
     try {
-      final entry = box.get(key) as CacheEntry?;
+      // box.clear();
+      final entryJson = box.get(key) as String?;
 
-      if (entry == null) return null;
+      if (entryJson == null) return null;
+
+      final entry = CacheEntry.fromJson(jsonDecode(entryJson));
 
       if (entry.isExpired) {
         await delete(key);
@@ -88,7 +105,7 @@ class MainBoxStorage<T> implements StorageInterface<T> {
       }
 
       final decodedData = jsonDecode(entry.value) as Map<String, dynamic>;
-      return fromJson?.call(decodedData) ?? decodedData as T;
+      return fromJson?.call(decodedData);
     } catch (e) {
       throw StorageException('Failed to load data for key: $key', e);
     }
@@ -142,7 +159,7 @@ class AppPreferences {
   static const _firstTimeKey = 'is_first_time';
   static const _themeKey = 'active_theme';
 
-  final StorageInterface<Map<String, dynamic>> _storage;
+  final StorageInterface _storage;
 
   AppPreferences(this._storage);
 
