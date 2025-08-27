@@ -15,7 +15,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
 
   @override
   Future<void> saveData(UserModel value) async {
-    final local = MainBoxStorage<UserModel>(
+    final local = await MainBoxStorage.create<UserModel>(
       fromJson: UserModel.fromJson,
       toJson: (data) => data.toJson(),
     );

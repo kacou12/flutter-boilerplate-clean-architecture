@@ -116,10 +116,13 @@ class AppRouter extends GoRouter {
                 path: PageRoutes.splashScreen.path,
                 name: PageRoutes.splashScreen.name,
                 redirect: (context, state) async {
-                  final mainBoxStorage = sl<MainBoxStorage>();
+                  final mainBoxStorage =
+                      sl<MainBoxStorage<Map<String, dynamic>>>();
 
-                  if (mainBoxStorage.isFirstTime()) {
-                    mainBoxStorage.cacheFirstTimer();
+                  final preferences = AppPreferences(mainBoxStorage);
+
+                  if (await preferences.isFirstTime()) {
+                    await preferences.setNotFirstTime();
                     return PageRoutes.onBoarding.path;
                   }
 

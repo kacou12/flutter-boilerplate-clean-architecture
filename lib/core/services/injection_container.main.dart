@@ -17,8 +17,12 @@ Future<void> injectionContainer({
 }
 
 Future<void> _initHiveBoxes({String prefixBox = ''}) async {
-  await MainBoxStorage.initHive(prefixBox);
-  sl.registerSingleton<MainBoxStorage>(MainBoxStorage());
+  // await MainBoxStorage.initHive(prefixBox);
+  await MainBoxStorage.create(
+    boxName: 'users',
+    defaultTtl: NetworkConstants.defaultDataCachedDuration,
+  );
+  sl.registerSingleton<MainBoxStorage>(MainBoxStorage(box: sl()));
 }
 
 void _metaDependancies() {

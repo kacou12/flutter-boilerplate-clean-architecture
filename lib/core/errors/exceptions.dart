@@ -25,8 +25,11 @@ class RequestException implements Exception {
   final int? statusCode;
   final dynamic response;
 
-  const RequestException(
-      {required this.message, required this.statusCode, this.response});
+  const RequestException({
+    required this.message,
+    required this.statusCode,
+    this.response,
+  });
 
   factory RequestException.fromDioError(DioException error) {
     try {
@@ -42,9 +45,10 @@ class RequestException implements Exception {
       }
 
       return RequestException(
-          statusCode: error.response?.statusCode,
-          message: message,
-          response: error.response?.data);
+        statusCode: error.response?.statusCode,
+        message: message,
+        response: error.response?.data,
+      );
     } on Error {
       return const RequestException(statusCode: -2, message: 'UNKNOWN_ISSUE');
     }
@@ -53,17 +57,30 @@ class RequestException implements Exception {
   factory RequestException.fromJson(Map<String, dynamic> json) {
     if (json['waitingTime'] != null) {
       return RequestException(
-          message: json['message'].toString(),
-          statusCode: json['statusCode'] as int,
-          response: json['waitingTime']);
-    }
-    return RequestException(
         message: json['message'].toString(),
         statusCode: json['statusCode'] as int,
-        response: json['response']);
+        response: json['waitingTime'],
+      );
+    }
+    return RequestException(
+      message: json['message'].toString(),
+      statusCode: json['statusCode'] as int,
+      response: json['response'],
+    );
   }
 
   @override
   String toString() =>
       "RequestException:\n\tcode: $statusCode\n\tmessage:$message \n\rresponse:$response";
+}
+
+class StorageException implements Exception {
+  final String message;
+  final dynamic cause;
+
+  StorageException(this.message, [this.cause]);
+
+  @override
+  String toString() =>
+      'StorageException: $message${cause != null ? ' (caused by: $cause)' : ''}';
 }

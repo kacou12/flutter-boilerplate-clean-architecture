@@ -4,6 +4,7 @@ import 'package:my/core/api/dio_client.dart';
 import 'package:my/core/network/network_info.dart';
 import 'package:my/core/services/hive/hive.dart';
 import 'package:my/core/services/router/router.dart';
+import 'package:my/core/utils/constants/network_constants.dart';
 import 'package:my/features/auth/data/datasources/auth_local_data_source.dart';
 import 'package:my/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:my/features/auth/data/repositories/auth/auth_repository_impl.dart';
