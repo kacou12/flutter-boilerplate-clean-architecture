@@ -77,8 +77,8 @@ class MainBoxStorage<T> implements StorageInterface<T> {
     bool hasExpiration = true,
   }) async {
     try {
-      final jsonData = toJson?.call(data) ?? data as Map<String, dynamic>;
-      final encodedData = jsonEncode(jsonData);
+      // final jsonData = toJson?.call(data) ?? data as Map<String, dynamic>;
+      final encodedData = jsonEncode(data);
 
       final effectiveTtl = hasExpiration ? ttl : null;
       final entry = CacheEntry(encodedData, effectiveTtl);
@@ -93,11 +93,11 @@ class MainBoxStorage<T> implements StorageInterface<T> {
   Future<T?> load(String key) async {
     try {
       // box.clear();
-      final entryJson = box.get(key) as String?;
+      final entryJson = box.get(key);
 
       if (entryJson == null) return null;
 
-      final entry = CacheEntry.fromJson(jsonDecode(entryJson));
+      final entry = CacheEntry.fromJson(Map.from(entryJson));
 
       if (entry.isExpired) {
         await delete(key);
