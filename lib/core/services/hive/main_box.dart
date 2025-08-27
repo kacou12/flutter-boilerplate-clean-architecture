@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:my/core/core.dart';
+import 'package:my/core/utils/constants/network_constants.dart';
 
-// Types pour la sérialisation
 typedef FromJsonFunction<T> = T Function(Map<String, dynamic> json);
 typedef ToJsonFunction<T> = Map<String, dynamic> Function(T object);
 
@@ -27,7 +27,7 @@ class CacheEntry {
 }
 
 abstract class StorageInterface<T> {
-  Future<void> save(String key, T data, {Duration? ttl});
+  Future<void> save({required String key, required T data, Duration? ttl});
   Future<T?> load(String key);
   Future<void> delete(String key);
   Future<void> clear();
@@ -36,36 +36,40 @@ abstract class StorageInterface<T> {
 class MainBoxStorage<T> implements StorageInterface<T> {
   final FromJsonFunction<T>? fromJson;
   final ToJsonFunction<T>? toJson;
-  final Duration? defaultTtl;
 
-  MainBoxStorage({Box? box, this.fromJson, this.toJson, this.defaultTtl});
+  MainBoxStorage({this.fromJson, this.toJson});
 
-  static final _boxName = HelperConstants.boxName;
+  static final boxName = HelperConstants.boxName;
+  static final Duration defaultTtl = NetworkConstants.defaultDataCachedDuration;
 
-  static late Box? box;
+  static late Box box;
+
+  static Future<void> initialize<T>(String boxName) async {
+    box = await Hive.openBox(boxName);
+  }
 
   static Future<MainBoxStorage<T>> create<T>({
-    required String boxName,
     FromJsonFunction<T>? fromJson,
     ToJsonFunction<T>? toJson,
-    Duration? defaultTtl,
   }) async {
-    final box = await Hive.openBox(_boxName);
-    return MainBoxStorage<T>(
-      box: box,
-      fromJson: fromJson,
-      toJson: toJson,
-      defaultTtl: defaultTtl,
-    );
+    return MainBoxStorage<T>(fromJson: fromJson, toJson: toJson);
   }
 
   @override
-  Future<void> save(String key, T data, {Duration? ttl}) async {
+  Future<void> save({
+    required String key,
+    required T data,
+    Duration? ttl,
+    bool hasExpiration = true,
+  }) async {
     try {
       final jsonData = toJson?.call(data) ?? data as Map<String, dynamic>;
       final encodedData = jsonEncode(jsonData);
-      final entry = CacheEntry(encodedData, ttl ?? defaultTtl);
-      await box!.put(key, entry);
+
+      final effectiveTtl = hasExpiration ? ttl : null;
+      final entry = CacheEntry(encodedData, effectiveTtl);
+
+      await box.put(key, entry);
     } catch (e) {
       throw StorageException('Failed to save data for key: $key', e);
     }
@@ -74,7 +78,7 @@ class MainBoxStorage<T> implements StorageInterface<T> {
   @override
   Future<T?> load(String key) async {
     try {
-      final entry = _box.get(key) as CacheEntry?;
+      final entry = box.get(key) as CacheEntry?;
 
       if (entry == null) return null;
 
@@ -93,7 +97,7 @@ class MainBoxStorage<T> implements StorageInterface<T> {
   @override
   Future<void> delete(String key) async {
     try {
-      await _box.delete(key);
+      await box.delete(key);
     } catch (e) {
       throw StorageException('Failed to delete data for key: $key', e);
     }
@@ -102,24 +106,24 @@ class MainBoxStorage<T> implements StorageInterface<T> {
   @override
   Future<void> clear() async {
     try {
-      await _box.clear();
+      await box.clear();
     } catch (e) {
       throw StorageException('Failed to clear storage', e);
     }
   }
 
-  bool containsKey(String key) => _box.containsKey(key);
+  bool containsKey(String key) => box.containsKey(key);
 
-  List<String> get keys => _box.keys.cast<String>().toList();
+  List<String> get keys => box.keys.cast<String>().toList();
 
-  int get length => _box.length;
+  int get length => box.length;
 
   Future<int> cleanExpired() async {
     int cleaned = 0;
     final keysToDelete = <String>[];
 
-    for (final key in _box.keys) {
-      final entry = _box.get(key) as CacheEntry?;
+    for (final key in box.keys) {
+      final entry = box.get(key) as CacheEntry?;
       if (entry?.isExpired == true) {
         keysToDelete.add(key as String);
       }
@@ -148,7 +152,7 @@ class AppPreferences {
   }
 
   Future<void> setNotFirstTime() async {
-    await _storage.save(_firstTimeKey, {'value': false});
+    await _storage.save(key: _firstTimeKey, data: {'value': false});
   }
 
   Future<ActiveTheme> getTheme() async {
@@ -161,7 +165,7 @@ class AppPreferences {
   }
 
   Future<void> setTheme(ActiveTheme theme) async {
-    await _storage.save(_themeKey, {'theme': theme.name});
+    await _storage.save(key: _themeKey, data: {'theme': theme.name});
   }
 }
 
