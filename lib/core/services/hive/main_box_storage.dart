@@ -8,37 +8,6 @@ import 'package:my/core/utils/constants/network_constants.dart';
 typedef FromJsonFunction<T> = T Function(Map<String, dynamic> json);
 typedef ToJsonFunction<T> = Map<String, dynamic> Function(T object);
 
-enum ActiveTheme {
-  light(ThemeMode.light),
-  dark(ThemeMode.dark),
-  system(ThemeMode.system);
-
-  final ThemeMode mode;
-  const ActiveTheme(this.mode);
-}
-
-class CacheEntry {
-  final String data;
-
-  final DateTime? expiry;
-
-  CacheEntry(this.data, Duration? ttl)
-    : expiry = ttl != null ? DateTime.now().add(ttl) : null;
-
-  CacheEntry.fromJson(Map<String, dynamic> json)
-    : data = json['data'],
-      expiry = json['expiry'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(json['expiry'])
-          : null;
-
-  bool get isExpired => expiry?.isBefore(DateTime.now()) ?? false;
-
-  Map<String, dynamic> toJson() => {
-    'data': data,
-    'expiry': expiry?.millisecondsSinceEpoch,
-  };
-}
-
 abstract class StorageInterface<T> {
   Future<void> save({required String key, required T data, Duration? ttl});
   Future<T?> load(String key);
@@ -188,26 +157,33 @@ class AppPreferences {
   }
 }
 
-// Exemple d'utilisation
-/*
-// Initialisation
-final userStorage = await MainBoxStorage.create<User>(
-  boxName: 'users',
-  fromJson: User.fromJson,
-  toJson: (user) => user.toJson(),
-  defaultTtl: Duration(hours: 24),
-);
+enum ActiveTheme {
+  light(ThemeMode.light),
+  dark(ThemeMode.dark),
+  system(ThemeMode.system);
 
-final preferences = AppPreferences(
-  await MainBoxStorage.create<Map<String, dynamic>>(boxName: 'preferences')
-);
-
-// Usage
-await userStorage.save('current_user', user, ttl: Duration(hours: 1));
-final cachedUser = await userStorage.load('current_user');
-
-if (await preferences.isFirstTime()) {
-  // Logique pour premier démarrage
-  await preferences.setNotFirstTime();
+  final ThemeMode mode;
+  const ActiveTheme(this.mode);
 }
-*/
+
+class CacheEntry {
+  final String data;
+
+  final DateTime? expiry;
+
+  CacheEntry(this.data, Duration? ttl)
+    : expiry = ttl != null ? DateTime.now().add(ttl) : null;
+
+  CacheEntry.fromJson(Map<String, dynamic> json)
+    : data = json['data'],
+      expiry = json['expiry'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(json['expiry'])
+          : null;
+
+  bool get isExpired => expiry?.isBefore(DateTime.now()) ?? false;
+
+  Map<String, dynamic> toJson() => {
+    'data': data,
+    'expiry': expiry?.millisecondsSinceEpoch,
+  };
+}
