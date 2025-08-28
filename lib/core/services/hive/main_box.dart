@@ -18,15 +18,15 @@ enum ActiveTheme {
 }
 
 class CacheEntry {
-  final String value;
+  final String data;
 
   final DateTime? expiry;
 
-  CacheEntry(this.value, Duration? ttl)
+  CacheEntry(this.data, Duration? ttl)
     : expiry = ttl != null ? DateTime.now().add(ttl) : null;
 
   CacheEntry.fromJson(Map<String, dynamic> json)
-    : value = json['value'],
+    : data = json['data'],
       expiry = json['expiry'] != null
           ? DateTime.fromMillisecondsSinceEpoch(json['expiry'])
           : null;
@@ -34,7 +34,7 @@ class CacheEntry {
   bool get isExpired => expiry?.isBefore(DateTime.now()) ?? false;
 
   Map<String, dynamic> toJson() => {
-    'value': value,
+    'data': data,
     'expiry': expiry?.millisecondsSinceEpoch,
   };
 }
@@ -104,8 +104,10 @@ class MainBoxStorage<T> implements StorageInterface<T> {
         return null;
       }
 
-      final decodedData = jsonDecode(entry.value) as Map<String, dynamic>;
-      return fromJson?.call(decodedData);
+      final decodedData = jsonDecode(entry.data) as Map<String, dynamic>;
+      // final test = fromJson?.call(decodedData);
+      return fromJson?.call(decodedData) ?? decodedData as T;
+      // return Future.sync(decodedData) ;
     } catch (e) {
       throw StorageException('Failed to load data for key: $key', e);
     }
@@ -165,11 +167,11 @@ class AppPreferences {
 
   Future<bool> isFirstTime() async {
     final result = await _storage.load(_firstTimeKey);
-    return result?['value'] as bool? ?? true;
+    return result?['data'] as bool? ?? true;
   }
 
   Future<void> setNotFirstTime() async {
-    await _storage.save(key: _firstTimeKey, data: {'value': false});
+    await _storage.save(key: _firstTimeKey, data: {'data': false});
   }
 
   Future<ActiveTheme> getTheme() async {
