@@ -19,19 +19,23 @@ class DioClient {
 
   factory DioClient({required AuthLocalDataSource auth}) {
     if (_instance == null) {
-      final dio = Dio(BaseOptions(
-        baseUrl: NetworkConstants.baseUrl,
-        connectTimeout: const Duration(milliseconds: 8000),
-        receiveTimeout: const Duration(milliseconds: 8000),
-        headers: NetworkConstants.headers,
-      ));
+      final dio = Dio(
+        BaseOptions(
+          baseUrl: NetworkConstants.baseUrl,
+          connectTimeout: const Duration(milliseconds: 8000),
+          receiveTimeout: const Duration(milliseconds: 8000),
+          headers: NetworkConstants.headers,
+        ),
+      );
 
-      dio.interceptors.add(LogInterceptor(
-        request: true,
-        requestBody: true,
-        responseBody: true,
-        error: true,
-      ));
+      dio.interceptors.add(
+        LogInterceptor(
+          request: true,
+          requestBody: true,
+          responseBody: true,
+          error: true,
+        ),
+      );
 
       _instance = DioClient._internal(dio, auth);
     }
@@ -40,56 +44,57 @@ class DioClient {
   }
 
   void _addAuthInterceptor() async {
-    _dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (options, handler) async {
-        final UserModel? currentUser;
-        currentUser = await auth.loadData();
-        if (currentUser?.token != null) {
-          options.headers['Authorization'] = 'Bearer ${currentUser?.token}';
-        }
-        return handler.next(options);
-      },
-      onError: (DioException error, handler) async {
-        if (error.response?.statusCode == 401) {
-          try {
-            final UserModel? currentUser = await auth.loadData();
-            if (currentUser?.refreshToken == null) {
-              return handler.next(error);
-            }
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          final UserModel? currentUser;
+          currentUser = await auth.loadData();
+          if (currentUser?.token != null) {
+            options.headers['Authorization'] = 'Bearer ${currentUser?.token}';
+          }
+          return handler.next(options);
+        },
 
-            final response = await _dio.post(
-              ListAPI.refresh,
-              data: {
-                'refresh_token': currentUser!.refreshToken,
-              },
-            );
+        onError: (DioException error, handler) async {
+          if (error.response?.statusCode == 401) {
+            try {
+              final UserModel? currentUser = await auth.loadData();
+              if (currentUser?.refreshToken == null) {
+                return handler.next(error);
+              }
 
-            if (response.statusCode == 200) {
-              final newToken = response.data['token'];
-              final newRefreshToken = response.data['refresh_token'];
-
-              final userUpdating = currentUser.copyWith(
-                token: newToken,
-                refreshToken: newRefreshToken,
+              final response = await _dio.post(
+                ListAPI.refresh,
+                data: {'refresh_token': currentUser!.refreshToken},
               );
 
-              await auth.saveData(userUpdating);
+              if (response.statusCode == 200) {
+                final newToken = response.data['token'];
+                final newRefreshToken = response.data['refresh_token'];
 
-              final opts = error.requestOptions;
-              opts.headers['Authorization'] = 'Bearer $newToken';
+                final userUpdating = currentUser.copyWith(
+                  token: newToken,
+                  refreshToken: newRefreshToken,
+                );
 
-              final newResponse = await _dio.fetch(opts);
-              return handler.resolve(newResponse);
+                await auth.saveData(userUpdating);
+
+                final opts = error.requestOptions;
+                opts.headers['Authorization'] = 'Bearer $newToken';
+
+                final newResponse = await _dio.fetch(opts);
+                return handler.resolve(newResponse);
+              }
+            } catch (e) {
+              await auth.deleteData();
+
+              return handler.next(error);
             }
-          } catch (e) {
-            await auth.deleteData();
-
-            return handler.next(error);
           }
-        }
-        return handler.next(error);
-      },
-    ));
+          return handler.next(error);
+        },
+      ),
+    );
   }
 
   FutureResult<T> getRequest<T>(
@@ -108,20 +113,21 @@ class DioClient {
       }
 
       return Right(
-          ApiResult.fromResponse(mapper: converter, response: response));
+        ApiResult.fromResponse(mapper: converter, response: response),
+      );
     } on ServerException catch (e) {
       try {
-        return Left(
-          ServerFailure.fromException(e),
-        );
+        return Left(ServerFailure.fromException(e));
       } catch (e, s) {
         debugPrint(e.toString());
         debugPrintStack(stackTrace: s);
         // throw const
-        return const Left(ServerFailure(
-          message: "Error Occurred: It's not your fault, it's ours",
-          statusCode: 500,
-        ));
+        return const Left(
+          ServerFailure(
+            message: "Error Occurred: It's not your fault, it's ours",
+            statusCode: 500,
+          ),
+        );
       }
     }
   }
@@ -132,10 +138,7 @@ class DioClient {
     required ResponseConverter<T> converter,
   }) async {
     try {
-      final response = await _dio.post(
-        url,
-        data: data,
-      );
+      final response = await _dio.post(url, data: data);
       if ((response.statusCode ?? 0) < 200 ||
           (response.statusCode ?? 0) > 201) {
         throw ServerException(
@@ -149,15 +152,21 @@ class DioClient {
       );
     } on DioException catch (error) {
       final exception = RequestException.fromDioError(error);
-      return Left(ServerFailure(
-          message: exception.message, statusCode: exception.statusCode ?? 400));
+      return Left(
+        ServerFailure(
+          message: exception.message,
+          statusCode: exception.statusCode ?? 400,
+        ),
+      );
     }
     // on ServerException
     catch (e) {
-      return const Left(ServerFailure(
-        message: "Erro  r Occurred: It's not your fault, it's ours",
-        statusCode: 500,
-      ));
+      return const Left(
+        ServerFailure(
+          message: "Erro  r Occurred: It's not your fault, it's ours",
+          statusCode: 500,
+        ),
+      );
     }
   }
 
@@ -167,10 +176,7 @@ class DioClient {
     required ResponseConverter<T> converter,
   }) async {
     try {
-      final response = await _dio.put(
-        url,
-        data: data,
-      );
+      final response = await _dio.put(url, data: data);
       if ((response.statusCode ?? 0) < 200 ||
           (response.statusCode ?? 0) > 201) {
         throw ServerException(
@@ -184,15 +190,21 @@ class DioClient {
       );
     } on DioException catch (error) {
       final exception = RequestException.fromDioError(error);
-      return Left(ServerFailure(
-          message: exception.message, statusCode: exception.statusCode ?? 400));
+      return Left(
+        ServerFailure(
+          message: exception.message,
+          statusCode: exception.statusCode ?? 400,
+        ),
+      );
     }
     // on ServerException
     catch (e) {
-      return const Left(ServerFailure(
-        message: "Erro  r Occurred: It's not your fault, it's ours",
-        statusCode: 500,
-      ));
+      return const Left(
+        ServerFailure(
+          message: "Erro  r Occurred: It's not your fault, it's ours",
+          statusCode: 500,
+        ),
+      );
     }
   }
 }

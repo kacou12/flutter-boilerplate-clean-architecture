@@ -31,11 +31,7 @@ extension StringExtension on String {
   String getImgType() {
     final extensionImg = (this).split('.').last.toLowerCase();
 
-    return {
-          'jpg': 'jpeg',
-          'jpeg': 'jpeg',
-          'png': 'png',
-        }[extensionImg] ??
+    return {'jpg': 'jpeg', 'jpeg': 'jpeg', 'png': 'png'}[extensionImg] ??
         'jpeg';
   }
 
@@ -96,8 +92,10 @@ extension StringExtension on String {
         object = DateTime.parse(this);
       }
 
-      return DateFormat("dd ${isShort ? "MMM" : "MMMM"} yyyy HH:mm", "id")
-          .format(object);
+      return DateFormat(
+        "dd ${isShort ? "MMM" : "MMMM"} yyyy HH:mm",
+        "id",
+      ).format(object);
     } catch (_) {
       return "-";
     }
@@ -119,8 +117,8 @@ extension StringExtensions on String? {
         return "Veuillez saisir un numero valide";
       }
     } else if (!RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(this!)) {
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+    ).hasMatch(this!)) {
       return "Veuillez saisir un email valide";
     }
     return null;

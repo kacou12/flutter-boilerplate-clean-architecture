@@ -12,11 +12,7 @@ class DioInterceptor extends Interceptor {
     options.headers.forEach((k, v) => headerMessage += '► $k: $v\n');
 
     try {
-      options.queryParameters.forEach(
-        (k, v) => debugPrint(
-          '► $k: $v',
-        ),
-      );
+      options.queryParameters.forEach((k, v) => debugPrint('► $k: $v'));
     } catch (_) {}
     try {
       const JsonEncoder encoder = JsonEncoder.withIndent('  ');
@@ -38,14 +34,14 @@ class DioInterceptor extends Interceptor {
   }
 
   @override
-  void onError(DioException dioException, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     // log.e(
     //   "<-- ${dioException.message} ${dioException.response?.requestOptions != null ? (dioException.response!.requestOptions.baseUrl + dioException.response!.requestOptions.path) : 'URL'}\n\n"
     //   "${dioException.response != null ? dioException.response!.data : 'Unknown Error'}",
     // );
 
     // nonFatalError(error: dioException, stackTrace: dioException.stackTrace);
-    super.onError(dioException, handler);
+    super.onError(err, handler);
   }
 
   @override
@@ -66,4 +62,5 @@ class DioInterceptor extends Interceptor {
     super.onResponse(response, handler);
   }
 }
+
 // coverage:ignore-end

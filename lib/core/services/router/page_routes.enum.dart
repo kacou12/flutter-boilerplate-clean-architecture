@@ -4,22 +4,29 @@ enum PageRoutes {
 
   /// Home Page
   dashboard("/dashboard"),
-  settings("/settings"),
 
   // auth Page
   login("/auth/login"),
   register("/auth/register"),
-  verifOTPByEmailOrTel("/auth/verif_otp_by_email_or_tel"),
 
-  forgotPasswordRoute("/forgot_password"),
-  resetPasswordRoute("/reset_password"),
+  forgotPassword("/auth/forgot-password"),
+  forgotPasswordCode("/auth/forgot-password/verif-otp-by-email-or-tel"),
+  resetPassword("/auth/forgot-password/reset-password"),
+  successResetPassword("/auth/forgot-password/success-reset"),
 
   // profile Page
   userProfile("/profile"),
   userProfileEdit("/profile/edit"),
-  userHome("/profile/home"),
 
-  onBoarding("/onBoarding");
+  onBoarding("/onBoarding"),
+
+  // NAVIGATION BAR
+  chat("/chat"),
+  settings("/settings"),
+  products("/products"),
+  userHome("/user-home"),
+
+  userProfil("/user-profil");
 
   const PageRoutes(this.path);
 

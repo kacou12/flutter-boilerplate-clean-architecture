@@ -19,13 +19,10 @@ class LoginCubit extends Cubit<LoginState> {
     emit(LoginLoading());
     final data = await authRepositoryImpl.login(params);
 
-    data.fold(
-      (l) {
-        if (l is ServerFailure) {
-          emit(LoginFailure(message: l.message));
-        }
-      },
-      (r) => emit(LoginSuccess(user: r)),
-    );
+    data.fold((l) {
+      if (l is ServerFailure) {
+        emit(LoginFailure(message: l.message));
+      }
+    }, (r) => emit(LoginSuccess(user: r)));
   }
 }

@@ -39,8 +39,8 @@ class _SplashScreenState extends State<SplashScreen> {
         value: SystemUiOverlayStyle(
           statusBarIconBrightness:
               Theme.of(context).brightness == Brightness.light
-                  ? Brightness.dark
-                  : Brightness.light,
+              ? Brightness.dark
+              : Brightness.light,
           statusBarColor: Colors.transparent,
         ),
         child: Scaffold(
@@ -49,7 +49,9 @@ class _SplashScreenState extends State<SplashScreen> {
               Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(Images.icLauncher), fit: BoxFit.cover),
+                    image: AssetImage(Images.icLauncher),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Align(
@@ -61,16 +63,15 @@ class _SplashScreenState extends State<SplashScreen> {
                       color: Colors.white,
                       height: 40.h,
                     ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
+                    SizedBox(height: 5.h),
                     Text(
                       'AFitterWorld',
                       style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.bold),
-                    )
+                        color: Colors.white,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -82,13 +83,11 @@ class _SplashScreenState extends State<SplashScreen> {
                   width: 20.h,
                   child: const CircularProgressIndicator.adaptive(
                     strokeWidth: 1,
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      Colors.red,
-                    ),
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
                     // backgroundColor: MyColorName.greyText,
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

@@ -18,13 +18,10 @@ class RegisterCubit extends Cubit<RegisterState> {
   Future<void> register(RequestParamsRegister params) async {
     emit(RegisterLoading());
     final data = await authRepositoryImpl.register(params);
-    data.fold(
-      (l) {
-        if (l is ServerFailure) {
-          emit(RegisterFailure(message: l.message));
-        }
-      },
-      (r) => emit(RegisterSuccess(user: r)),
-    );
+    data.fold((l) {
+      if (l is ServerFailure) {
+        emit(RegisterFailure(message: l.message));
+      }
+    }, (r) => emit(RegisterSuccess(user: r)));
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -57,9 +56,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           );
         }
       // }
-
-      default:
-        log('Unhandled event type: ${event.runtimeType}', name: 'AppBloc');
     }
   }
 

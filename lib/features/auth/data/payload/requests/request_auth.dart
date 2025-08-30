@@ -1,16 +1,19 @@
 import 'package:equatable/equatable.dart';
 
 class RequestLogin extends Equatable {
-  final String userName;
+  final String email;
   final String password;
 
-  const RequestLogin({required this.userName, required this.password});
+  const RequestLogin({required this.email, required this.password});
 
-  Map<String, dynamic> toJson() =>
-      {'user_name': userName, 'password': password};
+  Map<String, dynamic> toJson() => {'email': email, 'password': password};
+  // Map<String, dynamic> toJson() => {
+  //   'username': 'emilys',
+  //   'password': 'emilyspass',
+  // };
 
   @override
-  List<Object?> get props => [userName, password];
+  List<Object?> get props => [email, password];
 }
 
 class RequestRegister extends Equatable {
@@ -37,11 +40,5 @@ class RequestRegister extends Equatable {
       };
 
   @override
-  List<Object?> get props => [
-        password,
-        email,
-        phone,
-        firstName,
-        lastName,
-      ];
+  List<Object?> get props => [password, email, phone, firstName, lastName];
 }

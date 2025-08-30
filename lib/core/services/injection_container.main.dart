@@ -16,10 +16,8 @@ Future<void> injectionContainer({
   _cubit();
 }
 
-Future<void> _initHiveBoxes({
-  String prefixBox = '',
-}) async {
-  await MainBoxStorage.initHive(prefixBox);
+Future<void> _initHiveBoxes({String prefixBox = ''}) async {
+  await MainBoxStorage.initialize(prefixBox);
   sl.registerSingleton<MainBoxStorage>(MainBoxStorage());
 }
 
@@ -45,12 +43,9 @@ void _dataSources() {
 
 /// Register repositories
 void _repositories() {
+  sl.registerLazySingleton(() => AuthRepositoryImpl(sl(), sl(), sl()));
   sl.registerLazySingleton(
-    () => AuthRepositoryImpl(
-      sl(),
-      sl(),
-      sl(),
-    ),
+    () => ForgotPasswordRepositoryImpl(sl(), sl(), sl()),
   );
 }
 
@@ -58,7 +53,6 @@ void _cubit() {
   /// Auth
   sl.registerLazySingleton(() => RegisterCubit(sl()));
   sl.registerLazySingleton(() => LoginCubit(sl()));
-  sl.registerLazySingleton(() => AuthBloc(
-        sl(),
-      ));
+  sl.registerLazySingleton(() => AuthBloc(sl()));
+  sl.registerLazySingleton(() => ForgotPasswordBloc(repository: sl()));
 }

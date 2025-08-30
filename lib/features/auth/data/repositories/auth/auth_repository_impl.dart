@@ -13,26 +13,19 @@ class AuthRepositoryImpl implements AuthRepository {
   final NetworkInfo networkInfo;
   final AuthLocalDataSource store;
 
-  AuthRepositoryImpl(
-    this.remoteDataSource,
-    this.networkInfo,
-    this.store,
-  );
+  AuthRepositoryImpl(this.remoteDataSource, this.networkInfo, this.store);
 
   @override
   FutureResult<UserModel> login(RequestParamsLogin params) async {
     if (await networkInfo.isConnected) {
       final response = await remoteDataSource.login(
-          requests:
-              RequestLogin(userName: params.email, password: params.password));
-
-      return response.fold(
-        (failure) => Left(failure),
-        (response) async {
-          await store.saveData(response);
-          return Right(response);
-        },
+        requests: RequestLogin(email: params.email, password: params.password),
       );
+
+      return response.fold((failure) => Left(failure), (response) async {
+        await store.saveData(response);
+        return Right(response);
+      });
     } else {
       return const Left(CacheFailure());
     }
@@ -43,13 +36,10 @@ class AuthRepositoryImpl implements AuthRepository {
     if (await networkInfo.isConnected) {
       final response = await remoteDataSource.myProfile();
 
-      return response.fold(
-        (failure) => Left(failure),
-        (response) async {
-          await store.saveData(response);
-          return Right(response);
-        },
-      );
+      return response.fold((failure) => Left(failure), (response) async {
+        await store.saveData(response);
+        return Right(response);
+      });
     } else {
       return const Left(CacheFailure());
     }
@@ -66,20 +56,20 @@ class AuthRepositoryImpl implements AuthRepository {
       }
       return Right(user);
     } catch (e) {
-      return const Left(CacheFailure(
-          message: "Connexion implicite à echouer, veuillez vous connectez."));
+      return const Left(
+        CacheFailure(
+          message: "Connexion implicite à echouer, veuillez vous connectez.",
+        ),
+      );
     }
   }
 
   @override
   FutureResult<void> loggout() async {
     final response = await remoteDataSource.logout();
-    return response.fold(
-      (failure) => Left(failure),
-      (response) async {
-        return Right(await store.deleteData());
-      },
-    );
+    return response.fold((failure) => Left(failure), (response) async {
+      return Right(await store.deleteData());
+    });
   }
 
   @override
@@ -87,21 +77,19 @@ class AuthRepositoryImpl implements AuthRepository {
     if (await networkInfo.isConnected) {
       try {
         final response = await remoteDataSource.register(
-            requests: RequestRegister(
-          firstName: request.firstName,
-          lastName: request.lastName,
-          email: request.email,
-          password: request.password,
-          phone: request.phone,
-        ));
-
-        return response.fold(
-          (failure) => Left(failure),
-          (response) async {
-            await store.saveData(response);
-            return Right(response);
-          },
+          requests: RequestRegister(
+            firstName: request.firstName,
+            lastName: request.lastName,
+            email: request.email,
+            password: request.password,
+            phone: request.phone,
+          ),
         );
+
+        return response.fold((failure) => Left(failure), (response) async {
+          await store.saveData(response);
+          return Right(response);
+        });
 
         // if (response is Success<UserModel>) {
         //   await store.saveData(response.data);
@@ -117,7 +105,8 @@ class AuthRepositoryImpl implements AuthRepository {
       }
     } else {
       return const Left(
-          CacheFailure(message: "Veuillez verifier votre connection internet"));
+        CacheFailure(message: "Veuillez verifier votre connection internet"),
+      );
     }
   }
 }

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="27" height="27" viewBox="0 0 27 27">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#a8589e"/>
+      <stop offset="1" stop-color="#4565ad"/>
+    </linearGradient>
+  </defs>
+  <g id="menu_tabbar_ic_selected" transform="translate(-3712 -6267)">
+    <g id="Rectangle_2837" data-name="Rectangle 2837" transform="translate(3712 6267)" fill="#fff" stroke="#707070" stroke-width="1" opacity="0">
+      <rect width="27" height="27" stroke="none"/>
+      <rect x="0.5" y="0.5" width="26" height="26" fill="none"/>
+    </g>
+    <path id="icons8-menu-100" d="M0,7.5v2.7H27V7.5Zm0,8.1v2.7H27V15.6Zm0,8.1v2.7H27V23.7Z" transform="translate(3712 6263.5)" fill="url(#linear-gradient)"/>
+  </g>
+</svg>

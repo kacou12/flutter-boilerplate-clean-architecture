@@ -14,33 +14,33 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$UserModel implements DiagnosticableTreeMixin {
+  @JsonKey(name: 'id')
   String get id;
-  DateTime get createdAt;
-  DateTime? get updatedAt;
-  DateTime? get deletedAt;
-  String get userName;
-  String get name;
-  String? get bio;
-  String? get city;
-  String get country;
-  String? get image;
-  String get phone;
-  String? get cover;
-  DateTime get birthdate;
-  String get deviceId;
-  String get deviceType;
+  @JsonKey(name: 'created_at')
+  String get createdAt;
+  @JsonKey(name: 'updated_at')
+  String get updatedAt;
+  @JsonKey(name: 'email')
   String get email;
-  bool get online;
-  bool get isPrivate;
-  DateTime get lastOnline;
-  String get sponsorshipCode;
-  bool get sponsored;
-  String get type;
-  String? get firebaseToken;
-  String get stripeId;
-  String get stripeSellerId;
-  String? get token;
+  @JsonKey(name: 'first_name')
+  String get firstName;
+  @JsonKey(name: 'last_name')
+  String get lastName;
+  @JsonKey(name: 'phone')
+  String get phone;
+  @JsonKey(name: 'role')
+  String get role;
+  @JsonKey(name: 'is_verified')
+  bool? get isVerified;
+  @JsonKey(name: 'is_active')
+  bool? get isActive;
+  @JsonKey(name: 'last_login_at')
+  String get lastLoginAt;
+  @JsonKey(name: 'merchant_id')
+  String get merchantId;
+  @JsonKey(name: 'refresh_token')
   String? get refreshToken;
+  String? get token;
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
@@ -59,30 +59,17 @@ mixin _$UserModel implements DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('updatedAt', updatedAt))
-      ..add(DiagnosticsProperty('deletedAt', deletedAt))
-      ..add(DiagnosticsProperty('userName', userName))
-      ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('bio', bio))
-      ..add(DiagnosticsProperty('city', city))
-      ..add(DiagnosticsProperty('country', country))
-      ..add(DiagnosticsProperty('image', image))
-      ..add(DiagnosticsProperty('phone', phone))
-      ..add(DiagnosticsProperty('cover', cover))
-      ..add(DiagnosticsProperty('birthdate', birthdate))
-      ..add(DiagnosticsProperty('deviceId', deviceId))
-      ..add(DiagnosticsProperty('deviceType', deviceType))
       ..add(DiagnosticsProperty('email', email))
-      ..add(DiagnosticsProperty('online', online))
-      ..add(DiagnosticsProperty('isPrivate', isPrivate))
-      ..add(DiagnosticsProperty('lastOnline', lastOnline))
-      ..add(DiagnosticsProperty('sponsorshipCode', sponsorshipCode))
-      ..add(DiagnosticsProperty('sponsored', sponsored))
-      ..add(DiagnosticsProperty('type', type))
-      ..add(DiagnosticsProperty('firebaseToken', firebaseToken))
-      ..add(DiagnosticsProperty('stripeId', stripeId))
-      ..add(DiagnosticsProperty('stripeSellerId', stripeSellerId))
-      ..add(DiagnosticsProperty('token', token))
-      ..add(DiagnosticsProperty('refreshToken', refreshToken));
+      ..add(DiagnosticsProperty('firstName', firstName))
+      ..add(DiagnosticsProperty('lastName', lastName))
+      ..add(DiagnosticsProperty('phone', phone))
+      ..add(DiagnosticsProperty('role', role))
+      ..add(DiagnosticsProperty('isVerified', isVerified))
+      ..add(DiagnosticsProperty('isActive', isActive))
+      ..add(DiagnosticsProperty('lastLoginAt', lastLoginAt))
+      ..add(DiagnosticsProperty('merchantId', merchantId))
+      ..add(DiagnosticsProperty('refreshToken', refreshToken))
+      ..add(DiagnosticsProperty('token', token));
   }
 
   @override
@@ -95,81 +82,48 @@ mixin _$UserModel implements DiagnosticableTreeMixin {
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
-            (identical(other.deletedAt, deletedAt) ||
-                other.deletedAt == deletedAt) &&
-            (identical(other.userName, userName) ||
-                other.userName == userName) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.bio, bio) || other.bio == bio) &&
-            (identical(other.city, city) || other.city == city) &&
-            (identical(other.country, country) || other.country == country) &&
-            (identical(other.image, image) || other.image == image) &&
-            (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.cover, cover) || other.cover == cover) &&
-            (identical(other.birthdate, birthdate) ||
-                other.birthdate == birthdate) &&
-            (identical(other.deviceId, deviceId) ||
-                other.deviceId == deviceId) &&
-            (identical(other.deviceType, deviceType) ||
-                other.deviceType == deviceType) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.online, online) || other.online == online) &&
-            (identical(other.isPrivate, isPrivate) ||
-                other.isPrivate == isPrivate) &&
-            (identical(other.lastOnline, lastOnline) ||
-                other.lastOnline == lastOnline) &&
-            (identical(other.sponsorshipCode, sponsorshipCode) ||
-                other.sponsorshipCode == sponsorshipCode) &&
-            (identical(other.sponsored, sponsored) ||
-                other.sponsored == sponsored) &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.firebaseToken, firebaseToken) ||
-                other.firebaseToken == firebaseToken) &&
-            (identical(other.stripeId, stripeId) ||
-                other.stripeId == stripeId) &&
-            (identical(other.stripeSellerId, stripeSellerId) ||
-                other.stripeSellerId == stripeSellerId) &&
-            (identical(other.token, token) || other.token == token) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.role, role) || other.role == role) &&
+            (identical(other.isVerified, isVerified) ||
+                other.isVerified == isVerified) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive) &&
+            (identical(other.lastLoginAt, lastLoginAt) ||
+                other.lastLoginAt == lastLoginAt) &&
+            (identical(other.merchantId, merchantId) ||
+                other.merchantId == merchantId) &&
             (identical(other.refreshToken, refreshToken) ||
-                other.refreshToken == refreshToken));
+                other.refreshToken == refreshToken) &&
+            (identical(other.token, token) || other.token == token));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hashAll([
-        runtimeType,
-        id,
-        createdAt,
-        updatedAt,
-        deletedAt,
-        userName,
-        name,
-        bio,
-        city,
-        country,
-        image,
-        phone,
-        cover,
-        birthdate,
-        deviceId,
-        deviceType,
-        email,
-        online,
-        isPrivate,
-        lastOnline,
-        sponsorshipCode,
-        sponsored,
-        type,
-        firebaseToken,
-        stripeId,
-        stripeSellerId,
-        token,
-        refreshToken
-      ]);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      createdAt,
+      updatedAt,
+      email,
+      firstName,
+      lastName,
+      phone,
+      role,
+      isVerified,
+      isActive,
+      lastLoginAt,
+      merchantId,
+      refreshToken,
+      token);
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserModel(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, userName: $userName, name: $name, bio: $bio, city: $city, country: $country, image: $image, phone: $phone, cover: $cover, birthdate: $birthdate, deviceId: $deviceId, deviceType: $deviceType, email: $email, online: $online, isPrivate: $isPrivate, lastOnline: $lastOnline, sponsorshipCode: $sponsorshipCode, sponsored: $sponsored, type: $type, firebaseToken: $firebaseToken, stripeId: $stripeId, stripeSellerId: $stripeSellerId, token: $token, refreshToken: $refreshToken)';
+    return 'UserModel(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, email: $email, firstName: $firstName, lastName: $lastName, phone: $phone, role: $role, isVerified: $isVerified, isActive: $isActive, lastLoginAt: $lastLoginAt, merchantId: $merchantId, refreshToken: $refreshToken, token: $token)';
   }
 }
 
@@ -179,33 +133,20 @@ abstract mixin class $UserModelCopyWith<$Res> {
       _$UserModelCopyWithImpl;
   @useResult
   $Res call(
-      {String id,
-      DateTime createdAt,
-      DateTime? updatedAt,
-      DateTime? deletedAt,
-      String userName,
-      String name,
-      String? bio,
-      String? city,
-      String country,
-      String? image,
-      String phone,
-      String? cover,
-      DateTime birthdate,
-      String deviceId,
-      String deviceType,
-      String email,
-      bool online,
-      bool isPrivate,
-      DateTime lastOnline,
-      String sponsorshipCode,
-      bool sponsored,
-      String type,
-      String? firebaseToken,
-      String stripeId,
-      String stripeSellerId,
-      String? token,
-      String? refreshToken});
+      {@JsonKey(name: 'id') String id,
+      @JsonKey(name: 'created_at') String createdAt,
+      @JsonKey(name: 'updated_at') String updatedAt,
+      @JsonKey(name: 'email') String email,
+      @JsonKey(name: 'first_name') String firstName,
+      @JsonKey(name: 'last_name') String lastName,
+      @JsonKey(name: 'phone') String phone,
+      @JsonKey(name: 'role') String role,
+      @JsonKey(name: 'is_verified') bool? isVerified,
+      @JsonKey(name: 'is_active') bool? isActive,
+      @JsonKey(name: 'last_login_at') String lastLoginAt,
+      @JsonKey(name: 'merchant_id') String merchantId,
+      @JsonKey(name: 'refresh_token') String? refreshToken,
+      String? token});
 }
 
 /// @nodoc
@@ -222,31 +163,18 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
   $Res call({
     Object? id = null,
     Object? createdAt = null,
-    Object? updatedAt = freezed,
-    Object? deletedAt = freezed,
-    Object? userName = null,
-    Object? name = null,
-    Object? bio = freezed,
-    Object? city = freezed,
-    Object? country = null,
-    Object? image = freezed,
-    Object? phone = null,
-    Object? cover = freezed,
-    Object? birthdate = null,
-    Object? deviceId = null,
-    Object? deviceType = null,
+    Object? updatedAt = null,
     Object? email = null,
-    Object? online = null,
-    Object? isPrivate = null,
-    Object? lastOnline = null,
-    Object? sponsorshipCode = null,
-    Object? sponsored = null,
-    Object? type = null,
-    Object? firebaseToken = freezed,
-    Object? stripeId = null,
-    Object? stripeSellerId = null,
-    Object? token = freezed,
+    Object? firstName = null,
+    Object? lastName = null,
+    Object? phone = null,
+    Object? role = null,
+    Object? isVerified = freezed,
+    Object? isActive = freezed,
+    Object? lastLoginAt = null,
+    Object? merchantId = null,
     Object? refreshToken = freezed,
+    Object? token = freezed,
   }) {
     return _then(_self.copyWith(
       id: null == id
@@ -256,106 +184,54 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
       createdAt: null == createdAt
           ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: freezed == updatedAt
+              as String,
+      updatedAt: null == updatedAt
           ? _self.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      deletedAt: freezed == deletedAt
-          ? _self.deletedAt
-          : deletedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      userName: null == userName
-          ? _self.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _self.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      bio: freezed == bio
-          ? _self.bio
-          : bio // ignore: cast_nullable_to_non_nullable
-              as String?,
-      city: freezed == city
-          ? _self.city
-          : city // ignore: cast_nullable_to_non_nullable
-              as String?,
-      country: null == country
-          ? _self.country
-          : country // ignore: cast_nullable_to_non_nullable
-              as String,
-      image: freezed == image
-          ? _self.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as String?,
-      phone: null == phone
-          ? _self.phone
-          : phone // ignore: cast_nullable_to_non_nullable
-              as String,
-      cover: freezed == cover
-          ? _self.cover
-          : cover // ignore: cast_nullable_to_non_nullable
-              as String?,
-      birthdate: null == birthdate
-          ? _self.birthdate
-          : birthdate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      deviceId: null == deviceId
-          ? _self.deviceId
-          : deviceId // ignore: cast_nullable_to_non_nullable
-              as String,
-      deviceType: null == deviceType
-          ? _self.deviceType
-          : deviceType // ignore: cast_nullable_to_non_nullable
               as String,
       email: null == email
           ? _self.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      online: null == online
-          ? _self.online
-          : online // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isPrivate: null == isPrivate
-          ? _self.isPrivate
-          : isPrivate // ignore: cast_nullable_to_non_nullable
-              as bool,
-      lastOnline: null == lastOnline
-          ? _self.lastOnline
-          : lastOnline // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      sponsorshipCode: null == sponsorshipCode
-          ? _self.sponsorshipCode
-          : sponsorshipCode // ignore: cast_nullable_to_non_nullable
+      firstName: null == firstName
+          ? _self.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
               as String,
-      sponsored: null == sponsored
-          ? _self.sponsored
-          : sponsored // ignore: cast_nullable_to_non_nullable
-              as bool,
-      type: null == type
-          ? _self.type
-          : type // ignore: cast_nullable_to_non_nullable
+      lastName: null == lastName
+          ? _self.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      firebaseToken: freezed == firebaseToken
-          ? _self.firebaseToken
-          : firebaseToken // ignore: cast_nullable_to_non_nullable
-              as String?,
-      stripeId: null == stripeId
-          ? _self.stripeId
-          : stripeId // ignore: cast_nullable_to_non_nullable
+      phone: null == phone
+          ? _self.phone
+          : phone // ignore: cast_nullable_to_non_nullable
               as String,
-      stripeSellerId: null == stripeSellerId
-          ? _self.stripeSellerId
-          : stripeSellerId // ignore: cast_nullable_to_non_nullable
+      role: null == role
+          ? _self.role
+          : role // ignore: cast_nullable_to_non_nullable
               as String,
-      token: freezed == token
-          ? _self.token
-          : token // ignore: cast_nullable_to_non_nullable
-              as String?,
+      isVerified: freezed == isVerified
+          ? _self.isVerified
+          : isVerified // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isActive: freezed == isActive
+          ? _self.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      lastLoginAt: null == lastLoginAt
+          ? _self.lastLoginAt
+          : lastLoginAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      merchantId: null == merchantId
+          ? _self.merchantId
+          : merchantId // ignore: cast_nullable_to_non_nullable
+              as String,
       refreshToken: freezed == refreshToken
           ? _self.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      token: freezed == token
+          ? _self.token
+          : token // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -455,33 +331,20 @@ extension UserModelPatterns on UserModel {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
-            String id,
-            DateTime createdAt,
-            DateTime? updatedAt,
-            DateTime? deletedAt,
-            String userName,
-            String name,
-            String? bio,
-            String? city,
-            String country,
-            String? image,
-            String phone,
-            String? cover,
-            DateTime birthdate,
-            String deviceId,
-            String deviceType,
-            String email,
-            bool online,
-            bool isPrivate,
-            DateTime lastOnline,
-            String sponsorshipCode,
-            bool sponsored,
-            String type,
-            String? firebaseToken,
-            String stripeId,
-            String stripeSellerId,
-            String? token,
-            String? refreshToken)?
+            @JsonKey(name: 'id') String id,
+            @JsonKey(name: 'created_at') String createdAt,
+            @JsonKey(name: 'updated_at') String updatedAt,
+            @JsonKey(name: 'email') String email,
+            @JsonKey(name: 'first_name') String firstName,
+            @JsonKey(name: 'last_name') String lastName,
+            @JsonKey(name: 'phone') String phone,
+            @JsonKey(name: 'role') String role,
+            @JsonKey(name: 'is_verified') bool? isVerified,
+            @JsonKey(name: 'is_active') bool? isActive,
+            @JsonKey(name: 'last_login_at') String lastLoginAt,
+            @JsonKey(name: 'merchant_id') String merchantId,
+            @JsonKey(name: 'refresh_token') String? refreshToken,
+            String? token)?
         $default, {
     required TResult orElse(),
   }) {
@@ -492,30 +355,17 @@ extension UserModelPatterns on UserModel {
             _that.id,
             _that.createdAt,
             _that.updatedAt,
-            _that.deletedAt,
-            _that.userName,
-            _that.name,
-            _that.bio,
-            _that.city,
-            _that.country,
-            _that.image,
-            _that.phone,
-            _that.cover,
-            _that.birthdate,
-            _that.deviceId,
-            _that.deviceType,
             _that.email,
-            _that.online,
-            _that.isPrivate,
-            _that.lastOnline,
-            _that.sponsorshipCode,
-            _that.sponsored,
-            _that.type,
-            _that.firebaseToken,
-            _that.stripeId,
-            _that.stripeSellerId,
-            _that.token,
-            _that.refreshToken);
+            _that.firstName,
+            _that.lastName,
+            _that.phone,
+            _that.role,
+            _that.isVerified,
+            _that.isActive,
+            _that.lastLoginAt,
+            _that.merchantId,
+            _that.refreshToken,
+            _that.token);
       case _:
         return orElse();
     }
@@ -537,33 +387,20 @@ extension UserModelPatterns on UserModel {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
-            String id,
-            DateTime createdAt,
-            DateTime? updatedAt,
-            DateTime? deletedAt,
-            String userName,
-            String name,
-            String? bio,
-            String? city,
-            String country,
-            String? image,
-            String phone,
-            String? cover,
-            DateTime birthdate,
-            String deviceId,
-            String deviceType,
-            String email,
-            bool online,
-            bool isPrivate,
-            DateTime lastOnline,
-            String sponsorshipCode,
-            bool sponsored,
-            String type,
-            String? firebaseToken,
-            String stripeId,
-            String stripeSellerId,
-            String? token,
-            String? refreshToken)
+            @JsonKey(name: 'id') String id,
+            @JsonKey(name: 'created_at') String createdAt,
+            @JsonKey(name: 'updated_at') String updatedAt,
+            @JsonKey(name: 'email') String email,
+            @JsonKey(name: 'first_name') String firstName,
+            @JsonKey(name: 'last_name') String lastName,
+            @JsonKey(name: 'phone') String phone,
+            @JsonKey(name: 'role') String role,
+            @JsonKey(name: 'is_verified') bool? isVerified,
+            @JsonKey(name: 'is_active') bool? isActive,
+            @JsonKey(name: 'last_login_at') String lastLoginAt,
+            @JsonKey(name: 'merchant_id') String merchantId,
+            @JsonKey(name: 'refresh_token') String? refreshToken,
+            String? token)
         $default,
   ) {
     final _that = this;
@@ -573,30 +410,17 @@ extension UserModelPatterns on UserModel {
             _that.id,
             _that.createdAt,
             _that.updatedAt,
-            _that.deletedAt,
-            _that.userName,
-            _that.name,
-            _that.bio,
-            _that.city,
-            _that.country,
-            _that.image,
-            _that.phone,
-            _that.cover,
-            _that.birthdate,
-            _that.deviceId,
-            _that.deviceType,
             _that.email,
-            _that.online,
-            _that.isPrivate,
-            _that.lastOnline,
-            _that.sponsorshipCode,
-            _that.sponsored,
-            _that.type,
-            _that.firebaseToken,
-            _that.stripeId,
-            _that.stripeSellerId,
-            _that.token,
-            _that.refreshToken);
+            _that.firstName,
+            _that.lastName,
+            _that.phone,
+            _that.role,
+            _that.isVerified,
+            _that.isActive,
+            _that.lastLoginAt,
+            _that.merchantId,
+            _that.refreshToken,
+            _that.token);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -617,33 +441,20 @@ extension UserModelPatterns on UserModel {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
-            String id,
-            DateTime createdAt,
-            DateTime? updatedAt,
-            DateTime? deletedAt,
-            String userName,
-            String name,
-            String? bio,
-            String? city,
-            String country,
-            String? image,
-            String phone,
-            String? cover,
-            DateTime birthdate,
-            String deviceId,
-            String deviceType,
-            String email,
-            bool online,
-            bool isPrivate,
-            DateTime lastOnline,
-            String sponsorshipCode,
-            bool sponsored,
-            String type,
-            String? firebaseToken,
-            String stripeId,
-            String stripeSellerId,
-            String? token,
-            String? refreshToken)?
+            @JsonKey(name: 'id') String id,
+            @JsonKey(name: 'created_at') String createdAt,
+            @JsonKey(name: 'updated_at') String updatedAt,
+            @JsonKey(name: 'email') String email,
+            @JsonKey(name: 'first_name') String firstName,
+            @JsonKey(name: 'last_name') String lastName,
+            @JsonKey(name: 'phone') String phone,
+            @JsonKey(name: 'role') String role,
+            @JsonKey(name: 'is_verified') bool? isVerified,
+            @JsonKey(name: 'is_active') bool? isActive,
+            @JsonKey(name: 'last_login_at') String lastLoginAt,
+            @JsonKey(name: 'merchant_id') String merchantId,
+            @JsonKey(name: 'refresh_token') String? refreshToken,
+            String? token)?
         $default,
   ) {
     final _that = this;
@@ -653,30 +464,17 @@ extension UserModelPatterns on UserModel {
             _that.id,
             _that.createdAt,
             _that.updatedAt,
-            _that.deletedAt,
-            _that.userName,
-            _that.name,
-            _that.bio,
-            _that.city,
-            _that.country,
-            _that.image,
-            _that.phone,
-            _that.cover,
-            _that.birthdate,
-            _that.deviceId,
-            _that.deviceType,
             _that.email,
-            _that.online,
-            _that.isPrivate,
-            _that.lastOnline,
-            _that.sponsorshipCode,
-            _that.sponsored,
-            _that.type,
-            _that.firebaseToken,
-            _that.stripeId,
-            _that.stripeSellerId,
-            _that.token,
-            _that.refreshToken);
+            _that.firstName,
+            _that.lastName,
+            _that.phone,
+            _that.role,
+            _that.isVerified,
+            _that.isActive,
+            _that.lastLoginAt,
+            _that.merchantId,
+            _that.refreshToken,
+            _that.token);
       case _:
         return null;
     }
@@ -687,90 +485,64 @@ extension UserModelPatterns on UserModel {
 @JsonSerializable()
 class _UserModel with DiagnosticableTreeMixin implements UserModel {
   const _UserModel(
-      {required this.id,
-      required this.createdAt,
-      this.updatedAt,
-      this.deletedAt,
-      required this.userName,
-      required this.name,
-      this.bio,
-      this.city,
-      required this.country,
-      this.image,
-      required this.phone,
-      this.cover,
-      required this.birthdate,
-      required this.deviceId,
-      required this.deviceType,
-      required this.email,
-      required this.online,
-      required this.isPrivate,
-      required this.lastOnline,
-      required this.sponsorshipCode,
-      required this.sponsored,
-      required this.type,
-      this.firebaseToken,
-      required this.stripeId,
-      required this.stripeSellerId,
-      this.token,
-      this.refreshToken});
+      {@JsonKey(name: 'id') required this.id,
+      @JsonKey(name: 'created_at') required this.createdAt,
+      @JsonKey(name: 'updated_at') required this.updatedAt,
+      @JsonKey(name: 'email') required this.email,
+      @JsonKey(name: 'first_name') required this.firstName,
+      @JsonKey(name: 'last_name') required this.lastName,
+      @JsonKey(name: 'phone') required this.phone,
+      @JsonKey(name: 'role') required this.role,
+      @JsonKey(name: 'is_verified') required this.isVerified,
+      @JsonKey(name: 'is_active') required this.isActive,
+      @JsonKey(name: 'last_login_at') required this.lastLoginAt,
+      @JsonKey(name: 'merchant_id') required this.merchantId,
+      @JsonKey(name: 'refresh_token') this.refreshToken,
+      this.token});
   factory _UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
 
   @override
+  @JsonKey(name: 'id')
   final String id;
   @override
-  final DateTime createdAt;
+  @JsonKey(name: 'created_at')
+  final String createdAt;
   @override
-  final DateTime? updatedAt;
+  @JsonKey(name: 'updated_at')
+  final String updatedAt;
   @override
-  final DateTime? deletedAt;
-  @override
-  final String userName;
-  @override
-  final String name;
-  @override
-  final String? bio;
-  @override
-  final String? city;
-  @override
-  final String country;
-  @override
-  final String? image;
-  @override
-  final String phone;
-  @override
-  final String? cover;
-  @override
-  final DateTime birthdate;
-  @override
-  final String deviceId;
-  @override
-  final String deviceType;
-  @override
+  @JsonKey(name: 'email')
   final String email;
   @override
-  final bool online;
+  @JsonKey(name: 'first_name')
+  final String firstName;
   @override
-  final bool isPrivate;
+  @JsonKey(name: 'last_name')
+  final String lastName;
   @override
-  final DateTime lastOnline;
+  @JsonKey(name: 'phone')
+  final String phone;
   @override
-  final String sponsorshipCode;
+  @JsonKey(name: 'role')
+  final String role;
   @override
-  final bool sponsored;
+  @JsonKey(name: 'is_verified')
+  final bool? isVerified;
   @override
-  final String type;
+  @JsonKey(name: 'is_active')
+  final bool? isActive;
   @override
-  final String? firebaseToken;
+  @JsonKey(name: 'last_login_at')
+  final String lastLoginAt;
   @override
-  final String stripeId;
+  @JsonKey(name: 'merchant_id')
+  final String merchantId;
   @override
-  final String stripeSellerId;
+  @JsonKey(name: 'refresh_token')
+  final String? refreshToken;
   @override
   final String? token;
-  @override
-  final String? refreshToken;
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
@@ -794,30 +566,17 @@ class _UserModel with DiagnosticableTreeMixin implements UserModel {
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('updatedAt', updatedAt))
-      ..add(DiagnosticsProperty('deletedAt', deletedAt))
-      ..add(DiagnosticsProperty('userName', userName))
-      ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('bio', bio))
-      ..add(DiagnosticsProperty('city', city))
-      ..add(DiagnosticsProperty('country', country))
-      ..add(DiagnosticsProperty('image', image))
-      ..add(DiagnosticsProperty('phone', phone))
-      ..add(DiagnosticsProperty('cover', cover))
-      ..add(DiagnosticsProperty('birthdate', birthdate))
-      ..add(DiagnosticsProperty('deviceId', deviceId))
-      ..add(DiagnosticsProperty('deviceType', deviceType))
       ..add(DiagnosticsProperty('email', email))
-      ..add(DiagnosticsProperty('online', online))
-      ..add(DiagnosticsProperty('isPrivate', isPrivate))
-      ..add(DiagnosticsProperty('lastOnline', lastOnline))
-      ..add(DiagnosticsProperty('sponsorshipCode', sponsorshipCode))
-      ..add(DiagnosticsProperty('sponsored', sponsored))
-      ..add(DiagnosticsProperty('type', type))
-      ..add(DiagnosticsProperty('firebaseToken', firebaseToken))
-      ..add(DiagnosticsProperty('stripeId', stripeId))
-      ..add(DiagnosticsProperty('stripeSellerId', stripeSellerId))
-      ..add(DiagnosticsProperty('token', token))
-      ..add(DiagnosticsProperty('refreshToken', refreshToken));
+      ..add(DiagnosticsProperty('firstName', firstName))
+      ..add(DiagnosticsProperty('lastName', lastName))
+      ..add(DiagnosticsProperty('phone', phone))
+      ..add(DiagnosticsProperty('role', role))
+      ..add(DiagnosticsProperty('isVerified', isVerified))
+      ..add(DiagnosticsProperty('isActive', isActive))
+      ..add(DiagnosticsProperty('lastLoginAt', lastLoginAt))
+      ..add(DiagnosticsProperty('merchantId', merchantId))
+      ..add(DiagnosticsProperty('refreshToken', refreshToken))
+      ..add(DiagnosticsProperty('token', token));
   }
 
   @override
@@ -830,81 +589,48 @@ class _UserModel with DiagnosticableTreeMixin implements UserModel {
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
-            (identical(other.deletedAt, deletedAt) ||
-                other.deletedAt == deletedAt) &&
-            (identical(other.userName, userName) ||
-                other.userName == userName) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.bio, bio) || other.bio == bio) &&
-            (identical(other.city, city) || other.city == city) &&
-            (identical(other.country, country) || other.country == country) &&
-            (identical(other.image, image) || other.image == image) &&
-            (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.cover, cover) || other.cover == cover) &&
-            (identical(other.birthdate, birthdate) ||
-                other.birthdate == birthdate) &&
-            (identical(other.deviceId, deviceId) ||
-                other.deviceId == deviceId) &&
-            (identical(other.deviceType, deviceType) ||
-                other.deviceType == deviceType) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.online, online) || other.online == online) &&
-            (identical(other.isPrivate, isPrivate) ||
-                other.isPrivate == isPrivate) &&
-            (identical(other.lastOnline, lastOnline) ||
-                other.lastOnline == lastOnline) &&
-            (identical(other.sponsorshipCode, sponsorshipCode) ||
-                other.sponsorshipCode == sponsorshipCode) &&
-            (identical(other.sponsored, sponsored) ||
-                other.sponsored == sponsored) &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.firebaseToken, firebaseToken) ||
-                other.firebaseToken == firebaseToken) &&
-            (identical(other.stripeId, stripeId) ||
-                other.stripeId == stripeId) &&
-            (identical(other.stripeSellerId, stripeSellerId) ||
-                other.stripeSellerId == stripeSellerId) &&
-            (identical(other.token, token) || other.token == token) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.role, role) || other.role == role) &&
+            (identical(other.isVerified, isVerified) ||
+                other.isVerified == isVerified) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive) &&
+            (identical(other.lastLoginAt, lastLoginAt) ||
+                other.lastLoginAt == lastLoginAt) &&
+            (identical(other.merchantId, merchantId) ||
+                other.merchantId == merchantId) &&
             (identical(other.refreshToken, refreshToken) ||
-                other.refreshToken == refreshToken));
+                other.refreshToken == refreshToken) &&
+            (identical(other.token, token) || other.token == token));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hashAll([
-        runtimeType,
-        id,
-        createdAt,
-        updatedAt,
-        deletedAt,
-        userName,
-        name,
-        bio,
-        city,
-        country,
-        image,
-        phone,
-        cover,
-        birthdate,
-        deviceId,
-        deviceType,
-        email,
-        online,
-        isPrivate,
-        lastOnline,
-        sponsorshipCode,
-        sponsored,
-        type,
-        firebaseToken,
-        stripeId,
-        stripeSellerId,
-        token,
-        refreshToken
-      ]);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      createdAt,
+      updatedAt,
+      email,
+      firstName,
+      lastName,
+      phone,
+      role,
+      isVerified,
+      isActive,
+      lastLoginAt,
+      merchantId,
+      refreshToken,
+      token);
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserModel(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, userName: $userName, name: $name, bio: $bio, city: $city, country: $country, image: $image, phone: $phone, cover: $cover, birthdate: $birthdate, deviceId: $deviceId, deviceType: $deviceType, email: $email, online: $online, isPrivate: $isPrivate, lastOnline: $lastOnline, sponsorshipCode: $sponsorshipCode, sponsored: $sponsored, type: $type, firebaseToken: $firebaseToken, stripeId: $stripeId, stripeSellerId: $stripeSellerId, token: $token, refreshToken: $refreshToken)';
+    return 'UserModel(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, email: $email, firstName: $firstName, lastName: $lastName, phone: $phone, role: $role, isVerified: $isVerified, isActive: $isActive, lastLoginAt: $lastLoginAt, merchantId: $merchantId, refreshToken: $refreshToken, token: $token)';
   }
 }
 
@@ -917,33 +643,20 @@ abstract mixin class _$UserModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
-      DateTime createdAt,
-      DateTime? updatedAt,
-      DateTime? deletedAt,
-      String userName,
-      String name,
-      String? bio,
-      String? city,
-      String country,
-      String? image,
-      String phone,
-      String? cover,
-      DateTime birthdate,
-      String deviceId,
-      String deviceType,
-      String email,
-      bool online,
-      bool isPrivate,
-      DateTime lastOnline,
-      String sponsorshipCode,
-      bool sponsored,
-      String type,
-      String? firebaseToken,
-      String stripeId,
-      String stripeSellerId,
-      String? token,
-      String? refreshToken});
+      {@JsonKey(name: 'id') String id,
+      @JsonKey(name: 'created_at') String createdAt,
+      @JsonKey(name: 'updated_at') String updatedAt,
+      @JsonKey(name: 'email') String email,
+      @JsonKey(name: 'first_name') String firstName,
+      @JsonKey(name: 'last_name') String lastName,
+      @JsonKey(name: 'phone') String phone,
+      @JsonKey(name: 'role') String role,
+      @JsonKey(name: 'is_verified') bool? isVerified,
+      @JsonKey(name: 'is_active') bool? isActive,
+      @JsonKey(name: 'last_login_at') String lastLoginAt,
+      @JsonKey(name: 'merchant_id') String merchantId,
+      @JsonKey(name: 'refresh_token') String? refreshToken,
+      String? token});
 }
 
 /// @nodoc
@@ -960,31 +673,18 @@ class __$UserModelCopyWithImpl<$Res> implements _$UserModelCopyWith<$Res> {
   $Res call({
     Object? id = null,
     Object? createdAt = null,
-    Object? updatedAt = freezed,
-    Object? deletedAt = freezed,
-    Object? userName = null,
-    Object? name = null,
-    Object? bio = freezed,
-    Object? city = freezed,
-    Object? country = null,
-    Object? image = freezed,
-    Object? phone = null,
-    Object? cover = freezed,
-    Object? birthdate = null,
-    Object? deviceId = null,
-    Object? deviceType = null,
+    Object? updatedAt = null,
     Object? email = null,
-    Object? online = null,
-    Object? isPrivate = null,
-    Object? lastOnline = null,
-    Object? sponsorshipCode = null,
-    Object? sponsored = null,
-    Object? type = null,
-    Object? firebaseToken = freezed,
-    Object? stripeId = null,
-    Object? stripeSellerId = null,
-    Object? token = freezed,
+    Object? firstName = null,
+    Object? lastName = null,
+    Object? phone = null,
+    Object? role = null,
+    Object? isVerified = freezed,
+    Object? isActive = freezed,
+    Object? lastLoginAt = null,
+    Object? merchantId = null,
     Object? refreshToken = freezed,
+    Object? token = freezed,
   }) {
     return _then(_UserModel(
       id: null == id
@@ -994,106 +694,54 @@ class __$UserModelCopyWithImpl<$Res> implements _$UserModelCopyWith<$Res> {
       createdAt: null == createdAt
           ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: freezed == updatedAt
+              as String,
+      updatedAt: null == updatedAt
           ? _self.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      deletedAt: freezed == deletedAt
-          ? _self.deletedAt
-          : deletedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      userName: null == userName
-          ? _self.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _self.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      bio: freezed == bio
-          ? _self.bio
-          : bio // ignore: cast_nullable_to_non_nullable
-              as String?,
-      city: freezed == city
-          ? _self.city
-          : city // ignore: cast_nullable_to_non_nullable
-              as String?,
-      country: null == country
-          ? _self.country
-          : country // ignore: cast_nullable_to_non_nullable
-              as String,
-      image: freezed == image
-          ? _self.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as String?,
-      phone: null == phone
-          ? _self.phone
-          : phone // ignore: cast_nullable_to_non_nullable
-              as String,
-      cover: freezed == cover
-          ? _self.cover
-          : cover // ignore: cast_nullable_to_non_nullable
-              as String?,
-      birthdate: null == birthdate
-          ? _self.birthdate
-          : birthdate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      deviceId: null == deviceId
-          ? _self.deviceId
-          : deviceId // ignore: cast_nullable_to_non_nullable
-              as String,
-      deviceType: null == deviceType
-          ? _self.deviceType
-          : deviceType // ignore: cast_nullable_to_non_nullable
               as String,
       email: null == email
           ? _self.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      online: null == online
-          ? _self.online
-          : online // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isPrivate: null == isPrivate
-          ? _self.isPrivate
-          : isPrivate // ignore: cast_nullable_to_non_nullable
-              as bool,
-      lastOnline: null == lastOnline
-          ? _self.lastOnline
-          : lastOnline // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      sponsorshipCode: null == sponsorshipCode
-          ? _self.sponsorshipCode
-          : sponsorshipCode // ignore: cast_nullable_to_non_nullable
+      firstName: null == firstName
+          ? _self.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
               as String,
-      sponsored: null == sponsored
-          ? _self.sponsored
-          : sponsored // ignore: cast_nullable_to_non_nullable
-              as bool,
-      type: null == type
-          ? _self.type
-          : type // ignore: cast_nullable_to_non_nullable
+      lastName: null == lastName
+          ? _self.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      firebaseToken: freezed == firebaseToken
-          ? _self.firebaseToken
-          : firebaseToken // ignore: cast_nullable_to_non_nullable
-              as String?,
-      stripeId: null == stripeId
-          ? _self.stripeId
-          : stripeId // ignore: cast_nullable_to_non_nullable
+      phone: null == phone
+          ? _self.phone
+          : phone // ignore: cast_nullable_to_non_nullable
               as String,
-      stripeSellerId: null == stripeSellerId
-          ? _self.stripeSellerId
-          : stripeSellerId // ignore: cast_nullable_to_non_nullable
+      role: null == role
+          ? _self.role
+          : role // ignore: cast_nullable_to_non_nullable
               as String,
-      token: freezed == token
-          ? _self.token
-          : token // ignore: cast_nullable_to_non_nullable
-              as String?,
+      isVerified: freezed == isVerified
+          ? _self.isVerified
+          : isVerified // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isActive: freezed == isActive
+          ? _self.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      lastLoginAt: null == lastLoginAt
+          ? _self.lastLoginAt
+          : lastLoginAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      merchantId: null == merchantId
+          ? _self.merchantId
+          : merchantId // ignore: cast_nullable_to_non_nullable
+              as String,
       refreshToken: freezed == refreshToken
           ? _self.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      token: freezed == token
+          ? _self.token
+          : token // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }

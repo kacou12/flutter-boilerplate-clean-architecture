@@ -1,5 +1,6 @@
 import 'package:my/core/errors/exceptions.dart';
-import 'package:my/core/services/hive/main_box.dart';
+import 'package:my/core/services/hive/hive.dart';
+import 'package:my/core/services/hive/main_box_storage.dart';
 import 'package:my/features/auth/data/models/user_model.dart';
 
 abstract class AuthLocalDataSource {
@@ -15,13 +16,13 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
 
   @override
   Future<void> saveData(UserModel value) async {
-    final local = MainBoxStorage<UserModel>(
+    final local = await MainBoxStorage.create<UserModel>(
       fromJson: UserModel.fromJson,
       toJson: (data) => data.toJson(),
     );
 
     try {
-      await local.saveMapData(data: value, key: cacheUser);
+      await local.save(data: value, key: cacheUser, hasExpiration: false);
     } catch (e) {
       throw CacheException(message: e.toString());
     }
@@ -35,7 +36,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
     );
 
     try {
-      return (await local.loadMapData(cacheUser))!;
+      return (await local.load(cacheUser))!;
     } catch (e) {
       return null;
     }
@@ -47,6 +48,6 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
       fromJson: UserModel.fromJson,
       toJson: (data) => data.toJson(),
     );
-    await local.clearData(cacheUser);
+    await local.delete(cacheUser);
   }
 }

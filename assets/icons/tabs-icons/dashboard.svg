@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" viewBox="0 0 25 25">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#a8589e"/>
+      <stop offset="1" stop-color="#4664ac"/>
+    </linearGradient>
+  </defs>
+  <g id="s_user_ic" transform="translate(431 329)">
+    <rect id="Rectangle_2851" data-name="Rectangle 2851" width="25" height="25" transform="translate(-431 -329)" opacity="0" fill="url(#linear-gradient)"/>
+    <path id="icons8-utilisateur-384" d="M15.5,3a5.556,5.556,0,1,0,5.556,5.556A5.556,5.556,0,0,0,15.5,3Zm0,15.278c-4.172,0-12.5,2.094-12.5,6.25V28H28V24.528C28,20.372,19.672,18.278,15.5,18.278Z" transform="translate(-434 -332)" fill="url(#linear-gradient)"/>
+  </g>
+</svg>

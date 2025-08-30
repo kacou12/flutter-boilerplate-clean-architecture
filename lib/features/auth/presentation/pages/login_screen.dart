@@ -26,8 +26,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   /// Controller
-  final _conEmail = TextEditingController(text: "abc");
-  final _conPassword = TextEditingController(text: "testtest");
+  final _conEmail = TextEditingController(text: "test@gmail.com");
+  final _conPassword = TextEditingController(text: "3Uek4Co3nhKfICJ");
 
   LoginCubit get cubit {
     return context.read<LoginCubit>();
@@ -48,9 +48,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 message.toToastError(context);
                 break;
               case LoginSuccess():
-                context
-                    .read<AuthBloc>()
-                    .add(const AuthStatusChanged(AuthStatus.authenticated));
+                context.read<AuthBloc>().add(
+                  const AuthStatusChanged(AuthStatus.authenticated),
+                );
 
               default:
             }
@@ -96,42 +96,48 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _loginForm() => BlocBuilder<LoginCubit, LoginState>(
-        builder: (_, __) {
-          return MyFormBuilder(
-            formKey: cubit.formKey,
-            child: Column(
-              children: [
-                _UsernameInput(conEmail: _conEmail),
-                SpacerV(value: Dimens.space24),
-                _PasswordInput(conPassword: _conPassword),
-                SpacerV(value: Dimens.space24),
-                SubmitButton(
-                  title: "login",
-                  onTap: () {
-                    if (cubit.formKey.currentState!.validate()) {
-                      context.read<LoginCubit>().login(
-                            RequestParamsLogin(
-                              email: _conEmail.text,
-                              password: _conPassword.text,
-                            ),
-                          );
-                    } else {
-                      final errors = cubit.formKey.currentState!.fields
-                          .map((key, field) => MapEntry(key, field.errorText))
-                          .entries
-                          .where((entry) => entry.value != null)
-                          .map((entry) => '${entry.key}: ${entry.value}')
-                          .toList();
-
-                      errors.join("\n").toToastError(context);
-                    }
-                  },
-                ),
-              ],
+    builder: (_, __) {
+      return MyFormBuilder(
+        formKey: cubit.formKey,
+        child: Column(
+          children: [
+            _UsernameInput(conEmail: _conEmail),
+            SpacerV(value: Dimens.space24),
+            _PasswordInput(conPassword: _conPassword),
+            SpacerV(value: Dimens.space24),
+            ButtonText(
+              title: "Forgot your password ?",
+              onPressed: () {
+                context.pushNamed(PageRoutes.forgotPassword.name);
+              },
             ),
-          );
-        },
+            SubmitButton(
+              title: "login",
+              onTap: () {
+                if (cubit.formKey.currentState!.validate()) {
+                  context.read<LoginCubit>().login(
+                    RequestParamsLogin(
+                      email: _conEmail.text,
+                      password: _conPassword.text,
+                    ),
+                  );
+                } else {
+                  final errors = cubit.formKey.currentState!.fields
+                      .map((key, field) => MapEntry(key, field.errorText))
+                      .entries
+                      .where((entry) => entry.value != null)
+                      .map((entry) => '${entry.key}: ${entry.value}')
+                      .toList();
+
+                  errors.join("\n").toToastError(context);
+                }
+              },
+            ),
+          ],
+        ),
       );
+    },
+  );
 }
 
 class _UsernameInput extends StatelessWidget {
@@ -142,21 +148,29 @@ class _UsernameInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormBuilderField(
-        name: "username",
-        initialValue: conEmail.text,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        // validator: (v) {
-        //   return (v).isValidEmailOrPhoneNumber();
-        // },
-        builder: (FormFieldState field) {
-          return CommonTextFormField(
-              onChanged: field.didChange,
-              // initialValue: field.value,
-              controller: conEmail,
-              decoration: const InputDecoration(
-                labelText: "Adresse email ou numero de téléphone",
-              ));
-        });
+      name: "email",
+      initialValue: conEmail.text,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      // validator: (v) {
+      //   return (v).isValidEmailOrPhoneNumber();
+      // },
+      validator: FormBuilderValidators.compose([
+        FormBuilderValidators.email(
+          errorText: "Veuillez saisir un email valide",
+        ),
+        // FormBuilderValidators.min(5, errorText: "Minimum 5 caractères"),
+      ]),
+      builder: (FormFieldState field) {
+        return CommonTextFormField(
+          onChanged: field.didChange,
+          // initialValue: field.value,
+          controller: conEmail,
+          decoration: const InputDecoration(
+            labelText: "Adresse email ou numero de téléphone",
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -175,35 +189,33 @@ class _PasswordInputState extends State<_PasswordInput> {
   Widget build(BuildContext context) {
     final IconData icon = obscureText ? Icons.visibility : Icons.visibility_off;
     return FormBuilderField(
-        name: "password",
-        initialValue: widget.conPassword.text,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        validator: FormBuilderValidators.compose([
-          FormBuilderValidators.required(
-              errorText: "Veuillez remplir ce champ"),
-          // FormBuilderValidators.min(5, errorText: "Minimum 5 caractères"),
-        ]),
-        builder: (FormFieldState field) {
-          return CommonTextFormField(
-            onChanged: field.didChange,
-            controller: widget.conPassword,
-            decoration: InputDecoration(
-                labelText: "Mot de passe",
-                suffixIcon: InkWell(
-                  onTap: () {
-                    setState(() {
-                      obscureText = !obscureText;
-                    });
-                  },
-                  child: Icon(
-                    icon,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(35.0),
-                )),
-          );
-        });
+      name: "password",
+      initialValue: widget.conPassword.text,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: FormBuilderValidators.compose([
+        FormBuilderValidators.required(errorText: "Veuillez remplir ce champ"),
+        // FormBuilderValidators.min(5, errorText: "Minimum 5 caractères"),
+      ]),
+      builder: (FormFieldState field) {
+        return CommonTextFormField(
+          onChanged: field.didChange,
+          controller: widget.conPassword,
+          decoration: InputDecoration(
+            labelText: "Mot de passe",
+            suffixIcon: InkWell(
+              onTap: () {
+                setState(() {
+                  obscureText = !obscureText;
+                });
+              },
+              child: Icon(icon, color: Theme.of(context).colorScheme.primary),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(35.0),
+            ),
+          ),
+        );
+      },
+    );
   }
 }

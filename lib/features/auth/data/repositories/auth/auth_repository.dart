@@ -35,11 +35,5 @@ class RequestParamsRegister extends Equatable {
   final String phone;
 
   @override
-  List<Object?> get props => [
-        firstName,
-        lastName,
-        email,
-        password,
-        phone,
-      ];
+  List<Object?> get props => [firstName, lastName, email, password, phone];
 }

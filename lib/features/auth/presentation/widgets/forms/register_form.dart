@@ -29,13 +29,15 @@ class RegisterForm extends StatelessWidget {
         data[key] = value.value;
       });
 
-      context.read<RegisterCubit>().register(RequestParamsRegister(
-            email: data['email'],
-            password: data['password'],
-            firstName: data['fisrtName'],
-            lastName: data['lastName'],
-            phone: data['phone'],
-          ));
+      context.read<RegisterCubit>().register(
+        RequestParamsRegister(
+          email: data['email'],
+          password: data['password'],
+          firstName: data['fisrtName'],
+          lastName: data['lastName'],
+          phone: data['phone'],
+        ),
+      );
     }
 
     return MyFormBuilder(
@@ -54,10 +56,7 @@ class RegisterForm extends StatelessWidget {
           SpacerV(value: Dimens.space12),
           const _ConfirmPasswordInput(),
           SpacerV(value: Dimens.space12),
-          SubmitButton(
-            title: "Inscription",
-            onTap: submitHandler,
-          ),
+          SubmitButton(title: "Inscription", onTap: submitHandler),
         ],
       ),
     );
@@ -72,18 +71,21 @@ class _EmailInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormBuilderField(
-        name: "email",
-        validator: FormBuilderValidators.email(),
-        builder: (FormFieldState field) {
-          return CommonTextFormField(
-              onChanged: field.didChange,
-              controller: _emailPhone,
-              decoration: InputDecoration(
-                  labelText: "Adresse email",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(35.0),
-                  )));
-        });
+      name: "email",
+      validator: FormBuilderValidators.email(),
+      builder: (FormFieldState field) {
+        return CommonTextFormField(
+          onChanged: field.didChange,
+          controller: _emailPhone,
+          decoration: InputDecoration(
+            labelText: "Adresse email",
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(35.0),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -94,20 +96,23 @@ class _PhoneInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormBuilderField(
-        name: "phone",
-        validator: (v) {
-          return (v as String).isValidPhoneNumber();
-        },
-        builder: (FormFieldState field) {
-          return CommonTextFormField(
-              controller: _conPhone,
-              onChanged: field.didChange,
-              decoration: InputDecoration(
-                  labelText: "Numero de téléphone",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(35.0),
-                  )));
-        });
+      name: "phone",
+      validator: (v) {
+        return (v as String).isValidPhoneNumber();
+      },
+      builder: (FormFieldState field) {
+        return CommonTextFormField(
+          controller: _conPhone,
+          onChanged: field.didChange,
+          decoration: InputDecoration(
+            labelText: "Numero de téléphone",
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(35.0),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -119,20 +124,23 @@ class _LastNameInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormBuilderField(
-        name: "lastName",
-        validator: FormBuilderValidators.compose([
-          FormBuilderValidators.required(),
-        ]),
-        builder: (FormFieldState field) {
-          return CommonTextFormField(
-              controller: _conLastName,
-              onChanged: field.didChange,
-              decoration: InputDecoration(
-                  labelText: "last name",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(35.0),
-                  )));
-        });
+      name: "lastName",
+      validator: FormBuilderValidators.compose([
+        FormBuilderValidators.required(),
+      ]),
+      builder: (FormFieldState field) {
+        return CommonTextFormField(
+          controller: _conLastName,
+          onChanged: field.didChange,
+          decoration: InputDecoration(
+            labelText: "last name",
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(35.0),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -144,20 +152,23 @@ class _FirstNameInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormBuilderField(
-        name: "fisrtName",
-        validator: FormBuilderValidators.compose([
-          FormBuilderValidators.required(),
-        ]),
-        builder: (FormFieldState field) {
-          return CommonTextFormField(
-              onChanged: field.didChange,
-              controller: _conFirstName,
-              decoration: InputDecoration(
-                  labelText: "first name",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(35.0),
-                  )));
-        });
+      name: "fisrtName",
+      validator: FormBuilderValidators.compose([
+        FormBuilderValidators.required(),
+      ]),
+      builder: (FormFieldState field) {
+        return CommonTextFormField(
+          onChanged: field.didChange,
+          controller: _conFirstName,
+          decoration: InputDecoration(
+            labelText: "first name",
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(35.0),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -176,32 +187,31 @@ class _PasswordInputState extends State<_PasswordInput> {
   Widget build(BuildContext context) {
     final IconData icon = obscureText ? Icons.visibility : Icons.visibility_off;
     return FormBuilderField(
-        name: "password",
-        validator: FormBuilderValidators.compose([
-          FormBuilderValidators.required(),
-        ]),
-        builder: (FormFieldState field) {
-          return CommonTextFormField(
-            controller: conPassword,
-            onChanged: field.didChange,
-            decoration: InputDecoration(
-                labelText: "Mot de passe",
-                suffixIcon: InkWell(
-                  onTap: () {
-                    setState(() {
-                      obscureText = !obscureText;
-                    });
-                  },
-                  child: Icon(
-                    icon,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(35.0),
-                )),
-          );
-        });
+      name: "password",
+      validator: FormBuilderValidators.compose([
+        FormBuilderValidators.required(),
+      ]),
+      builder: (FormFieldState field) {
+        return CommonTextFormField(
+          controller: conPassword,
+          onChanged: field.didChange,
+          decoration: InputDecoration(
+            labelText: "Mot de passe",
+            suffixIcon: InkWell(
+              onTap: () {
+                setState(() {
+                  obscureText = !obscureText;
+                });
+              },
+              child: Icon(icon, color: Theme.of(context).colorScheme.primary),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(35.0),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -232,30 +242,31 @@ class _ConfirmPasswordInputState extends State<_ConfirmPasswordInput> {
   Widget build(BuildContext context) {
     final IconData icon = obscureText ? Icons.visibility : Icons.visibility_off;
     return FormBuilderField(
-        name: "confirmPassword",
-        validator: FormBuilderValidators.equal(getPassordValue(context),
-            errorText: "Mot de passe incorrect"),
-        builder: (FormFieldState field) {
-          return CommonTextFormField(
-            controller: conPassword,
-            onChanged: field.didChange,
-            decoration: InputDecoration(
-                labelText: "confirmation du mot de passe",
-                suffixIcon: InkWell(
-                  onTap: () {
-                    setState(() {
-                      obscureText = !obscureText;
-                    });
-                  },
-                  child: Icon(
-                    icon,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(35.0),
-                )),
-          );
-        });
+      name: "confirmPassword",
+      validator: FormBuilderValidators.equal(
+        getPassordValue(context),
+        errorText: "Mot de passe incorrect",
+      ),
+      builder: (FormFieldState field) {
+        return CommonTextFormField(
+          controller: conPassword,
+          onChanged: field.didChange,
+          decoration: InputDecoration(
+            labelText: "confirmation du mot de passe",
+            suffixIcon: InkWell(
+              onTap: () {
+                setState(() {
+                  obscureText = !obscureText;
+                });
+              },
+              child: Icon(icon, color: Theme.of(context).colorScheme.primary),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(35.0),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
