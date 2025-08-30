@@ -1,5 +1,6 @@
 import 'package:my/core/errors/exceptions.dart';
-import 'package:my/core/services/hive/main_box.dart';
+import 'package:my/core/services/hive/hive.dart';
+import 'package:my/core/services/hive/main_box_storage.dart';
 import 'package:my/features/auth/data/models/user_model.dart';
 
 abstract class AuthLocalDataSource {
